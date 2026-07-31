@@ -9,6 +9,8 @@
     { "src": "api/**/*.js", "use": "@vercel/node" }
   ],
   "routes": [
+    { "handle": "filesystem" },
+    { "src": "/favicon.ico", "dest": "/favicon.svg" },
     { "src": "/api/(.*)", "dest": "/api/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
