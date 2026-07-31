@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 
 /* ==============================================================
-   AquaSense AI — Login Page
+    Nuleus1  AI — Login Page
    Mirrors the design language of the Landing Page:
    abyss/depth/current color system, Sora + Inter + IBM Plex Mono,
    bioluma (#4CE0D2) signature glow, glassmorphism, floating buoy
@@ -270,7 +270,7 @@ export default function Login() {
               </svg>
             </span>
             <span className="font-[Sora] font-semibold tracking-tight text-[#eaf6f6] text-[17px]">
-              AquaSense <span className="text-[#4CE0D2]">AI</span>
+              Nuleus1 <span className="text-[#4CE0D2]">AI</span>
             </span>
           </div>
 
@@ -337,7 +337,7 @@ export default function Login() {
                 />
               </svg>
               <span className="font-[Sora] font-semibold text-[#eaf6f6] text-[17px]">
-                AquaSense <span className="text-[#4CE0D2]">AI</span>
+                Nuleus1 <span className="text-[#4CE0D2]">AI</span>
               </span>
             </div>
 

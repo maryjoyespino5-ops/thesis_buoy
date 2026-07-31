@@ -1,1702 +1,1132 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Anchor,
+  Radio,
+  Satellite,
+  Sun,
+  MapPin,
+  Activity,
+  Droplet,
+  Wind,
+  Battery,
+  BarChart3,
+  Map as MapIcon,
+  Bell,
+  FileText,
+  Cloud,
+  Cpu,
+  Fish,
+  ShieldAlert,
+  CloudRain,
+  Wrench,
+  Zap,
+  Database,
+  Server,
+  Globe as GlobeIcon,
+  ArrowRight,
+  Menu,
+  X,
+  ChevronRight,
+  TrendingUp,
+  Gauge,
+  Thermometer,
+  Waves,
+} from "lucide-react";
 
-/**
- * AquaSense AI — Landing Page
- * ------------------------------------------------------------------
- * Self-contained page component. Assumes:
- *   - react-router-dom is configured with a "/login" route.
- *   - Tailwind CSS is available globally (arbitrary-value utilities used).
- *   - No external icon/animation libraries required — all icons are
- *     inline SVG and all motion is CSS/IntersectionObserver based, so
- *     this drops into any Vite + Tailwind project with zero new deps.
- * ------------------------------------------------------------------
- */
+/* ------------------------------------------------------------------ */
+/*  DESIGN TOKENS                                                       */
+/* ------------------------------------------------------------------ */
+const C = {
+  primary: "#0B4D8C",
+  secondary: "#1479D7",
+  accent: "#00D4FF",
+  bg: "#031726",
+  surface: "#071F35",
+  white: "#FFFFFF",
+  textSub: "#A8C2DA",
+  border: "rgba(255,255,255,0.08)",
+};
 
-/* ============================== DESIGN TOKENS ==============================
-   Color   abyss #051923 · depth #0a2f3d · current #114b5f
-           bioluma #4CE0D2 (signature glow) · coral #ff7a59 (alert accent)
-           foam #eaf6f6 · mist #9fc5c9
-   Type    Display: Sora · Body: Inter · Data: IBM Plex Mono
-   Motif   the buoy's sensor glow — small pulsing cyan nodes — recurs as the
-           connective tissue between sections (hotspots, workflow, metrics).
-============================================================================ */
+/* ------------------------------------------------------------------ */
+/*  HOOKS                                                               */
+/* ------------------------------------------------------------------ */
 
-const FONT_LINK_ID = "aquasense-fonts";
-
-function useInjectFonts() {
-  useEffect(() => {
-    if (document.getElementById(FONT_LINK_ID)) return;
-    const link = document.createElement("link");
-    link.id = FONT_LINK_ID;
-    link.rel = "stylesheet";
-    link.href =
-      "https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap";
-    document.head.appendChild(link);
-  }, []);
-}
-
-/* ============================== SCROLL REVEAL ============================== */
-
-function useReveal(options = {}) {
+// Reveal-on-scroll
+function useReveal(threshold = 0.2) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-    const io = new IntersectionObserver(
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setVisible(true);
-          io.unobserve(node);
+          obs.unobserve(el);
         }
       },
-      { threshold: 0.18, ...options },
+      { threshold },
     );
-    io.observe(node);
-    return () => io.disconnect();
-  }, []);
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
   return [ref, visible];
 }
 
-function Reveal({
-  as: Tag = "div",
-  delay = 0,
-  className = "",
-  children,
-  ...rest
-}) {
+// Count-up animation triggered on visibility
+function useCountUp(target, visible, duration = 1600) {
+  const [value, setValue] = useState(0);
+  const startedRef = useRef(false);
+  useEffect(() => {
+    if (!visible || startedRef.current) return;
+    startedRef.current = true;
+    const start = performance.now();
+    const step = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(target * eased);
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [visible, target, duration]);
+  return value;
+}
+
+/* ------------------------------------------------------------------ */
+/*  SMALL UI ATOMS                                                      */
+/* ------------------------------------------------------------------ */
+
+// Coordinate-style eyebrow tag — a recurring signature motif standing in
+// for a buoy's GPS fix, used instead of generic "01 / 02 / 03" numbering.
+function Coord({ children }) {
+  return (
+    <div
+      className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase mb-5"
+      style={{ color: C.accent, fontFamily: "'JetBrains Mono', monospace" }}>
+      <span className="h-[6px] w-[6px]" style={{ background: C.accent }} />
+      {children}
+    </div>
+  );
+}
+
+function SectionHeading({ coord, title, sub, align = "left" }) {
+  return (
+    <div
+      className={
+        align === "center" ? "text-center max-w-3xl mx-auto" : "max-w-2xl"
+      }>
+      {coord && <Coord>{coord}</Coord>}
+      <h2
+        className="text-3xl md:text-5xl font-semibold leading-[1.1] tracking-tight"
+        style={{ color: C.white }}>
+        {title}
+      </h2>
+      {sub && (
+        <p
+          className="mt-5 text-base md:text-lg leading-relaxed"
+          style={{ color: C.textSub }}>
+          {sub}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function PrimaryButton({ children, className = "", ...props }) {
+  return (
+    <button
+      className={`group relative inline-flex items-center justify-center gap-2 px-7 py-4 text-sm font-medium tracking-wide overflow-hidden ${className}`}
+      style={{ background: C.accent, color: "#03131F" }}
+      {...props}>
+      <span className="relative z-10 flex items-center gap-2">{children}</span>
+      <span
+        className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"
+        style={{ background: C.white }}
+      />
+    </button>
+  );
+}
+
+function GhostButton({ children, className = "", ...props }) {
+  return (
+    <button
+      className={`inline-flex items-center justify-center gap-2 px-7 py-4 text-sm font-medium tracking-wide border transition-colors duration-300 hover:bg-white/[0.06] ${className}`}
+      style={{ borderColor: C.border, color: C.white }}
+      {...props}>
+      {children}
+    </button>
+  );
+}
+
+function Reveal({ children, className = "", delay = 0 }) {
   const [ref, visible] = useReveal();
   return (
-    <Tag
+    <div
       ref={ref}
-      className={`as-reveal ${visible ? "as-reveal-in" : ""} ${className}`}
-      style={{ transitionDelay: visible ? `${delay}ms` : "0ms" }}
-      {...rest}>
+      className={`${className} transition-all duration-700 ease-out`}
+      style={{
+        transitionDelay: `${delay}ms`,
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(28px)",
+      }}>
       {children}
-    </Tag>
+    </div>
   );
 }
 
-/* ============================== ANIMATED COUNTER ============================== */
-
-function Counter({ to, suffix = "", duration = 1600, decimals = 0 }) {
-  const [ref, visible] = useReveal({ threshold: 0.6 });
-  const [value, setValue] = useState(0);
-  useEffect(() => {
-    if (!visible) return;
-    let start = null;
-    let raf;
-    const tick = (t) => {
-      if (start === null) start = t;
-      const progress = Math.min((t - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(to * eased);
-      if (progress < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [visible, to, duration]);
+/* ------------------------------------------------------------------ */
+/*  SIGNATURE VISUAL — sonar / buoy ping instrument                     */
+/* ------------------------------------------------------------------ */
+function BuoySonar() {
   return (
-    <span ref={ref} className="font-mono tabular-nums">
-      {value.toFixed(decimals)}
-      {suffix}
-    </span>
+    <div className="relative w-full aspect-square max-w-[520px] mx-auto">
+      <svg viewBox="0 0 520 520" className="w-full h-full">
+        <defs>
+          <radialGradient id="sonarGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor={C.accent} stopOpacity="0.25" />
+            <stop offset="100%" stopColor={C.accent} stopOpacity="0" />
+          </radialGradient>
+          <linearGradient id="buoyBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={C.secondary} />
+            <stop offset="100%" stopColor={C.primary} />
+          </linearGradient>
+        </defs>
+
+        <circle cx="260" cy="260" r="230" fill="url(#sonarGlow)" />
+
+        {[80, 140, 200].map((r, i) => (
+          <circle
+            key={r}
+            cx="260"
+            cy="260"
+            r={r}
+            fill="none"
+            stroke={C.border.replace("0.08", "0.18")}
+            strokeWidth="1"
+          />
+        ))}
+
+        {/* rotating sweep */}
+        <g
+          style={{
+            transformOrigin: "260px 260px",
+            animation: "sweep 5s linear infinite",
+          }}>
+          <path
+            d="M260 260 L260 30 A230 230 0 0 1 420 100 Z"
+            fill={C.accent}
+            opacity="0.06"
+          />
+          <line
+            x1="260"
+            y1="260"
+            x2="260"
+            y2="30"
+            stroke={C.accent}
+            strokeWidth="1.5"
+            opacity="0.5"
+          />
+        </g>
+
+        {/* buoy silhouette */}
+        <g transform="translate(210,150)">
+          <ellipse
+            cx="50"
+            cy="215"
+            rx="60"
+            ry="10"
+            fill="#000"
+            opacity="0.35"
+          />
+          <rect
+            x="46"
+            y="0"
+            width="8"
+            height="40"
+            fill={C.textSub}
+            opacity="0.7"
+          />
+          <circle cx="50" cy="-6" r="6" fill={C.accent}>
+            <animate
+              attributeName="opacity"
+              values="1;0.25;1"
+              dur="1.8s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <path
+            d="M10 55 Q50 30 90 55 L100 150 Q50 175 0 150 Z"
+            fill="url(#buoyBody)"
+            stroke={C.accent}
+            strokeOpacity="0.4"
+          />
+          <rect
+            x="0"
+            y="150"
+            width="100"
+            height="14"
+            fill={C.surface}
+            stroke={C.border}
+          />
+        </g>
+
+        {/* ping dot */}
+        <circle cx="150" cy="360" r="4" fill={C.accent}>
+          <animate
+            attributeName="r"
+            values="4;10;4"
+            dur="2.4s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="opacity"
+            values="0.9;0;0.9"
+            dur="2.4s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <circle cx="370" cy="180" r="3" fill={C.accent} opacity="0.7" />
+      </svg>
+
+      <div
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 border text-[11px] tracking-[0.2em]"
+        style={{
+          borderColor: C.border,
+          background: "rgba(3,23,38,0.6)",
+          color: C.textSub,
+          fontFamily: "'JetBrains Mono', monospace",
+        }}>
+        10.3157° N &nbsp;·&nbsp; 123.6122° E &nbsp;·&nbsp; LIVE
+      </div>
+
+      <style>{`
+        @keyframes sweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      `}</style>
+    </div>
   );
 }
 
-/* ============================== ICONS (inline, minimal) ============================== */
+function TelemetryGlobe() {
+  return (
+    <div className="relative w-full aspect-square max-w-[480px] mx-auto overflow-hidden rounded-[2.5rem] border border-white/10 shadow-[0_30px_70px_rgba(0,0,0,0.35)]">
+      <video
+        className="absolute inset-0 h-full w-full object-cover"
+        src="/video/11104160-hd_1920_1080_25fps.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#03131f]/20 to-[#03131f]/85" />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div
+          className="relative w-[72%] h-[72%] rounded-full border border-white/15"
+          style={{ boxShadow: "0 0 0 1px rgba(255,255,255,0.05)" }}>
+          {[...Array(5)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute inset-0 rounded-full border border-white/10"
+              style={{ transform: `scale(${0.72 - i * 0.11})` }}
+            />
+          ))}
+          <div className="absolute inset-0 rounded-full border border-white/10 opacity-70" />
+        </div>
+      </div>
+      <div className="absolute left-5 top-5 rounded-full bg-[#03131f]/70 px-4 py-3 text-sm font-medium text-[#d5f6f2]">
+        LIVE CONNECTIVITY
+      </div>
+      <div className="absolute right-5 bottom-5 rounded-full bg-[#03131f]/70 px-4 py-3 text-sm font-medium text-[#d5f6f2]">
+        REAL-TIME OCEAN AI
+      </div>
+    </div>
+  );
+}
 
-const Icon = {
-  drop: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" {...p}>
-      <path
-        d="M12 2.5c3.6 4.6 7 8.7 7 12.4a7 7 0 1 1-14 0c0-3.7 3.4-7.8 7-12.4Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-    </svg>
-  ),
-  wave: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" {...p}>
-      <path
-        d="M2 8c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2M2 14c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2M2 20c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  ),
-  bolt: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" {...p}>
-      <path
-        d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-  gps: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" {...p}>
-      <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.5" />
-      <path
-        d="M12 2v3M12 19v3M2 12h3M19 12h3"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  ),
-  camera: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" {...p}>
-      <rect
-        x="3"
-        y="7"
-        width="18"
-        height="13"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <circle
-        cx="12"
-        cy="13.5"
-        r="3.4"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <path
-        d="M8 7 9.6 4h4.8L16 7"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-  shield: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" {...p}>
-      <path
-        d="M12 2 4 5v6c0 5 3.4 8.6 8 11 4.6-2.4 8-6 8-11V5l-8-3Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-  cloud: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" {...p}>
-      <path
-        d="M7 18h10a4 4 0 0 0 .5-7.97A5.5 5.5 0 0 0 7.1 9.1 4 4 0 0 0 7 18Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-  bell: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" {...p}>
-      <path
-        d="M6 17h12l-1.5-2.2V10a4.5 4.5 0 0 0-9 0v4.8L6 17Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path d="M10 20a2 2 0 0 0 4 0" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  ),
-  chart: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" {...p}>
-      <path
-        d="M4 20V9M11 20V4M18 20v-7"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  ),
-  sun: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" {...p}>
-      <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.5" />
-      <path
-        d="M12 2v2M12 20v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2 12h2M20 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  ),
-  fish: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" {...p}>
-      <path
-        d="M3 12c3-4 8-6 12-6 3 0 5 2.5 6 6-1 3.5-3 6-6 6-4 0-9-2-12-6Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <circle cx="15" cy="10.5" r="0.8" fill="currentColor" />
-    </svg>
-  ),
-  radar: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" {...p}>
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
-      <path
-        d="M12 12 18 7"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <circle cx="12" cy="12" r="1.4" fill="currentColor" />
-    </svg>
-  ),
-  battery: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" {...p}>
-      <rect
-        x="2"
-        y="8"
-        width="17"
-        height="8"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <path
-        d="M21 10.5v3"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <rect x="4.5" y="10" width="7" height="4" rx="0.6" fill="currentColor" />
-    </svg>
-  ),
-  layers: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" {...p}>
-      <path
-        d="M12 3 3 8l9 5 9-5-9-5Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M3 13l9 5 9-5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-  chevron: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" {...p}>
-      <path
-        d="m7 10 5 5 5-5"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-  arrowRight: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" {...p}>
-      <path
-        d="M5 12h14M13 6l6 6-6 6"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-};
+/* ------------------------------------------------------------------ */
+/*  FISHERIES SECTION                                                  */
+/* ------------------------------------------------------------------ */
+function FisheriesSection() {
+  const [ref, visible] = useReveal(0.18);
+  const cages = useCountUp(2500, visible);
+  const uptime = useCountUp(24, visible);
+  const reliability = useCountUp(99.9, visible);
 
-/* ============================== NAV ============================== */
+  return (
+    <section
+      id="fisheries"
+      ref={ref}
+      className="relative py-20"
+      style={{ background: C.bg }}>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(60% 40% at 20% 20%, rgba(4,12,20,0.25), transparent 40%)",
+          }}
+        />
+        <div className="absolute inset-0" aria-hidden>
+          <div className="w-full h-full" />
+        </div>
+        <style>{`
+          .fish-particle { position:absolute; width:4px;height:4px;border-radius:2px;background:rgba(255,255,255,0.06); opacity:0.9 }
+          @keyframes fp { from { transform: translateY(10px); opacity:0 } to { transform: translateY(-30px); opacity:0.6 } }
+        `}</style>
+      </div>
 
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <Reveal>
+            <div>
+              <div className="text-xs uppercase tracking-wider text-[#9fd0d8]">
+                LET NELEUS1 HANDLE YOUR FISHERIES
+              </div>
+              <h3
+                className="text-3xl md:text-4xl font-semibold mt-4"
+                style={{ color: C.white }}>
+                Smarter Fish Farming Starts with Real-Time Ocean Intelligence
+              </h3>
+              <p
+                className="mt-4 text-base text-[15px] max-w-xl"
+                style={{ color: C.textSub }}>
+                NELEUS1 continuously monitors water conditions around your fish
+                cages using AI-powered smart buoys. Receive real-time
+                environmental data, instant alerts, and predictive insights that
+                help protect your stock, improve feeding schedules, reduce
+                losses, and maximize productivity.
+              </p>
+
+              <div className="mt-6 grid gap-3">
+                {[
+                  ["Real-Time Monitoring", "✔"],
+                  ["AI Water Quality Analysis", "✔"],
+                  ["Fish Health Monitoring", "✔"],
+                  ["Environmental Alerts", "✔"],
+                  ["Cloud Synchronization", "✔"],
+                  ["Solar Powered Smart Buoy", "✔"],
+                ].map(([label, mark]) => (
+                  <div key={label} className="flex items-center gap-3">
+                    <div className="text-accent text-[#00D4FF]">{mark}</div>
+                    <div style={{ color: C.white }}>{label}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-8 flex gap-4">
+                <button className="px-6 py-3 bg-[#00D4FF] text-[#03131F] font-medium">
+                  Explore Fisheries Solution
+                </button>
+                <button
+                  className="px-6 py-3 border"
+                  style={{ borderColor: C.border, color: C.white }}>
+                  Watch Platform Demo
+                </button>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={120}>
+            <div className="w-full h-[420px] md:h-[520px]">
+              <video
+                className="w-full h-full object-cover"
+                src="/video/fishcage.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(180deg, rgba(3,7,12,0.0), rgba(3,7,12,0.45))",
+                }}
+              />
+            </div>
+          </Reveal>
+        </div>
+
+        <Reveal delay={220}>
+          <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+            <div>
+              <div
+                className="text-3xl font-semibold"
+                style={{ color: C.white }}>
+                {cages >= 1000
+                  ? `${Math.round(cages)}+`
+                  : `${Math.round(cages)}`}
+              </div>
+              <div className="mt-1 text-sm" style={{ color: C.textSub }}>
+                Fish Cages Supported
+              </div>
+            </div>
+            <div>
+              <div
+                className="text-3xl font-semibold"
+                style={{ color: C.white }}>
+                {uptime.toFixed(0)}
+              </div>
+              <div className="mt-1 text-sm" style={{ color: C.textSub }}>
+                24/7 Continuous Monitoring
+              </div>
+            </div>
+            <div>
+              <div
+                className="text-3xl font-semibold"
+                style={{ color: C.white }}>
+                {reliability.toFixed(1)}%
+              </div>
+              <div className="mt-1 text-sm" style={{ color: C.textSub }}>
+                Data Reliability
+              </div>
+            </div>
+            <div>
+              <div
+                className="text-3xl font-semibold"
+                style={{ color: C.white }}>
+                AI
+              </div>
+              <div className="mt-1 text-sm" style={{ color: C.textSub }}>
+                Predictive Analytics
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  NAVIGATION                                                          */
+/* ------------------------------------------------------------------ */
 function Nav() {
-  const [scrolled, setScrolled] = useState(false);
+  const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setSolid(window.scrollY > 40);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const links = [
-    { href: "#technology", label: "Technology" },
-    { href: "#intelligence", label: "AI Intelligence" },
-    { href: "#dashboard", label: "Dashboard" },
-    { href: "#benefits", label: "Benefits" },
-    { href: "#faq", label: "FAQ" },
+    "Platform",
+    "Features",
+    "Monitoring",
+    "AI Insights",
+    "Technology",
+    "Contact",
   ];
 
+  const linkColor = solid ? C.white : C.textSub;
+  const textColor = C.white;
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled ? "as-glass border-b border-white/10 py-3" : "py-4"
-      }`}>
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <a href="#top" className="flex items-center gap-2.5 group">
-          <span className="relative w-8 h-8 grid place-items-center">
-            <span className="absolute inset-0 rounded-full bg-[#4CE0D2]/25 blur-md group-hover:bg-[#4CE0D2]/40 transition" />
-            <svg viewBox="0 0 24 24" className="w-6 h-6 relative" fill="none">
-              <path
-                d="M12 2.5c3.6 4.6 7 8.7 7 12.4a7 7 0 1 1-14 0c0-3.7 3.4-7.8 7-12.4Z"
-                stroke="#4CE0D2"
-                strokeWidth="1.6"
-              />
-            </svg>
-          </span>
-          <span className="font-[Sora] font-semibold tracking-tight text-[#eaf6f6] text-[17px]">
-            AquaSense <span className="text-[#4CE0D2]">AI</span>
-          </span>
-        </a>
+      className="fixed top-0 left-0 right-0 z-50 transition-colors duration-500"
+      style={{
+        background: solid ? "rgba(36, 71, 97, 0.92)" : "transparent",
+        borderBottom: solid
+          ? `1px solid rgba(255,255,255,0.04)`
+          : "1px solid transparent",
+        backdropFilter: solid ? "blur(6px)" : "none",
+        color: textColor,
+      }}>
+      <div className="max-w-[1200px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+        <div className="flex items-center relative -left-12">
+          <img
+            src="/image/logow.png"
+            alt="NELEUS1 logo"
+            className="h-20 md:h-24 w-auto object-contain relative top-1 md:top-2"
+          />
+          <img
+            src="/image/name.png"
+            alt="NELEUS1"
+            className="h-32 md:h-36 w-auto object-contain self-center -ml-26 md:-ml-16 relative top-[2px] md:top-[4px]"
+          />
+        </div>
 
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-9">
           {links.map((l) => (
             <a
-              key={l.href}
-              href={l.href}
-              className="text-[13.5px] font-medium text-[#9fc5c9] hover:text-[#eaf6f6] transition-colors">
-              {l.label}
+              key={l}
+              href={`#${l.toLowerCase().replace(/\s/g, "-")}`}
+              className={`text-[13px] tracking-wide transition-colors duration-300 ${
+                solid ? "hover:text-[#00D4FF]" : "hover:text-white"
+              }`}
+              style={{ color: linkColor }}>
+              {l}
             </a>
           ))}
         </nav>
 
-        <div className="hidden md:block">
-          <Link
-            to="/login"
-            className="as-btn-ghost text-[13.5px] px-4 py-2 rounded-full">
-            Open Login Portal
-          </Link>
+        <div className="hidden lg:flex items-center gap-3">
+          <button
+            className={`px-5 py-2.5 text-[13px] font-medium tracking-wide transition-colors duration-300 ${
+              solid ? "hover:text-[#00D4FF]" : "hover:text-white"
+            }`}
+            style={{ color: linkColor }}>
+            Login
+          </button>
+          <button
+            className="px-5 py-2.5 text-[13px] font-medium tracking-wide"
+            style={{ background: C.accent, color: "#03131F" }}>
+            Launch Dashboard
+          </button>
         </div>
 
         <button
-          onClick={() => setOpen((o) => !o)}
-          className="md:hidden w-9 h-9 grid place-items-center rounded-full border border-white/15 text-[#eaf6f6]"
-          aria-label="Toggle menu">
-          <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
-            {open ? (
-              <path
-                d="M6 6l12 12M18 6 6 18"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-              />
-            ) : (
-              <path
-                d="M4 7h16M4 12h16M4 17h16"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-              />
-            )}
-          </svg>
+          className="lg:hidden"
+          onClick={() => setOpen(!open)}
+          style={{ color: textColor }}>
+          {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
       {open && (
-        <div className="md:hidden as-glass mt-3 mx-4 rounded-2xl px-5 py-5 flex flex-col gap-4 border border-white/10">
+        <div
+          className="lg:hidden px-6 pb-8 pt-2 flex flex-col gap-5"
+          style={{
+            background: solid ? "rgba(3,23,38,0.96)" : "rgba(3,23,38,0.98)",
+            borderTop: `1px solid ${solid ? "rgba(255,255,255,0.04)" : C.border}`,
+          }}>
           {links.map((l) => (
             <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              className="text-[#eaf6f6] text-sm font-medium">
-              {l.label}
+              key={l}
+              href={`#${l.toLowerCase().replace(/\s/g, "-")}`}
+              className="text-sm"
+              style={{ color: solid ? "#042022" : C.textSub }}
+              onClick={() => setOpen(false)}>
+              {l}
             </a>
           ))}
-          <Link
-            to="/login"
-            className="as-btn-primary text-center rounded-full py-2.5 text-sm">
-            Open Login Portal
-          </Link>
+          <div
+            className="flex flex-col gap-3 pt-4"
+            style={{ borderTop: `1px solid ${C.border}` }}>
+            <button
+              className="px-5 py-3 text-sm text-left"
+              style={{ color: solid ? "#042022" : C.textSub }}>
+              Login
+            </button>
+            <button
+              className="px-5 py-3 text-sm font-medium"
+              style={{ background: C.accent, color: "#03131F" }}>
+              Launch Dashboard
+            </button>
+          </div>
         </div>
       )}
     </header>
   );
 }
 
-/* ============================== HERO ============================== */
-
-const HOTSPOTS = [
-  {
-    x: 50,
-    y: 12,
-    label: "Solar array",
-    desc: "Continuous charging keeps the unit powered indefinitely.",
-  },
-  {
-    x: 78,
-    y: 24,
-    label: "AI vision camera",
-    desc: "Edge-processed imagery for wildlife and debris recognition.",
-  },
-  {
-    x: 22,
-    y: 26,
-    label: "Comms antenna",
-    desc: "Cellular / satellite uplink to the cloud platform.",
-  },
-  {
-    x: 64,
-    y: 40,
-    label: "Weather station",
-    desc: "Wind, rainfall, humidity and air temperature in real time.",
-  },
-  {
-    x: 36,
-    y: 46,
-    label: "GPS antenna",
-    desc: "Sub-metre positioning for drift and location tracking.",
-  },
-  {
-    x: 50,
-    y: 66,
-    label: "Sensor pod",
-    desc: "Water chemistry and ocean-dynamics sensors below the waterline.",
-  },
-];
-
+/* ------------------------------------------------------------------ */
+/*  HERO                                                                */
+/* ------------------------------------------------------------------ */
 function Hero() {
-  const wrapRef = useRef(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [activeHotspot, setActiveHotspot] = useState(null);
-
-  const onMouseMove = useCallback((e) => {
-    const el = wrapRef.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    setTilt({ x: px * 10, y: py * -8 });
-  }, []);
-
   return (
     <section
-      id="top"
-      ref={wrapRef}
-      onMouseMove={onMouseMove}
-      onMouseLeave={() => setTilt({ x: 0, y: 0 })}
-      className="relative min-h-screen overflow-hidden flex items-center pt-24 pb-12 as-hero-bg">
-      {/* ambient particles */}
-      <div className="as-particles" aria-hidden>
-        {Array.from({ length: 22 }).map((_, i) => (
-          <span key={i} className="as-particle" style={{ "--i": i }} />
-        ))}
-      </div>
+      id="home"
+      className="relative min-h-screen flex items-center overflow-hidden"
+      style={{ background: C.bg }}>
+      <BackgroundVideo />
+      <div className="absolute inset-0 bg-[#03131f]/70" />
 
-      <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-2 gap-8 lg:gap-16 items-center relative z-10">
-        {/* copy */}
-        <div>
-          <Reveal className="inline-flex items-center gap-2 as-glass rounded-full px-4 py-1.5 text-[12.5px] font-medium text-[#bfe9e4] border border-white/10">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#4CE0D2] as-pulse-dot" />
-            Now monitoring 240+ marine reserves worldwide
-          </Reveal>
-
-          <Reveal delay={80}>
-            <h1 className="mt-5 font-[Sora] font-[750] leading-[1.05] text-[38px] sm:text-[48px] lg:text-[54px] tracking-tight text-[#f4fbfb]">
-              The ocean, <span className="as-gradient-text">watched by AI</span>
-              ,<br />
-              protected in real time.
-            </h1>
-          </Reveal>
-
-          <Reveal delay={160}>
-            <p className="mt-4 text-[15.5px] leading-relaxed text-[#a9cdd0] max-w-lg">
-              AquaSense AI is a solar-powered smart buoy network that senses,
-              interprets, and reports on marine health continuously — turning
-              raw ocean data into conservation decisions your team can act on
-              today.
-            </p>
-          </Reveal>
-
-          <Reveal
-            delay={240}
-            className="mt-7 flex flex-wrap items-center gap-3">
-            <Link
-              to="/login"
-              className="as-btn-primary rounded-full px-6 py-3 text-[14px] font-semibold inline-flex items-center gap-2 group">
-              Open Login Portal
-              <Icon.arrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-            </Link>
-            <a
-              href="#technology"
-              className="as-btn-ghost rounded-full px-6 py-3 text-[14px] font-semibold">
-              Explore Technology
-            </a>
-          </Reveal>
-
-          <Reveal delay={320} className="mt-8 grid grid-cols-3 gap-6 max-w-md">
-            {[
-              ["27", "sensor parameters"],
-              ["24/7", "autonomous uptime"],
-              ["98.6%", "AI detection accuracy"],
-            ].map(([n, l]) => (
-              <div key={l}>
-                <div className="font-mono text-[20px] font-medium text-[#eaf6f6]">
-                  {n}
-                </div>
-                <div className="text-[11px] text-[#7fa3a6] mt-1 leading-tight">
-                  {l}
-                </div>
-              </div>
-            ))}
-          </Reveal>
-        </div>
-
-        {/* buoy visual */}
-        <div className="relative flex justify-center">
-          <div
-            className="relative max-w-[340px] sm:max-w-[380px] lg:max-w-[400px] as-float"
-            style={{ transform: `rotate(${tilt.x * 0.15}deg)` }}>
-            <div
-              className="relative"
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 pt-32 pb-20 grid lg:grid-cols-2 gap-16 items-center w-full">
+        <Reveal>
+          <h1
+            className="text-4xl sm:text-5xl md:text-6xl font-semibold leading-[1.08] tracking-tight"
+            style={{ color: C.white }}>
+            Ocean Intelligence,{" "}
+            <span
               style={{
-                transform: `perspective(900px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)`,
-                transition: "transform .25s ease-out",
+                background: `linear-gradient(90deg, ${C.secondary}, ${C.accent})`,
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
               }}>
-              <BuoySVG />
-              {HOTSPOTS.map((h, i) => (
-                <button
-                  key={h.label}
-                  onMouseEnter={() => setActiveHotspot(i)}
-                  onMouseLeave={() => setActiveHotspot(null)}
-                  onClick={() =>
-                    setActiveHotspot(activeHotspot === i ? null : i)
-                  }
-                  style={{ left: `${h.x}%`, top: `${h.y}%` }}
-                  className="absolute -translate-x-1/2 -translate-y-1/2 w-4 h-4"
-                  aria-label={h.label}>
-                  <span className="absolute inset-0 rounded-full bg-[#4CE0D2] as-pulse-dot" />
-                  <span className="absolute inset-0 rounded-full bg-[#4CE0D2]/50 as-ping" />
-                </button>
-              ))}
-
-              {activeHotspot !== null && (
-                <div
-                  className="absolute z-20 as-glass border border-white/15 rounded-xl px-4 py-3 w-52 text-left shadow-2xl"
-                  style={{
-                    left: `${HOTSPOTS[activeHotspot].x}%`,
-                    top: `${HOTSPOTS[activeHotspot].y}%`,
-                    transform: `translate(${HOTSPOTS[activeHotspot].x > 55 ? "-105%" : "18px"}, -10%)`,
-                  }}>
-                  <div className="text-[13px] font-semibold text-[#eaf6f6]">
-                    {HOTSPOTS[activeHotspot].label}
-                  </div>
-                  <div className="text-[12px] text-[#9fc5c9] mt-1 leading-snug">
-                    {HOTSPOTS[activeHotspot].desc}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* reflection */}
-            <div className="as-reflection">
-              <BuoySVG />
-            </div>
-          </div>
-
-          {/* waves under buoy */}
-          <WaveLayer />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function BuoySVG(props) {
-  return (
-    <svg
-      viewBox="0 0 400 420"
-      className="w-full h-auto drop-shadow-[0_30px_60px_rgba(76,224,210,0.15)]"
-      {...props}>
-      <defs>
-        <linearGradient id="hull" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#1c4a54" />
-          <stop offset="1" stopColor="#0a2530" />
-        </linearGradient>
-        <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#123846" />
-          <stop offset="1" stopColor="#08222b" />
-        </linearGradient>
-        <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0" stopColor="#4CE0D2" stopOpacity="0.55" />
-          <stop offset="1" stopColor="#4CE0D2" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-
-      {/* ambient glow */}
-      <ellipse
-        cx="200"
-        cy="230"
-        rx="170"
-        ry="170"
-        fill="url(#glow)"
-        opacity="0.5"
-      />
-
-      {/* antennas */}
-      <line
-        x1="150"
-        y1="70"
-        x2="150"
-        y2="18"
-        stroke="#3a6b73"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-      <circle cx="150" cy="16" r="4" fill="#4CE0D2" className="as-blink" />
-      <line
-        x1="250"
-        y1="70"
-        x2="262"
-        y2="24"
-        stroke="#3a6b73"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-      <circle cx="262" cy="22" r="3.5" fill="#eaf6f6" />
-
-      {/* top solar deck */}
-      <rect
-        x="90"
-        y="70"
-        width="220"
-        height="40"
-        rx="10"
-        fill="url(#panel)"
-        stroke="#2c5560"
-        strokeWidth="1.5"
-      />
-      {Array.from({ length: 6 }).map((_, i) => (
-        <rect
-          key={i}
-          x={100 + i * 34}
-          y="78"
-          width="28"
-          height="24"
-          rx="3"
-          fill="#0d3038"
-          stroke="#245057"
-          strokeWidth="1"
-        />
-      ))}
-
-      {/* camera housing */}
-      <rect
-        x="278"
-        y="88"
-        width="34"
-        height="34"
-        rx="8"
-        fill="url(#panel)"
-        stroke="#2c5560"
-        strokeWidth="1.5"
-      />
-      <circle
-        cx="295"
-        cy="105"
-        r="8"
-        fill="#04141a"
-        stroke="#4CE0D2"
-        strokeWidth="1.4"
-      />
-      <circle cx="295" cy="105" r="3" fill="#4CE0D2" />
-
-      {/* main hull */}
-      <path
-        d="M60 118 h280 a14 14 0 0 1 14 14 v70 a90 90 0 0 1 -90 90 h-128 a90 90 0 0 1 -90 -90 v-70 a14 14 0 0 1 14 -14 Z"
-        fill="url(#hull)"
-        stroke="#2c5560"
-        strokeWidth="1.5"
-      />
-
-      {/* status band */}
-      <rect
-        x="80"
-        y="150"
-        width="240"
-        height="26"
-        rx="13"
-        fill="#08222b"
-        stroke="#204750"
-        strokeWidth="1"
-      />
-      {[0, 1, 2, 3, 4].map((i) => (
-        <circle
-          key={i}
-          cx={110 + i * 42}
-          cy="163"
-          r="5"
-          fill={i === 2 ? "#ff7a59" : "#4CE0D2"}
-          opacity={i === 2 ? 1 : 0.7}
-          className={i === 2 ? "as-blink" : ""}
-        />
-      ))}
-
-      {/* sensor ring / mid band */}
-      <rect
-        x="70"
-        y="196"
-        width="260"
-        height="18"
-        rx="9"
-        fill="#0d3038"
-        stroke="#204750"
-        strokeWidth="1"
-      />
-
-      {/* body text plate */}
-      <rect
-        x="150"
-        y="230"
-        width="100"
-        height="26"
-        rx="6"
-        fill="#04141a"
-        stroke="#2c5560"
-        strokeWidth="1"
-      />
-      <text
-        x="200"
-        y="247"
-        textAnchor="middle"
-        fontFamily="IBM Plex Mono, monospace"
-        fontSize="11"
-        fill="#4CE0D2">
-        AQUASENSE
-      </text>
-
-      {/* lower stabilizer skirt */}
-      <path
-        d="M96 288 a104 60 0 0 0 208 0 Z"
-        fill="#08222b"
-        stroke="#204750"
-        strokeWidth="1.4"
-      />
-
-      {/* underwater sensor pod */}
-      <line
-        x1="200"
-        y1="288"
-        x2="200"
-        y2="340"
-        stroke="#245057"
-        strokeWidth="3"
-      />
-      <ellipse
-        cx="200"
-        cy="352"
-        rx="30"
-        ry="14"
-        fill="url(#panel)"
-        stroke="#2c5560"
-        strokeWidth="1.5"
-      />
-      <circle cx="200" cy="352" r="5" fill="#4CE0D2" opacity="0.85" />
-    </svg>
-  );
-}
-
-function WaveLayer() {
-  return (
-    <div className="relative mt-2 h-16 overflow-hidden">
-      <svg
-        className="absolute inset-0 w-full h-full as-wave-1"
-        viewBox="0 0 600 100"
-        preserveAspectRatio="none">
-        <path
-          d="M0 50 Q 75 20 150 50 T 300 50 T 450 50 T 600 50 V100 H0 Z"
-          fill="#0d3038"
-          opacity="0.55"
-        />
-      </svg>
-      <svg
-        className="absolute inset-0 w-full h-full as-wave-2"
-        viewBox="0 0 600 100"
-        preserveAspectRatio="none">
-        <path
-          d="M0 60 Q 75 35 150 60 T 300 60 T 450 60 T 600 60 V100 H0 Z"
-          fill="#123846"
-          opacity="0.7"
-        />
-      </svg>
-    </div>
-  );
-}
-
-/* ============================== SECTION HEADER ============================== */
-
-function SectionHeader({ eyebrow, title, desc, align = "center" }) {
-  return (
-    <Reveal
-      className={`max-w-2xl ${align === "center" ? "mx-auto text-center" : ""} mb-16`}>
-      <div className="inline-flex items-center gap-2 text-[12.5px] font-mono font-medium text-[#4CE0D2] tracking-wide uppercase">
-        <span className="w-6 h-px bg-[#4CE0D2]/60" />
-        {eyebrow}
-      </div>
-      <h2 className="mt-4 font-[Sora] font-[700] text-[32px] sm:text-[38px] leading-tight tracking-tight text-[#eaf6f6]">
-        {title}
-      </h2>
-      {desc && (
-        <p className="mt-4 text-[15.5px] leading-relaxed text-[#9fc5c9]">
-          {desc}
-        </p>
-      )}
-    </Reveal>
-  );
-}
-
-/* ============================== PROBLEM SECTION ============================== */
-
-const PROBLEMS = [
-  {
-    icon: Icon.wave,
-    title: "Coral reef degradation",
-    desc: "Bleaching events go unnoticed for weeks without continuous water-quality data.",
-  },
-  {
-    icon: Icon.drop,
-    title: "Water pollution",
-    desc: "Runoff and spills reach protected waters long before manual sampling catches them.",
-  },
-  {
-    icon: Icon.fish,
-    title: "Illegal fishing",
-    desc: "Vast, unpatrolled coastlines make enforcement reactive instead of preventive.",
-  },
-  {
-    icon: Icon.sun,
-    title: "Climate change",
-    desc: "Warming and acidifying waters shift faster than quarterly survey cycles can track.",
-  },
-  {
-    icon: Icon.radar,
-    title: "Poor monitoring coverage",
-    desc: "Most protected areas rely on sparse, human-powered spot checks.",
-  },
-  {
-    icon: Icon.bell,
-    title: "Delayed response",
-    desc: "By the time a report reaches a decision-maker, the damage is already done.",
-  },
-];
-
-function ProblemSection() {
-  return (
-    <section className="relative py-20 as-section-alt">
-      <div className="max-w-7xl mx-auto px-6">
-        <SectionHeader
-          eyebrow="The Challenge"
-          title="Oceans are changing faster than we can watch them"
-          desc="Traditional monitoring depends on infrequent visits and manual sampling — leaving critical windows where damage goes undetected and unaddressed."
-        />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {PROBLEMS.map((p, i) => (
-            <Reveal
-              key={p.title}
-              delay={i * 70}
-              className="as-card rounded-2xl p-6">
-              <p.icon className="w-6 h-6 text-[#ff7a59]" />
-              <h3 className="mt-4 font-[Sora] font-semibold text-[16.5px] text-[#eaf6f6]">
-                {p.title}
-              </h3>
-              <p className="mt-2 text-[13.5px] leading-relaxed text-[#93b7ba]">
-                {p.desc}
-              </p>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ============================== SOLUTION SECTION ============================== */
-
-const SOLUTIONS = [
-  {
-    icon: Icon.radar,
-    title: "24/7 autonomous monitoring",
-    desc: "Every buoy senses continuously — no visit required, no gap in coverage.",
-  },
-  {
-    icon: Icon.layers,
-    title: "AI-powered analysis",
-    desc: "Edge and cloud models turn raw signals into meaningful environmental context.",
-  },
-  {
-    icon: Icon.chart,
-    title: "Predictive insights",
-    desc: "Trend models flag deteriorating conditions before they become emergencies.",
-  },
-  {
-    icon: Icon.bell,
-    title: "Instant notifications",
-    desc: "Alerts reach the right team in seconds, not weeks.",
-  },
-  {
-    icon: Icon.cloud,
-    title: "Cloud-connected monitoring",
-    desc: "Every reading syncs to a live platform accessible from anywhere.",
-  },
-  {
-    icon: Icon.shield,
-    title: "Scientific decision support",
-    desc: "Recommendations grounded in historical and real-time data, not guesswork.",
-  },
-];
-
-function SolutionSection() {
-  return (
-    <section className="relative py-20">
-      <div className="max-w-7xl mx-auto px-6">
-        <SectionHeader
-          eyebrow="The Solution"
-          title="One autonomous system, watching every hour of every day"
-          desc="AquaSense AI replaces scheduled spot-checks with a living sensor network that thinks, learns, and speaks up the moment something changes."
-        />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {SOLUTIONS.map((s, i) => (
-            <Reveal
-              key={s.title}
-              delay={i * 70}
-              className="as-card as-card-hover rounded-2xl p-6">
-              <div className="w-11 h-11 rounded-xl as-icon-badge grid place-items-center">
-                <s.icon className="w-5 h-5 text-[#4CE0D2]" />
-              </div>
-              <h3 className="mt-4 font-[Sora] font-semibold text-[16.5px] text-[#eaf6f6]">
-                {s.title}
-              </h3>
-              <p className="mt-2 text-[13.5px] leading-relaxed text-[#93b7ba]">
-                {s.desc}
-              </p>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ============================== FEATURE SHOWCASE (tabs) ============================== */
-
-const FEATURE_GROUPS = [
-  {
-    key: "chemistry",
-    label: "Water Chemistry",
-    items: [
-      ["Water Temperature", Icon.sun],
-      ["Dissolved Oxygen", Icon.drop],
-      ["pH", Icon.drop],
-      ["Salinity", Icon.drop],
-      ["Turbidity", Icon.drop],
-      ["Conductivity", Icon.bolt],
-    ],
-  },
-  {
-    key: "dynamics",
-    label: "Ocean Dynamics",
-    items: [
-      ["Water Level", Icon.wave],
-      ["Wave Height", Icon.wave],
-      ["Tide Monitoring", Icon.wave],
-    ],
-  },
-  {
-    key: "weather",
-    label: "Weather",
-    items: [
-      ["Rainfall", Icon.drop],
-      ["Wind Speed", Icon.wave],
-      ["Humidity", Icon.drop],
-      ["Air Temperature", Icon.sun],
-    ],
-  },
-  {
-    key: "position",
-    label: "Position & Power",
-    items: [
-      ["GPS Tracking", Icon.gps],
-      ["Solar Charging", Icon.sun],
-      ["Battery Monitoring", Icon.battery],
-    ],
-  },
-  {
-    key: "vision",
-    label: "AI Vision & Detection",
-    items: [
-      ["AI Camera", Icon.camera],
-      ["Wildlife Observation", Icon.fish],
-      ["Coral Health Monitoring", Icon.shield],
-      ["Oil Spill Detection", Icon.radar],
-      ["Harmful Algae Bloom Detection", Icon.radar],
-      ["Illegal Fishing Detection", Icon.fish],
-      ["Floating Debris Detection", Icon.radar],
-    ],
-  },
-  {
-    key: "systems",
-    label: "Systems",
-    items: [
-      ["Sensor Health Monitoring", Icon.chart],
-      ["Edge AI Processing", Icon.layers],
-      ["Cloud Synchronization", Icon.cloud],
-      ["Emergency Alerts", Icon.bell],
-    ],
-  },
-];
-
-function FeatureShowcase() {
-  const [active, setActive] = useState(FEATURE_GROUPS[0].key);
-  const group = FEATURE_GROUPS.find((g) => g.key === active);
-
-  return (
-    <section id="technology" className="relative py-20 as-section-alt">
-      <div className="max-w-7xl mx-auto px-6">
-        <SectionHeader
-          eyebrow="Smart Buoy Showcase"
-          title="27 sensing capabilities, one unified instrument"
-          desc="Every buoy packs a full environmental sensor suite alongside AI vision — from water chemistry to illegal-activity detection."
-        />
-
-        <Reveal className="flex flex-wrap justify-center gap-2 mb-10">
-          {FEATURE_GROUPS.map((g) => (
-            <button
-              key={g.key}
-              onClick={() => setActive(g.key)}
-              className={`px-4 py-2 rounded-full text-[13px] font-medium transition-all border ${
-                active === g.key
-                  ? "bg-[#4CE0D2] text-[#04141a] border-transparent"
-                  : "border-white/12 text-[#9fc5c9] hover:text-[#eaf6f6] hover:border-white/25"
-              }`}>
-              {g.label}
-            </button>
-          ))}
-        </Reveal>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {group.items.map(([name, IconC], i) => (
-            <div
-              key={name}
-              className="as-card as-card-hover as-fade-swap rounded-2xl p-5 flex items-center gap-4"
-              style={{ animationDelay: `${i * 45}ms` }}>
-              <div className="w-10 h-10 shrink-0 rounded-lg as-icon-badge grid place-items-center">
-                <IconC className="w-4.5 h-4.5 text-[#4CE0D2]" />
-              </div>
-              <span className="text-[14px] font-medium text-[#e2f4f2]">
-                {name}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ============================== AI INTELLIGENCE SECTION ============================== */
-
-const AI_CAPABILITIES = [
-  "Environmental anomaly detection",
-  "Predictive environmental forecasting",
-  "AI recommendations",
-  "Risk prediction",
-  "Pattern recognition",
-  "Water quality prediction",
-  "Historical trend learning",
-  "Automatic report generation",
-  "Intelligent conservation insights",
-  "Sensor diagnostics",
-];
-
-function AISection() {
-  return (
-    <section id="intelligence" className="relative py-20 overflow-hidden">
-      <div className="as-ai-glow" aria-hidden />
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center relative">
-        <div>
-          <SectionHeader
-            eyebrow="AI Intelligence"
-            title="A decision-support engine, not just a data feed"
-            align="left"
-            desc="AquaSense AI's models continuously learn from every sensor across the network, converting raw readings into forecasts and clear, actionable guidance for your team."
-          />
-          <div className="grid sm:grid-cols-2 gap-3 max-w-xl">
-            {AI_CAPABILITIES.map((c, i) => (
-              <Reveal
-                key={c}
-                delay={i * 45}
-                className="flex items-start gap-2.5">
-                <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#4CE0D2] shrink-0" />
-                <span className="text-[13.5px] text-[#bcdcdb] leading-snug">
-                  {c}
-                </span>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-
-        <Reveal
-          delay={120}
-          className="as-glass border border-white/10 rounded-3xl p-6 shadow-2xl relative as-float-slow">
-          <div className="flex items-center justify-between mb-5">
-            <span className="text-[12px] font-mono text-[#7fa3a6]">
-              AI_INSIGHT_ENGINE.log
-            </span>
-            <span className="flex gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#ff7a59]" />
-              <span className="w-2 h-2 rounded-full bg-[#f4d35e]" />
-              <span className="w-2 h-2 rounded-full bg-[#4CE0D2]" />
-            </span>
-          </div>
-
-          <div className="space-y-3">
-            <InsightRow
-              label="Dissolved Oxygen — Reef Zone C"
-              value="6.1 mg/L"
-              trend="stable"
-              tone="ok"
-            />
-            <InsightRow
-              label="Turbidity — River Mouth Station"
-              value="+18% (24h)"
-              trend="rising"
-              tone="warn"
-            />
-            <InsightRow
-              label="Predicted Algae Bloom Risk"
-              value="Moderate, 72h"
-              trend="watch"
-              tone="warn"
-            />
-            <InsightRow
-              label="Coral Thermal Stress Index"
-              value="0.4 / 4"
-              tone="ok"
-              trend="normal"
-            />
-          </div>
-
-          <div className="mt-6 as-bars">
-            {Array.from({ length: 24 }).map((_, i) => (
-              <span
-                key={i}
-                style={{
-                  "--h": `${30 + Math.round(40 * Math.abs(Math.sin(i * 0.6)))}%`,
-                  "--d": `${i * 40}ms`,
-                }}
-              />
-            ))}
-          </div>
-          <p className="mt-4 text-[12.5px] text-[#7fa3a6] font-mono">
-            recommendation → deploy secondary sampling pass, Reef Zone C
+              Built for Smarter
+            </span>{" "}
+            Coastal Monitoring
+          </h1>
+          <p
+            className="mt-7 text-base md:text-lg max-w-xl leading-relaxed"
+            style={{ color: C.textSub }}>
+            NELEUS1 is an AI-powered smart buoy platform that watches the water
+            continuously — reading conditions, forecasting change, spotting fish
+            activity, and streaming the findings to fisheries, researchers,
+            local governments, and coastal communities in real time.
           </p>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-function InsightRow({ label, value, tone, trend }) {
-  const toneMap = { ok: "#4CE0D2", warn: "#ff7a59" };
-  return (
-    <div className="flex items-center justify-between border-b border-white/8 pb-2.5">
-      <span className="text-[12.5px] text-[#a9cdd0]">{label}</span>
-      <span className="flex items-center gap-2">
-        <span className="text-[12.5px] font-mono text-[#eaf6f6]">{value}</span>
-        <span
-          className="text-[10px] font-mono px-1.5 py-0.5 rounded"
-          style={{
-            color: toneMap[tone],
-            backgroundColor: `${toneMap[tone]}22`,
-          }}>
-          {trend}
-        </span>
-      </span>
-    </div>
-  );
-}
-
-/* ============================== DASHBOARD PREVIEW ============================== */
-
-function DashboardSection() {
-  return (
-    <section id="dashboard" className="relative py-20 as-section-alt">
-      <div className="max-w-7xl mx-auto px-6">
-        <SectionHeader
-          eyebrow="Live Platform"
-          title="Your entire sanctuary, in one live dashboard"
-          desc="Track every deployed buoy, review AI insights, and act on alerts — all from a single connected view."
-        />
-
-        <Reveal className="as-glass border border-white/10 rounded-3xl p-4 sm:p-6 shadow-2xl">
-          <div className="grid lg:grid-cols-[1.4fr_1fr] gap-4">
-            {/* map */}
-            <div className="relative rounded-2xl overflow-hidden as-map-bg min-h-[320px]">
-              {[
-                [30, 35],
-                [55, 55],
-                [70, 25],
-                [22, 65],
-                [80, 60],
-                [45, 20],
-              ].map(([x, y], i) => (
-                <span
-                  key={i}
-                  className="absolute w-2.5 h-2.5 rounded-full bg-[#4CE0D2] as-ping-slow"
-                  style={{ left: `${x}%`, top: `${y}%` }}
-                />
-              ))}
-              <div className="absolute bottom-4 left-4 as-glass rounded-xl px-3 py-2 border border-white/10">
-                <span className="text-[11px] font-mono text-[#bcdcdb]">
-                  6 buoys · Reef Sanctuary North
-                </span>
-              </div>
-            </div>
-
-            {/* side stats */}
-            <div className="grid grid-cols-2 gap-3">
-              <StatTile label="Water Quality Index" value="Good" tone="ok" />
-              <StatTile label="Active Alerts" value="2" tone="warn" />
-              <StatTile label="Device Health" value="99.1%" tone="ok" />
-              <StatTile label="Wind" value="14 kt" tone="neutral" />
-              <div className="col-span-2 as-card rounded-xl p-4">
-                <div className="text-[11.5px] font-mono text-[#7fa3a6] mb-3">
-                  7-DAY DISSOLVED OXYGEN
-                </div>
-                <svg viewBox="0 0 200 50" className="w-full h-12">
-                  <polyline
-                    points="0,35 25,30 50,32 75,20 100,25 125,15 150,22 175,12 200,18"
-                    fill="none"
-                    stroke="#4CE0D2"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-              <div className="col-span-2 as-card rounded-xl p-4">
-                <div className="text-[11.5px] font-mono text-[#7fa3a6] mb-2">
-                  NOTIFICATIONS
-                </div>
-                <div className="text-[12.5px] text-[#e2f4f2]">
-                  Turbidity rising — River Mouth Station
-                </div>
-                <div className="text-[11px] text-[#7fa3a6] mt-1">
-                  2 minutes ago
-                </div>
-              </div>
-            </div>
+          <div className="mt-10 flex flex-col sm:flex-row gap-4">
+            <PrimaryButton>
+              Launch Dashboard <ArrowRight size={16} />
+            </PrimaryButton>
+            <GhostButton>Explore Platform</GhostButton>
           </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
 
-function StatTile({ label, value, tone }) {
-  const toneMap = { ok: "#4CE0D2", warn: "#ff7a59", neutral: "#9fc5c9" };
-  return (
-    <div className="as-card rounded-xl p-4">
-      <div className="text-[11px] text-[#7fa3a6]">{label}</div>
-      <div
-        className="text-[19px] font-[Sora] font-semibold mt-1"
-        style={{ color: toneMap[tone] }}>
-        {value}
-      </div>
-    </div>
-  );
-}
-
-/* ============================== WORKFLOW ============================== */
-
-const WORKFLOW = [
-  "Smart Buoy",
-  "Sensors",
-  "Edge AI",
-  "Cloud Platform",
-  "Analytics",
-  "Live Dashboard",
-  "Smart Alerts",
-  "Conservation Decisions",
-];
-
-function WorkflowSection() {
-  return (
-    <section className="relative py-20">
-      <div className="max-w-7xl mx-auto px-6">
-        <SectionHeader
-          eyebrow="How It Works"
-          title="From raw signal to conservation action"
-          desc="Every reading travels the same path — sensed, processed, understood, and acted on."
-        />
-        <div className="relative">
-          <div className="hidden lg:block absolute top-6 left-0 right-0 h-px as-workflow-line" />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {WORKFLOW.map((step, i) => (
-              <Reveal
-                key={step}
-                delay={i * 90}
-                className="relative flex lg:flex-col items-center lg:items-start gap-4 lg:gap-0">
-                <div className="w-12 h-12 shrink-0 rounded-full as-glass border border-[#4CE0D2]/40 grid place-items-center relative z-10">
-                  <span className="text-[13px] font-mono text-[#4CE0D2]">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                </div>
-                <div className="lg:mt-5">
-                  <h3 className="font-[Sora] font-semibold text-[15px] text-[#eaf6f6]">
-                    {step}
-                  </h3>
-                </div>
-              </Reveal>
+          <div className="mt-14 flex items-center gap-8 flex-wrap">
+            {[
+              ["ESP32", Cpu],
+              ["Supabase", Database],
+              ["Solar", Sun],
+              ["GPS", MapPin],
+            ].map(([label, Icon]) => (
+              <div
+                key={label}
+                className="flex items-center gap-2"
+                style={{ color: C.textSub }}>
+                <Icon size={16} style={{ color: C.accent }} />
+                <span className="text-xs tracking-wide">{label}</span>
+              </div>
             ))}
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ============================== BENEFITS ============================== */
-
-const BENEFITS = [
-  [
-    "Marine Sanctuaries",
-    "Continuous ecosystem baselines without added field staff.",
-  ],
-  ["Coral Reefs", "Early thermal-stress warnings ahead of bleaching events."],
-  [
-    "Mangrove Ecosystems",
-    "Sediment and salinity tracking across tidal cycles.",
-  ],
-  ["Fisheries", "Stock-relevant water conditions logged automatically."],
-  ["Aquaculture", "Real-time alerts on oxygen and temperature swings."],
-  [
-    "Environmental Agencies",
-    "Defensible, timestamped data for enforcement and reporting.",
-  ],
-  ["Local Government Units", "A shared source of truth across jurisdictions."],
-  [
-    "Universities & Researchers",
-    "Open, structured datasets for long-term studies.",
-  ],
-  [
-    "Coastal Communities",
-    "Transparent, public-facing water safety information.",
-  ],
-  [
-    "Disaster Response Teams",
-    "Faster situational awareness during severe weather.",
-  ],
-];
-
-const OUTCOMES = [
-  ["Faster response times", "62%"],
-  ["Lower operational cost", "3.4x"],
-  ["Continuous monitoring", "24/7"],
-  ["Detection accuracy", "98.6%"],
-];
-
-function BenefitsSection() {
-  return (
-    <section id="benefits" className="relative py-20 as-section-alt">
-      <div className="max-w-7xl mx-auto px-6">
-        <SectionHeader
-          eyebrow="Who It's For"
-          title="Built for everyone protecting the water"
-        />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-16">
-          {BENEFITS.map((b, i) => (
-            <Reveal
-              key={b[0]}
-              delay={i * 55}
-              className="as-card rounded-2xl p-5">
-              <h3 className="font-[Sora] font-semibold text-[14.5px] text-[#eaf6f6]">
-                {b[0]}
-              </h3>
-              <p className="mt-2 text-[12.5px] leading-relaxed text-[#93b7ba]">
-                {b[1]}
-              </p>
-            </Reveal>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {OUTCOMES.map(([label, val], i) => (
-            <Reveal key={label} delay={i * 80} className="text-center">
-              <div className="font-mono text-[30px] sm:text-[36px] font-semibold as-gradient-text">
-                {val}
-              </div>
-              <div className="mt-2 text-[13px] text-[#9fc5c9]">{label}</div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ============================== WHY AQUASENSE (COMPARISON) ============================== */
-
-const COMPARISON = [
-  ["Coverage", "Scheduled site visits", "Continuous, 24/7"],
-  ["Response time", "Days to weeks", "Seconds to minutes"],
-  [
-    "Data granularity",
-    "Point-in-time samples",
-    "Continuous streams, 27 parameters",
-  ],
-  [
-    "Cost over time",
-    "Recurring field labor",
-    "One deployment, low maintenance",
-  ],
-  ["Insight", "Manual analysis", "AI-driven forecasting & recommendations"],
-];
-
-function ComparisonSection() {
-  return (
-    <section className="relative py-20">
-      <div className="max-w-7xl mx-auto px-6">
-        <SectionHeader
-          eyebrow="Why AquaSense AI"
-          title="Beyond manual monitoring"
-          desc="Autonomous operation and AI-driven insight close the gap that traditional methods can't."
-        />
-        <Reveal className="as-card rounded-2xl overflow-hidden">
-          <div className="grid grid-cols-3 text-[12.5px] font-mono uppercase tracking-wide text-[#7fa3a6] px-6 py-4 border-b border-white/8">
-            <span>Criteria</span>
-            <span>Traditional Monitoring</span>
-            <span className="text-[#4CE0D2]">AquaSense AI</span>
-          </div>
-          {COMPARISON.map(([c, trad, us]) => (
-            <div
-              key={c}
-              className="grid grid-cols-3 px-6 py-4 border-b border-white/6 last:border-0 text-[13.5px]">
-              <span className="font-medium text-[#eaf6f6]">{c}</span>
-              <span className="text-[#93b7ba]">{trad}</span>
-              <span className="text-[#bfeee8] font-medium">{us}</span>
-            </div>
-          ))}
         </Reveal>
       </div>
     </section>
   );
 }
 
-/* ============================== METRICS ============================== */
+function BackgroundVideo() {
+  return (
+    <div className="absolute inset-0 overflow-hidden">
+      <video
+        className="absolute inset-0 h-full w-full object-cover"
+        src="/video/10779129-hd_1920_1080_25fps.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#03131f]/20 to-[#03131f]/80" />
+    </div>
+  );
+}
 
-function MetricsSection() {
-  const metrics = [
-    { to: 240, suffix: "+", label: "Marine reserves monitored" },
-    { to: 98.6, suffix: "%", decimals: 1, label: "AI detection accuracy" },
-    { to: 1800, suffix: "+", label: "Active sensors deployed" },
-    { to: 27, suffix: "", label: "Environmental parameters" },
-    { to: 15000, suffix: "+", label: "Real-time alerts delivered" },
+/* ------------------------------------------------------------------ */
+/*  TRUST / STATS                                                       */
+/* ------------------------------------------------------------------ */
+function StatCard({ value, suffix, label, decimals = 0 }) {
+  const [ref, visible] = useReveal(0.4);
+  const count = useCountUp(value, visible);
+  return (
+    <div
+      ref={ref}
+      className="px-8 py-10 border-t md:border-t-0 md:border-l first:border-l-0 first:border-t-0"
+      style={{ borderColor: C.border }}>
+      <div
+        className="text-4xl md:text-5xl font-semibold tabular-nums"
+        style={{ color: C.white, fontFamily: "'JetBrains Mono', monospace" }}>
+        {count.toFixed(decimals)}
+        <span style={{ color: C.accent }}>{suffix}</span>
+      </div>
+      <div className="mt-3 text-sm" style={{ color: C.textSub }}>
+        {label}
+      </div>
+    </div>
+  );
+}
+
+function Trust() {
+  return (
+    <section
+      className="border-y"
+      style={{ borderColor: C.border, background: C.surface }}>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20">
+        <Reveal>
+          <SectionHeading
+            coord="NETWORK STATUS"
+            title="Trusted Ocean Intelligence Platform"
+            align="center"
+          />
+        </Reveal>
+        <div className="mt-14 grid grid-cols-2 md:grid-cols-4">
+          <StatCard value={500} suffix="+" label="Active Smart Buoys" />
+          <StatCard value={24} suffix="/7" label="Real-Time Monitoring" />
+          <StatCard value={10} suffix="M+" label="Environmental Data Points" />
+          <StatCard
+            value={99.9}
+            suffix="%"
+            label="Cloud Availability"
+            decimals={1}
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  PLATFORM                                                            */
+/* ------------------------------------------------------------------ */
+function Platform() {
+  const items = [
+    [
+      "ESP32 Core",
+      Cpu,
+      "A low-power microcontroller reads every sensor onboard and pushes data the moment conditions change.",
+    ],
+    [
+      "Supabase Cloud",
+      Database,
+      "Every reading lands in a managed Postgres backend seconds after it's captured, ready to query.",
+    ],
+    [
+      "Solar Powered",
+      Sun,
+      "A marine-grade panel and battery bank keep each buoy running indefinitely without a service trip.",
+    ],
+    [
+      "GPS Tracking",
+      MapPin,
+      "Continuous position reporting keeps drifting units accounted for and easy to recover.",
+    ],
+    [
+      "Real-Time Sensors",
+      Activity,
+      "Temperature, pH, turbidity, salinity, and dissolved oxygen stream in on a shared clock.",
+    ],
+    [
+      "AI Analysis",
+      TrendingUp,
+      "Incoming readings are scored against historical patterns to flag what actually matters.",
+    ],
   ];
   return (
-    <section className="relative py-20 as-section-alt">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-8">
-          {metrics.map((m, i) => (
-            <Reveal key={m.label} delay={i * 70} className="text-center">
-              <div className="font-mono text-[28px] sm:text-[32px] font-semibold text-[#eaf6f6]">
-                <Counter
-                  to={m.to}
-                  suffix={m.suffix}
-                  decimals={m.decimals || 0}
+    <section id="platform" className="py-28" style={{ background: C.bg }}>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-16 items-center">
+        <Reveal>
+          <SectionHeading
+            coord="THE NETWORK"
+            title="The Next Generation Smart Buoy Network"
+            sub="A single NELEUS1 unit is a full monitoring station — sensing, positioning, powering, and reasoning about the water around it, then reporting back over a resilient cloud link."
+          />
+          <div className="mt-10 grid sm:grid-cols-2 gap-6">
+            {items.map(([title, Icon, desc]) => (
+              <div key={title} className="flex gap-3">
+                <Icon
+                  size={18}
+                  className="mt-0.5 shrink-0"
+                  style={{ color: C.accent }}
                 />
-              </div>
-              <div className="mt-2 text-[12.5px] text-[#9fc5c9] leading-snug">
-                {m.label}
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ============================== TESTIMONIALS ============================== */
-
-const TESTIMONIALS = [
-  {
-    quote:
-      "Continuous dissolved-oxygen data lets us catch stress events days before they'd show up in a manual sample.",
-    name: "Dr. A. Villanueva",
-    role: "Marine Biologist, Coral Research Institute",
-  },
-  {
-    quote:
-      "We finally have coverage across the whole reserve, not just the parts we can physically reach each month.",
-    name: "Engr. R. Santos",
-    role: "Sanctuary Manager, Coastal Protected Area",
-  },
-  {
-    quote:
-      "The forecasting models gave our team a two-day head start on the last bloom warning — that's the difference that matters.",
-    name: "Dr. L. Fontaine",
-    role: "Environmental Scientist, University Marine Lab",
-  },
-  {
-    quote:
-      "It's become our shared reference point across departments — one dataset everyone trusts.",
-    name: "Hon. M. Cruz",
-    role: "Environmental Officer, Local Government Unit",
-  },
-];
-
-function TestimonialsSection() {
-  return (
-    <section className="relative py-20">
-      <div className="max-w-7xl mx-auto px-6">
-        <SectionHeader
-          eyebrow="From the Field"
-          title="Trusted by the people protecting these waters"
-        />
-        <div className="grid sm:grid-cols-2 gap-5">
-          {TESTIMONIALS.map((t, i) => (
-            <Reveal
-              key={t.name}
-              delay={i * 80}
-              className="as-card rounded-2xl p-7">
-              <svg
-                viewBox="0 0 24 24"
-                className="w-6 h-6 text-[#4CE0D2]/50 mb-4"
-                fill="currentColor">
-                <path d="M7 6c-2.8 0-5 2.2-5 5 0 2.6 2 4.8 4.5 5v2c-3.9-.2-7-3.5-7-7.5C-.5 6.5 3 3 7 3v3Zm12 0c-2.8 0-5 2.2-5 5 0 2.6 2 4.8 4.5 5v2c-3.9-.2-7-3.5-7-7.5C11.5 6.5 15 3 19 3v3Z" />
-              </svg>
-              <p className="text-[15px] leading-relaxed text-[#e2f4f2]">
-                {t.quote}
-              </p>
-              <div className="mt-5 flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full as-icon-badge grid place-items-center text-[12px] font-semibold text-[#4CE0D2]">
-                  {t.name.split(" ").slice(-1)[0][0]}
-                </div>
                 <div>
-                  <div className="text-[13.5px] font-medium text-[#eaf6f6]">
-                    {t.name}
+                  <div
+                    className="text-sm font-medium"
+                    style={{ color: C.white }}>
+                    {title}
                   </div>
-                  <div className="text-[12px] text-[#7fa3a6]">{t.role}</div>
+                  <div
+                    className="text-xs mt-1 leading-relaxed"
+                    style={{ color: C.textSub }}>
+                    {desc}
+                  </div>
                 </div>
               </div>
-            </Reveal>
-          ))}
-        </div>
+            ))}
+          </div>
+        </Reveal>
+        <Reveal delay={150}>
+          <TelemetryGlobe />
+        </Reveal>
       </div>
     </section>
   );
 }
 
-/* ============================== FAQ ============================== */
-
-const FAQS = [
-  [
-    "How is a buoy deployed?",
-    "Each unit ships pre-calibrated and anchors in place within a single-day field visit — no permanent infrastructure or diving required for standard installations.",
-  ],
-  [
-    "How much maintenance does it need?",
-    "Solar charging and self-cleaning sensor housings keep unattended runtime to roughly 6–12 months between service visits, depending on biofouling conditions.",
-  ],
-  [
-    "What does the AI actually do?",
-    "It cleans and cross-references incoming sensor data, flags anomalies against historical baselines, forecasts short-term risk, and drafts recommended actions for your team to review.",
-  ],
-  [
-    "What can the sensors measure?",
-    "Water temperature, dissolved oxygen, pH, salinity, turbidity, conductivity, water level, wave height, tide, plus weather variables and AI camera-based detection.",
-  ],
-  [
-    "How does it stay connected?",
-    "Buoys sync over cellular networks where available, with satellite uplink as a fallback in remote or offshore deployments.",
-  ],
-  [
-    "How is it powered?",
-    "A solar array with battery buffering keeps the system running continuously, including through extended overcast periods.",
-  ],
-  [
-    "Can it survive storms and rough seas?",
-    "The housing is rated for sustained marine exposure and high sea states, with a stabilized hull designed to keep sensors submerged correctly in swell.",
-  ],
-  [
-    "What area can one buoy cover?",
-    "Each unit reports hyper-local conditions at its anchor point; sanctuaries typically deploy a cluster to build a coverage map across key zones.",
-  ],
-];
-
-function FAQItem({ q, a, isOpen, onClick }) {
+/* ------------------------------------------------------------------ */
+/*  FEATURES (alternating)                                              */
+/* ------------------------------------------------------------------ */
+function FeaturePanel({ label }) {
+  const maps = {
+    monitoring: [
+      ["Water Temp", Thermometer, "18.4°C"],
+      ["pH Level", Droplet, "8.1"],
+      ["Turbidity", Waves, "3.2 NTU"],
+      ["Dissolved O₂", Activity, "6.7 mg/L"],
+      ["Salinity", Gauge, "34.5 PSU"],
+      ["Signal", Radio, "Strong"],
+    ],
+    ai: [
+      ["Fish Activity", Fish, "High"],
+      ["Water Quality", Gauge, "92 / 100"],
+      ["Weather Shift", CloudRain, "Incoming"],
+      ["Risk Level", ShieldAlert, "Low"],
+    ],
+    dashboard: [
+      ["Charts", BarChart3],
+      ["Map View", MapIcon],
+      ["Alerts", Bell],
+      ["Reports", FileText],
+    ],
+    cloud: [
+      ["ESP32 Link", Cpu],
+      ["Supabase Sync", Database],
+      ["Notifications", Bell],
+      ["Instant Sync", Zap],
+    ],
+  };
+  const rows = maps[label];
   return (
-    <Reveal className="as-card rounded-2xl overflow-hidden">
-      <button
-        onClick={onClick}
-        className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left">
-        <span className="text-[15px] font-medium text-[#eaf6f6]">{q}</span>
-        <Icon.chevron
-          className={`w-4.5 h-4.5 text-[#4CE0D2] shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}
-        />
-      </button>
+    <div
+      className="p-8 border"
+      style={{ borderColor: C.border, background: C.surface }}>
+      <div className="grid grid-cols-2 gap-4">
+        {rows.map((row) => {
+          const [name, Icon, val] = row;
+          return (
+            <div
+              key={name}
+              className="flex items-center gap-3 px-4 py-4 border"
+              style={{ borderColor: C.border, background: C.bg }}>
+              <Icon size={16} style={{ color: C.accent }} />
+              <div className="min-w-0">
+                <div className="text-[11px]" style={{ color: C.textSub }}>
+                  {name}
+                </div>
+                {val && (
+                  <div
+                    className="text-sm font-medium truncate"
+                    style={{
+                      color: C.white,
+                      fontFamily: "'JetBrains Mono', monospace",
+                    }}>
+                    {val}
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function FeatureRow({ coord, title, desc, panel, reverse }) {
+  return (
+    <Reveal
+      className={`grid lg:grid-cols-2 gap-14 items-center py-20 border-b`}>
       <div
-        className={`grid transition-all duration-300 ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
-        <div className="overflow-hidden">
-          <p className="px-6 pb-5 text-[13.5px] leading-relaxed text-[#93b7ba]">
-            {a}
-          </p>
-        </div>
+        style={{ borderColor: C.border }}
+        className={reverse ? "lg:order-2" : ""}>
+        <Coord>{coord}</Coord>
+        <h3
+          className="text-2xl md:text-3xl font-semibold tracking-tight"
+          style={{ color: C.white }}>
+          {title}
+        </h3>
+        <p
+          className="mt-5 text-base leading-relaxed max-w-md"
+          style={{ color: C.textSub }}>
+          {desc}
+        </p>
+      </div>
+      <div className={reverse ? "lg:order-1" : ""}>
+        <FeaturePanel label={panel} />
       </div>
     </Reveal>
   );
 }
 
-function FAQSection() {
-  const [open, setOpen] = useState(0);
+function Features() {
   return (
-    <section id="faq" className="relative py-20 as-section-alt">
-      <div className="max-w-4xl mx-auto px-6">
-        <SectionHeader
-          eyebrow="Questions"
-          title="Everything you need to know"
-        />
-        <div className="space-y-3">
-          {FAQS.map(([q, a], i) => (
-            <FAQItem
-              key={q}
-              q={q}
-              a={a}
-              isOpen={open === i}
-              onClick={() => setOpen(open === i ? -1 : i)}
-            />
-          ))}
+    <section id="features" className="py-8" style={{ background: C.bg }}>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+        <Reveal>
+          <SectionHeading
+            coord="CAPABILITIES"
+            title="Everything a Coastal Monitoring Team Needs"
+          />
+        </Reveal>
+        <div className="mt-6" style={{ borderColor: C.border }}>
+          <FeatureRow
+            coord="FEATURE 01 · MONITORING"
+            title="Real-Time Monitoring"
+            desc="Live sensor data on temperature, pH, turbidity, dissolved oxygen, salinity, GPS position, battery, and signal strength — refreshed continuously, not on a delay."
+            panel="monitoring"
+          />
+          <FeatureRow
+            coord="FEATURE 02 · AI INSIGHTS"
+            title="AI Prediction Engine"
+            desc="Models trained on historical readings forecast fish activity, water quality trends, weather shifts, and emerging environmental risk before they escalate."
+            panel="ai"
+            reverse
+          />
+          <FeatureRow
+            coord="FEATURE 03 · DASHBOARD"
+            title="Interactive Dashboard"
+            desc="Charts, maps, historical analytics, alerts, and exportable reports — one interface for everything the network is seeing."
+            panel="dashboard"
+          />
+          <FeatureRow
+            coord="FEATURE 04 · CLOUD"
+            title="Cloud Connected"
+            desc="ESP32 hardware syncs straight to Supabase, so every reading and notification reaches your team the instant it happens."
+            panel="cloud"
+            reverse
+          />
         </div>
       </div>
     </section>
   );
 }
 
-/* ============================== FINAL CTA ============================== */
-
-function FinalCTA() {
+/* ------------------------------------------------------------------ */
+/*  DASHBOARD PREVIEW                                                   */
+/* ------------------------------------------------------------------ */
+function DashboardPreview() {
+  const buoys = [
+    { id: "NLS-014", loc: "Cebu Strait", temp: "27.8°C", status: "Nominal" },
+    { id: "NLS-022", loc: "Bohol Sea", temp: "28.3°C", status: "Nominal" },
+    { id: "NLS-031", loc: "Tañon Strait", temp: "26.9°C", status: "Alert" },
+  ];
+  const bars = [40, 65, 50, 80, 60, 90, 70, 55, 85, 62, 74, 48];
   return (
-    <section className="relative py-24 overflow-hidden">
-      <div className="as-cta-glow" aria-hidden />
-      <div className="max-w-3xl mx-auto px-6 text-center relative">
+    <section
+      id="monitoring"
+      className="py-28"
+      style={{ background: C.surface }}>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <Reveal>
-          <h2 className="font-[Sora] font-[750] text-[34px] sm:text-[44px] leading-tight tracking-tight text-[#f4fbfb]">
-            Start protecting your waters,{" "}
-            <span className="as-gradient-text">starting today</span>
-          </h2>
-          <p className="mt-5 text-[15.5px] text-[#a9cdd0] max-w-lg mx-auto leading-relaxed">
-            Sign in to the AquaSense AI platform to view live buoy data, review
-            AI recommendations, and manage your sanctuary's monitoring network.
-          </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Link
-              to="/login"
-              className="as-btn-primary rounded-full px-8 py-4 text-[15.5px] font-semibold inline-flex items-center gap-2 group">
-              Open Login Portal
-              <Icon.arrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-            </Link>
+          <SectionHeading
+            coord="LIVE PREVIEW"
+            title="One Dashboard, the Whole Coastline"
+            align="center"
+          />
+        </Reveal>
+
+        <Reveal delay={100}>
+          <div
+            className="mt-14 border"
+            style={{ borderColor: C.border, background: C.bg }}>
+            <div
+              className="flex items-center justify-between px-6 py-4 border-b"
+              style={{ borderColor: C.border }}>
+              <span className="text-sm font-medium" style={{ color: C.white }}>
+                Fleet Overview
+              </span>
+              <span
+                className="text-xs"
+                style={{
+                  color: C.textSub,
+                  fontFamily: "'JetBrains Mono', monospace",
+                }}>
+                SYNCED 2s AGO
+              </span>
+            </div>
+
+            <div
+              className="grid lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x"
+              style={{ borderColor: C.border }}>
+              {/* chart */}
+              <div
+                className="lg:col-span-2 p-6"
+                style={{ borderColor: C.border }}>
+                <div className="text-xs mb-4" style={{ color: C.textSub }}>
+                  Water Temperature — 12hr
+                </div>
+                <div className="flex items-end gap-2 h-40">
+                  {bars.map((h, i) => (
+                    <div
+                      key={i}
+                      className="flex-1"
+                      style={{
+                        height: `${h}%`,
+                        background:
+                          i === bars.length - 3 ? C.accent : `${C.secondary}88`,
+                      }}
+                    />
+                  ))}
+                </div>
+                <div className="mt-8 grid grid-cols-3 gap-4">
+                  {buoys.map((b) => (
+                    <div
+                      key={b.id}
+                      className="p-4 border"
+                      style={{ borderColor: C.border }}>
+                      <div className="flex items-center justify-between">
+                        <span
+                          className="text-xs font-medium"
+                          style={{
+                            color: C.white,
+                            fontFamily: "'JetBrains Mono', monospace",
+                          }}>
+                          {b.id}
+                        </span>
+                        <span
+                          className="h-2 w-2"
+                          style={{
+                            background:
+                              b.status === "Alert" ? "#FF6B6B" : C.accent,
+                          }}
+                        />
+                      </div>
+                      <div
+                        className="text-[11px] mt-2"
+                        style={{ color: C.textSub }}>
+                        {b.loc}
+                      </div>
+                      <div
+                        className="text-lg mt-1 font-semibold"
+                        style={{ color: C.white }}>
+                        {b.temp}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* side panel: map + alerts */}
+              <div className="p-6 flex flex-col gap-6">
+                <div>
+                  <div className="text-xs mb-3" style={{ color: C.textSub }}>
+                    Regional Map
+                  </div>
+                  <div
+                    className="h-32 border relative overflow-hidden"
+                    style={{ borderColor: C.border }}>
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background: `linear-gradient(135deg, ${C.primary}44, transparent)`,
+                      }}
+                    />
+                    {[
+                      [30, 40],
+                      [60, 65],
+                      [80, 30],
+                    ].map(([x, y], i) => (
+                      <span
+                        key={i}
+                        className="absolute h-2 w-2"
+                        style={{
+                          left: `${x}%`,
+                          top: `${y}%`,
+                          background: C.accent,
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xs mb-3" style={{ color: C.textSub }}>
+                    Active Alerts
+                  </div>
+                  <div className="space-y-2">
+                    <div
+                      className="flex items-center gap-2 text-xs"
+                      style={{ color: C.white }}>
+                      <Bell size={13} style={{ color: C.accent }} /> NLS-031
+                      turbidity spike
+                    </div>
+                    <div
+                      className="flex items-center gap-2 text-xs"
+                      style={{ color: C.textSub }}>
+                      <Bell size={13} /> Battery below 40% · NLS-009
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </Reveal>
       </div>
@@ -1704,304 +1134,469 @@ function FinalCTA() {
   );
 }
 
-/* ============================== FOOTER ============================== */
+/* ------------------------------------------------------------------ */
+/*  HOW IT WORKS                                                        */
+/* ------------------------------------------------------------------ */
+function HowItWorks() {
+  const steps = [
+    [
+      "Deploy Buoy",
+      Anchor,
+      "Lower the unit into position — solar panel up, sensor array submerged, GPS locked.",
+    ],
+    [
+      "Collect Data",
+      Activity,
+      "Onboard sensors sample continuously across temperature, chemistry, and motion.",
+    ],
+    [
+      "AI Processing",
+      Cpu,
+      "Readings are cleaned, scored, and compared against historical baselines in the cloud.",
+    ],
+    [
+      "Monitor Anywhere",
+      GlobeIcon,
+      "Your team watches the results live from the dashboard, on any device, anywhere.",
+    ],
+  ];
+  return (
+    <section className="py-28" style={{ background: C.bg }}>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+        <Reveal>
+          <SectionHeading
+            coord="OPERATIONS"
+            title="How NELEUS1 Works"
+            align="center"
+          />
+        </Reveal>
+        <div className="mt-16 grid md:grid-cols-4 gap-0 relative">
+          <div
+            className="hidden md:block absolute top-7 left-0 right-0 h-px"
+            style={{ background: C.border }}
+          />
+          {steps.map(([title, Icon, desc], i) => (
+            <Reveal key={title} delay={i * 100}>
+              <div className="px-6 relative">
+                <div
+                  className="h-14 w-14 flex items-center justify-center border relative z-10"
+                  style={{ background: C.bg, borderColor: C.border }}>
+                  <Icon size={22} style={{ color: C.accent }} />
+                </div>
+                <div
+                  className="mt-6 text-lg font-semibold"
+                  style={{ color: C.white }}>
+                  {title}
+                </div>
+                <p
+                  className="mt-2 text-sm leading-relaxed"
+                  style={{ color: C.textSub }}>
+                  {desc}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
+/* ------------------------------------------------------------------ */
+/*  TECH STACK                                                          */
+/* ------------------------------------------------------------------ */
+function TechStack() {
+  const techs = [
+    ["ESP32", Cpu],
+    ["Supabase", Database],
+    ["React", Zap],
+    ["Vite", Zap],
+    ["Tailwind CSS", Waves],
+    ["PostgreSQL", Server],
+    ["AI Analytics", TrendingUp],
+    ["Solar Power", Sun],
+    ["GPS", MapPin],
+    ["Cloud Sync", Cloud],
+  ];
+  return (
+    <section
+      id="technology"
+      className="py-28 border-y"
+      style={{ background: C.surface, borderColor: C.border }}>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+        <Reveal>
+          <SectionHeading
+            coord="STACK"
+            title="Built on Dependable Technology"
+            align="center"
+          />
+        </Reveal>
+        <div className="mt-14 grid grid-cols-2 sm:grid-cols-5">
+          {techs.map(([name, Icon], i) => (
+            <Reveal key={name} delay={i * 40}>
+              <div
+                className="flex flex-col items-center gap-3 py-8 border-t border-l"
+                style={{ borderColor: C.border }}>
+                <Icon size={22} style={{ color: C.accent }} />
+                <span
+                  className="text-xs tracking-wide"
+                  style={{ color: C.textSub }}>
+                  {name}
+                </span>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  AI INSIGHTS                                                         */
+/* ------------------------------------------------------------------ */
+function AIInsights() {
+  const cards = [
+    [
+      "Fish Activity",
+      Fish,
+      "Elevated",
+      "Schooling behavior detected near NLS-014 over the last 6 hours.",
+    ],
+    [
+      "Water Quality Score",
+      Gauge,
+      "92 / 100",
+      "Composite index across pH, oxygen, and turbidity readings.",
+    ],
+    [
+      "Risk Detection",
+      ShieldAlert,
+      "Low",
+      "No anomalies exceeding safety thresholds across the fleet.",
+    ],
+    [
+      "Weather Forecast",
+      CloudRain,
+      "Squall in 4h",
+      "Pressure drop pattern matches prior storm signatures.",
+    ],
+    [
+      "Maintenance",
+      Wrench,
+      "1 Unit Due",
+      "NLS-009 battery trending below service threshold.",
+    ],
+  ];
+  return (
+    <section id="ai-insights" className="py-28" style={{ background: C.bg }}>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+        <Reveal>
+          <SectionHeading
+            coord="AI ENGINE"
+            title="Predictions the Moment They Matter"
+            sub="NELEUS1 doesn't just report numbers — it interprets them, surfacing what a trained analyst would flag, continuously and at fleet scale."
+          />
+        </Reveal>
+        <div
+          className="mt-14 grid sm:grid-cols-2 lg:grid-cols-5 gap-px"
+          style={{ background: C.border }}>
+          {cards.map(([title, Icon, val, desc], i) => (
+            <Reveal key={title} delay={i * 60}>
+              <div className="p-6 h-full" style={{ background: C.surface }}>
+                <Icon size={18} style={{ color: C.accent }} />
+                <div className="text-xs mt-4" style={{ color: C.textSub }}>
+                  {title}
+                </div>
+                <div
+                  className="text-xl font-semibold mt-1"
+                  style={{ color: C.white }}>
+                  {val}
+                </div>
+                <p
+                  className="mt-3 text-xs leading-relaxed"
+                  style={{ color: C.textSub }}>
+                  {desc}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  BENEFITS                                                            */
+/* ------------------------------------------------------------------ */
+function Benefits() {
+  const items = [
+    ["Real-Time Monitoring", Activity],
+    ["AI Decision Support", Cpu],
+    ["Remote Access", GlobeIcon],
+    ["Smart Alerts", Bell],
+    ["Cloud Storage", Cloud],
+    ["Historical Analytics", BarChart3],
+    ["Fish Detection", Fish],
+    ["Weather Monitoring", CloudRain],
+    ["Environmental Protection", ShieldAlert],
+    ["Predictive Analytics", TrendingUp],
+  ];
+  return (
+    <section className="py-28" style={{ background: C.surface }}>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+        <Reveal>
+          <SectionHeading
+            coord="ADVANTAGE"
+            title="Why Choose NELEUS1"
+            align="center"
+          />
+        </Reveal>
+        <div
+          className="mt-14 grid sm:grid-cols-2 lg:grid-cols-5 border-t border-l"
+          style={{ borderColor: C.border }}>
+          {items.map(([label, Icon], i) => (
+            <Reveal key={label} delay={i * 40}>
+              <div
+                className="flex items-center gap-3 px-6 py-6 border-r border-b transition-colors duration-300 hover:bg-white/[0.03]"
+                style={{ borderColor: C.border }}>
+                <Icon size={16} style={{ color: C.accent }} />
+                <span className="text-sm" style={{ color: C.white }}>
+                  {label}
+                </span>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  APPLICATIONS                                                        */
+/* ------------------------------------------------------------------ */
+function Applications() {
+  const apps = [
+    [
+      "Commercial Fisheries",
+      Fish,
+      "Track conditions and fish activity to plan smarter, safer trips.",
+    ],
+    [
+      "Aquaculture",
+      Waves,
+      "Keep pens and farms within safe chemical and temperature ranges.",
+    ],
+    [
+      "Marine Research",
+      Activity,
+      "Continuous, citable data streams for long-term ocean studies.",
+    ],
+    [
+      "Government",
+      ShieldAlert,
+      "Coastal oversight and compliance monitoring at regional scale.",
+    ],
+    [
+      "Disaster Monitoring",
+      CloudRain,
+      "Early signals on pressure and temperature shifts before storms.",
+    ],
+    [
+      "Environmental Protection",
+      GlobeIcon,
+      "Detect pollution events and ecosystem stress as they develop.",
+    ],
+    [
+      "Education",
+      FileText,
+      "Live ocean data for classrooms and student research projects.",
+    ],
+  ];
+  return (
+    <section className="py-28" style={{ background: C.bg }}>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+        <Reveal>
+          <SectionHeading
+            coord="USE CASES"
+            title="Built for Every Coastal Stakeholder"
+            align="center"
+          />
+        </Reveal>
+        <div
+          className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-px"
+          style={{ background: C.border }}>
+          {apps.map(([title, Icon, desc], i) => (
+            <Reveal key={title} delay={i * 50}>
+              <div
+                className="p-7 h-full transition-colors duration-300 hover:bg-white/[0.03]"
+                style={{ background: C.surface }}>
+                <Icon size={20} style={{ color: C.accent }} />
+                <div
+                  className="mt-4 text-sm font-medium"
+                  style={{ color: C.white }}>
+                  {title}
+                </div>
+                <p
+                  className="mt-2 text-xs leading-relaxed"
+                  style={{ color: C.textSub }}>
+                  {desc}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  CTA                                                                 */
+/* ------------------------------------------------------------------ */
+function CTA() {
+  return (
+    <section
+      id="contact"
+      className="relative py-32 overflow-hidden"
+      style={{ background: C.surface }}>
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `radial-gradient(ellipse at 50% 0%, ${C.primary}44, transparent 65%)`,
+        }}
+      />
+      <div className="relative max-w-3xl mx-auto px-6 text-center">
+        <Reveal>
+          <Coord>DEPLOYMENT READY</Coord>
+          <h2
+            className="text-3xl md:text-5xl font-semibold tracking-tight"
+            style={{ color: C.white }}>
+            Ready to Modernize Coastal Monitoring?
+          </h2>
+          <p className="mt-5 text-base md:text-lg" style={{ color: C.textSub }}>
+            Put a NELEUS1 network in the water and start seeing what's happening
+            beneath the surface — today.
+          </p>
+          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+            <PrimaryButton>
+              Launch Dashboard <ArrowRight size={16} />
+            </PrimaryButton>
+            <GhostButton>Request Demo</GhostButton>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  FOOTER                                                              */
+/* ------------------------------------------------------------------ */
 function Footer() {
   return (
-    <footer className="relative border-t border-white/8 pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
-          <div>
-            <div className="flex items-center gap-2">
-              <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-                <path
-                  d="M12 2.5c3.6 4.6 7 8.7 7 12.4a7 7 0 1 1-14 0c0-3.7 3.4-7.8 7-12.4Z"
-                  stroke="#4CE0D2"
-                  strokeWidth="1.6"
-                />
-              </svg>
-              <span className="font-[Sora] font-semibold text-[#eaf6f6]">
-                AquaSense <span className="text-[#4CE0D2]">AI</span>
-              </span>
+    <footer style={{ background: C.bg, borderTop: `1px solid ${C.border}` }}>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 grid md:grid-cols-4 gap-12">
+        <div>
+          <div className="flex items-center gap-3">
+            <div
+              className="h-7 w-7 flex items-center justify-center"
+              style={{ background: C.accent }}>
+              <Anchor size={14} color="#03131F" />
             </div>
-            <p className="mt-4 text-[13px] text-[#7fa3a6] leading-relaxed max-w-xs">
-              AI-powered smart buoy monitoring for marine sanctuaries, coral
-              reefs, and protected coastal waters.
-            </p>
+            <span className="text-white font-semibold tracking-[0.15em] text-sm">
+              NELEUS<span style={{ color: C.accent }}>1</span>
+            </span>
           </div>
+          <p
+            className="mt-5 text-xs leading-relaxed max-w-xs"
+            style={{ color: C.textSub }}>
+            AI-powered smart buoy monitoring for coastal waters — sensing,
+            predicting, and reporting, continuously.
+          </p>
+        </div>
 
-          <FooterCol
-            title="Product"
-            links={[
-              ["Technology", "#technology"],
-              ["AI Intelligence", "#intelligence"],
-              ["Dashboard", "#dashboard"],
-              ["Benefits", "#benefits"],
-            ]}
-          />
-          <FooterCol
-            title="Company"
-            links={[
-              ["FAQ", "#faq"],
-              ["Login Portal", "/login"],
-            ]}
-            isRouter
-          />
-          <div>
-            <div className="text-[12.5px] font-mono uppercase tracking-wide text-[#7fa3a6] mb-4">
-              Contact
+        {[
+          {
+            title: "Navigation",
+            links: ["Home", "Platform", "Features", "Dashboard"],
+          },
+          {
+            title: "Resources",
+            links: ["Documentation", "Support", "API Reference", "Status"],
+          },
+          { title: "Company", links: ["Privacy", "Terms", "Contact"] },
+        ].map((col) => (
+          <div key={col.title}>
+            <div
+              className="text-xs tracking-[0.2em] uppercase"
+              style={{ color: C.white }}>
+              {col.title}
             </div>
-            <p className="text-[13.5px] text-[#bcdcdb]">hello@aquasense.ai</p>
-            <div className="flex gap-3 mt-4">
-              {["X", "in", "◎"].map((s) => (
-                <span
-                  key={s}
-                  className="w-8 h-8 rounded-full as-icon-badge grid place-items-center text-[11px] text-[#4CE0D2]">
-                  {s}
-                </span>
+            <div className="mt-5 flex flex-col gap-3">
+              {col.links.map((l) => (
+                <a
+                  key={l}
+                  href="#"
+                  className="text-xs transition-colors duration-300 hover:text-white"
+                  style={{ color: C.textSub }}>
+                  {l}
+                </a>
               ))}
             </div>
           </div>
-        </div>
-
-        <div className="mt-16 pt-6 border-t border-white/8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-[#6c9497]">
-          <span>
-            © {new Date().getFullYear()} AquaSense AI. All rights reserved.
-          </span>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-[#9fc5c9]">
-              Privacy Policy
+        ))}
+      </div>
+      <div
+        className="max-w-[1400px] mx-auto px-6 md:px-10 py-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-t"
+        style={{ borderColor: C.border }}>
+        <span className="text-[11px]" style={{ color: C.textSub }}>
+          © {new Date().getFullYear()} NELEUS1. All rights reserved.
+        </span>
+        <div className="flex gap-5">
+          {["Twitter", "LinkedIn", "GitHub"].map((s) => (
+            <a
+              key={s}
+              href="#"
+              className="text-[11px] transition-colors duration-300 hover:text-white"
+              style={{ color: C.textSub }}>
+              {s}
             </a>
-            <a href="#" className="hover:text-[#9fc5c9]">
-              Terms of Service
-            </a>
-          </div>
+          ))}
         </div>
       </div>
     </footer>
   );
 }
 
-function FooterCol({ title, links, isRouter }) {
-  return (
-    <div>
-      <div className="text-[12.5px] font-mono uppercase tracking-wide text-[#7fa3a6] mb-4">
-        {title}
-      </div>
-      <ul className="space-y-2.5">
-        {links.map(([label, href]) =>
-          isRouter && href.startsWith("/") ? (
-            <li key={label}>
-              <Link
-                to={href}
-                className="text-[13.5px] text-[#bcdcdb] hover:text-[#eaf6f6] transition-colors">
-                {label}
-              </Link>
-            </li>
-          ) : (
-            <li key={label}>
-              <a
-                href={href}
-                className="text-[13.5px] text-[#bcdcdb] hover:text-[#eaf6f6] transition-colors">
-                {label}
-              </a>
-            </li>
-          ),
-        )}
-      </ul>
-    </div>
-  );
-}
-
-/* ============================== GLOBAL STYLE ============================== */
-
-function GlobalStyle() {
-  return (
-    <style>{`
-      #as-root {
-        background: #051923;
-        color: #eaf6f6;
-        font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
-      }
-      .font-mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
-
-      .as-gradient-text {
-        background: linear-gradient(90deg, #4CE0D2, #7ff0d8 60%, #4CE0D2);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-      }
-
-      .as-hero-bg {
-        background:
-          radial-gradient(60% 50% at 80% 8%, rgba(76,224,210,0.14), transparent 60%),
-          radial-gradient(50% 40% at 15% 90%, rgba(255,122,89,0.08), transparent 60%),
-          linear-gradient(180deg, #051923 0%, #072530 55%, #0a2f3d 100%);
-      }
-      .as-section-alt { background: linear-gradient(180deg, transparent, rgba(255,255,255,0.02), transparent); }
-
-      .as-glass {
-        background: rgba(15, 42, 51, 0.55);
-        backdrop-filter: blur(18px);
-        -webkit-backdrop-filter: blur(18px);
-      }
-      .as-card {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.08);
-        transition: transform .35s ease, border-color .35s ease, background .35s ease;
-      }
-      .as-card-hover:hover {
-        transform: translateY(-4px);
-        border-color: rgba(76,224,210,0.35);
-        background: rgba(255,255,255,0.045);
-      }
-      .as-icon-badge {
-        background: rgba(76,224,210,0.12);
-        border: 1px solid rgba(76,224,210,0.25);
-      }
-
-      .as-btn-primary {
-        background: #4CE0D2;
-        color: #04141a;
-        transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
-        box-shadow: 0 8px 30px rgba(76,224,210,0.25);
-      }
-      .as-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(76,224,210,0.4); background: #66e8dc; }
-      .as-btn-ghost {
-        border: 1px solid rgba(255,255,255,0.18);
-        color: #eaf6f6;
-        transition: border-color .25s ease, background .25s ease;
-      }
-      .as-btn-ghost:hover { border-color: rgba(76,224,210,0.5); background: rgba(76,224,210,0.08); }
-
-      .as-reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1); }
-      .as-reveal-in { opacity: 1; transform: translateY(0); }
-
-      @keyframes as-float-kf { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-14px) rotate(0.6deg); } }
-      .as-float { animation: as-float-kf 6.5s ease-in-out infinite; }
-      @keyframes as-float-slow-kf { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-      .as-float-slow { animation: as-float-slow-kf 7s ease-in-out infinite; }
-
-      .as-reflection {
-        margin-top: -14px;
-        transform: scaleY(-1);
-        opacity: 0.16;
-        -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.6), transparent 65%);
-        mask-image: linear-gradient(180deg, rgba(0,0,0,0.6), transparent 65%);
-        filter: blur(1px);
-      }
-
-      @keyframes as-wave-kf-1 { 0% { transform: translateX(0); } 100% { transform: translateX(-33.333%); } }
-      @keyframes as-wave-kf-2 { 0% { transform: translateX(0); } 100% { transform: translateX(-33.333%); } }
-      .as-wave-1, .as-wave-2 { width: 200%; }
-      .as-wave-1 { animation: as-wave-kf-1 9s linear infinite; }
-      .as-wave-2 { animation: as-wave-kf-2 13s linear infinite reverse; }
-
-      .as-pulse-dot { animation: as-pulse-kf 2.4s ease-in-out infinite; }
-      @keyframes as-pulse-kf { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
-
-      .as-ping { animation: as-ping-kf 2.2s cubic-bezier(0,0,0.2,1) infinite; }
-      @keyframes as-ping-kf { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(2.4); opacity: 0; } }
-      .as-ping-slow { animation: as-ping-kf 3.4s cubic-bezier(0,0,0.2,1) infinite; }
-
-      .as-blink { animation: as-blink-kf 1.6s ease-in-out infinite; }
-      @keyframes as-blink-kf { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-      .as-particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-      .as-particle {
-        position: absolute;
-        width: 3px; height: 3px;
-        border-radius: 999px;
-        background: rgba(76,224,210,0.55);
-        left: calc(5% + (var(--i) * 4.3%));
-        top: 100%;
-        animation: as-particle-kf calc(9s + (var(--i) * 0.4s)) linear infinite;
-        animation-delay: calc(var(--i) * -0.6s);
-      }
-      @keyframes as-particle-kf {
-        0% { transform: translateY(0) translateX(0); opacity: 0; }
-        10% { opacity: 0.8; }
-        100% { transform: translateY(-110vh) translateX(20px); opacity: 0; }
-      }
-
-      .as-fade-swap { animation: as-fade-swap-kf .5s ease both; }
-      @keyframes as-fade-swap-kf { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-      .as-ai-glow {
-        position: absolute; inset: 0;
-        background: radial-gradient(45% 55% at 75% 40%, rgba(76,224,210,0.10), transparent 65%);
-        pointer-events: none;
-      }
-      .as-cta-glow {
-        position: absolute; inset: 0;
-        background: radial-gradient(60% 60% at 50% 30%, rgba(76,224,210,0.14), transparent 65%);
-        pointer-events: none;
-      }
-
-      .as-bars { display: flex; align-items: flex-end; gap: 3px; height: 44px; }
-      .as-bars span {
-        flex: 1;
-        background: linear-gradient(180deg, #4CE0D2, rgba(76,224,210,0.15));
-        height: var(--h);
-        border-radius: 2px;
-        animation: as-bar-kf 2.6s ease-in-out infinite;
-        animation-delay: var(--d);
-      }
-      @keyframes as-bar-kf { 0%,100% { opacity: 0.55; } 50% { opacity: 1; } }
-
-      .as-workflow-line {
-        background: repeating-linear-gradient(90deg, rgba(76,224,210,0.4) 0 10px, transparent 10px 18px);
-      }
-
-      .as-map-bg {
-        background:
-          radial-gradient(circle at 30% 30%, rgba(76,224,210,0.12), transparent 55%),
-          linear-gradient(135deg, #0a2f3d, #06202a 60%, #041219);
-      }
-      .as-map-bg::before {
-        content: '';
-        position: absolute; inset: 0;
-        background-image:
-          linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-        background-size: 34px 34px;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .as-float, .as-float-slow, .as-particle, .as-wave-1, .as-wave-2, .as-pulse-dot, .as-ping, .as-ping-slow, .as-blink, .as-bars span {
-          animation: none !important;
-        }
-        .as-reveal { transition: none; opacity: 1; transform: none; }
-      }
-    `}</style>
-  );
-}
-
-/* ============================== PAGE ============================== */
-
+/* ------------------------------------------------------------------ */
+/*  ROOT                                                                */
+/* ------------------------------------------------------------------ */
 export default function LandingPage() {
-  useInjectFonts();
   return (
     <div
-      id="as-root"
-      className="min-h-screen antialiased selection:bg-[#4CE0D2]/30">
-      <GlobalStyle />
+      style={{ background: C.bg, fontFamily: "'Inter', sans-serif" }}
+      className="min-h-screen antialiased">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+        * { border-radius: 0 !important; }
+        html { scroll-behavior: smooth; }
+      `}</style>
       <Nav />
-      <main>
-        <Hero />
-        <ProblemSection />
-        <SolutionSection />
-        <FeatureShowcase />
-        <AISection />
-        <DashboardSection />
-        <WorkflowSection />
-        <BenefitsSection />
-        <ComparisonSection />
-        <MetricsSection />
-        <TestimonialsSection />
-        <FAQSection />
-        <FinalCTA />
-      </main>
+      <Hero />
+      <Trust />
+      <Platform />
+      <FisheriesSection />
+      <Features />
+      <DashboardPreview />
+      <HowItWorks />
+      <TechStack />
+      <AIInsights />
+      <Benefits />
+      <Applications />
+      <CTA />
       <Footer />
     </div>
   );

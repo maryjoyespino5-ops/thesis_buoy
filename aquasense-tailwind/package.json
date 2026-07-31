@@ -1,5 +1,5 @@
 {
-  "name": "aquasense-dashboard",
+  "name": "neleus1",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
@@ -8,16 +8,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.28.0",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-tabs": "^1.0.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "framer-motion": "^10.16.0",
+    "leaflet": "^1.9.4",
+    "leaflet-compass": "^1.5.6",
+    "leaflet-fullscreen": "^1.0.2",
+    "leaflet-measure": "^3.1.0",
     "lucide-react": "^0.294.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
+    "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.20.0",
     "recharts": "^2.8.0",
     "tailwind-merge": "^2.0.0"

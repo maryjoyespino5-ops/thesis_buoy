@@ -1,5 +1,5 @@
 <!-- path: README.md -->
-# AquaSense · AI Decision Support Dashboard
+# neleus1 · AI Decision Support Dashboard
 
 A production-ready React application with Tailwind CSS for coastal intelligence monitoring.
 
