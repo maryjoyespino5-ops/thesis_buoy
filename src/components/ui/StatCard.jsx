@@ -14,10 +14,10 @@ export function StatCard({ icon, value, label, trend, up, onClick }) {
       )}
     >
       <div className="flex items-center justify-between">
-        <span className="text-sm text-[#517b9d]">{label}</span>
+        <span className="text-xs text-[#517b9d]">{label}</span>
         {icon && <span className="text-xl text-[#267d9e] opacity-70">{icon}</span>}
       </div>
-      <div className="text-3xl font-semibold text-[#11364f] mt-1">{value}</div>
+      <div className="text-2xl font-semibold text-[#11364f] mt-1">{value}</div>
       {trend && (
         <div className="mt-1">
           <span className={cn(

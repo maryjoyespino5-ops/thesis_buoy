@@ -36,7 +36,7 @@ export function MetricCard({
           </span>
         )}
       </div>
-      <div className="text-lg font-semibold text-text-primary mt-0.5 leading-tight">
+      <div className="text-xl font-semibold text-text-primary mt-0.5 leading-tight">
         {value}
       </div>
       {trend && (

@@ -6,8 +6,8 @@ export function Hero({ title, subtitle, stats, children }) {
   return (
     <div className="hero">
       <div className="hero-left">
-        <h1>{title}</h1>
-        <p>{subtitle}</p>
+        <h1 className="text-3xl font-bold">{title}</h1>
+        <p className="text-sm">{subtitle}</p>
         {children}
       </div>
       {stats && (

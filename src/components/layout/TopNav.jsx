@@ -37,11 +37,11 @@ export function TopNav() {
           <Menu size={17} className="text-text-secondary" />
         </button>
         <nav aria-label="Breadcrumb" className="flex items-center gap-1.5">
-          <span className="text-[11px] font-medium text-text-primary">
+          <span className="text-sm font-medium text-text-primary">
             Dashboard
           </span>
-          <span className="text-text-muted text-[10px]">/</span>
-          <span className="text-[11px] text-text-muted">Overview</span>
+          <span className="text-text-muted text-xs">/</span>
+          <span className="text-sm text-text-muted">Overview</span>
         </nav>
       </div>
 
@@ -96,10 +96,10 @@ export function TopNav() {
                 {user?.name?.charAt(0) || "J"}
               </div>
               <div className="hidden lg:block text-left">
-                <p className="text-[11px] font-medium text-text-primary leading-none">
+                <p className="text-sm font-medium text-text-primary leading-none">
                   {user?.name?.split(" ")[0] || "John"}
                 </p>
-                <p className="text-[9px] text-text-muted leading-none mt-0.5">
+                <p className="text-xs text-text-muted leading-none mt-0.5">
                   {user?.role || "Admin"}
                 </p>
               </div>

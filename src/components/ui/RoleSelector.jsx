@@ -26,7 +26,7 @@ export function RoleSelector() {
           role="tab"
           aria-selected={currentRole === key}
           className={cn(
-            "px-2.5 py-1 rounded-md border text-[10px] font-medium transition-all",
+            "px-2.5 py-1 rounded-md border text-sm font-medium transition-all",
             "hover:bg-surface-muted",
             currentRole === key
               ? "bg-primary-500 text-white border-primary-500 shadow-sm"

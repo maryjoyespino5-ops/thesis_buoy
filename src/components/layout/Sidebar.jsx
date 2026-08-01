@@ -109,7 +109,7 @@ export function Sidebar() {
             to={item.path}
             onClick={() => setOpen(false)}
             className={cn(
-              "flex items-center gap-2.5 px-3 py-2 rounded-lg text-[11px] font-medium transition-all duration-200",
+              "flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200",
               "text-text-secondary hover:bg-surface-muted hover:text-text-primary",
               active && "bg-primary-50 text-primary-600 shadow-sm",
             )}>
@@ -152,10 +152,10 @@ export function Sidebar() {
           <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center shadow-sm">
             <Shield size={15} className="text-white" />
           </div>
-          <span className="text-[11px] font-bold text-text-primary tracking-tight">
+          <span className="text-sm font-bold text-text-primary tracking-tight">
             Nuleus1
           </span>
-          <span className="text-[9px] font-mono bg-primary-50 text-primary-600 px-1.5 py-0.5 rounded ml-auto">
+          <span className="text-xs font-mono bg-primary-50 text-primary-600 px-1.5 py-0.5 rounded ml-auto">
             v2.0
           </span>
         </div>
@@ -167,7 +167,7 @@ export function Sidebar() {
           {currentRole === "admin" &&
             adminFilteredGroups.map((group, gi) => (
               <div key={gi} className="mb-5">
-                <p className="text-[10px] font-semibold uppercase tracking-wider text-text-muted px-1 mb-2">
+                <p className="text-xs font-semibold uppercase tracking-wider text-text-muted px-1 mb-2">
                   {group.section}
                 </p>
                 {renderNavItems(group.items)}
@@ -175,7 +175,7 @@ export function Sidebar() {
             ))}
           {filteredGroups.map((group, gi) => (
             <div key={gi} className="mb-5">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-text-muted px-1 mb-2">
+              <p className="text-xs font-semibold uppercase tracking-wider text-text-muted px-1 mb-2">
                 {group.section}
               </p>
               {renderNavItems(group.items)}
@@ -188,7 +188,7 @@ export function Sidebar() {
           <NavLink
             to="/profile"
             onClick={() => setOpen(false)}
-            className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[11px] font-medium text-text-secondary hover:bg-surface-muted hover:text-text-primary transition-colors">
+            className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-text-secondary hover:bg-surface-muted hover:text-text-primary transition-colors">
             <User size={16} className="text-text-muted" />
             <span>Profile</span>
           </NavLink>
@@ -196,7 +196,7 @@ export function Sidebar() {
             onClick={() => {
               /* handle sign out */
             }}
-            className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[11px] font-medium text-text-secondary hover:bg-red-50 hover:text-red-600 transition-colors w-full">
+            className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-text-secondary hover:bg-red-50 hover:text-red-600 transition-colors w-full">
             <Shield size={16} className="text-text-muted" />
             <span>Sign Out</span>
           </button>

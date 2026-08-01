@@ -37,7 +37,7 @@ export function SearchInput({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="flex-1 bg-transparent border-none outline-none text-[11px] text-text-primary placeholder:text-text-placeholder"
+        className="flex-1 bg-transparent border-none outline-none text-sm text-text-primary placeholder:text-text-placeholder"
         aria-label={placeholder}
         {...props}
       />

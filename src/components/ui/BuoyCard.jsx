@@ -28,7 +28,7 @@ export function BuoyCard({
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-1.5">
           <span className={cn("w-2 h-2 rounded-full", status.color)} />
-          <span className="font-medium text-text-primary text-[11px] leading-tight">
+          <span className="font-medium text-text-primary text-sm leading-tight">
             {buoy.name}
           </span>
         </div>
@@ -37,12 +37,12 @@ export function BuoyCard({
         </Badge>
       </div>
 
-      <div className="flex items-center gap-1 text-[11px] text-text-muted mb-2">
+      <div className="flex items-center gap-1 text-sm text-text-muted mb-2">
         <MapPin size={11} />
         {buoy.coords}
       </div>
 
-      <div className="grid grid-cols-3 gap-1 text-[11px] mb-2">
+      <div className="grid grid-cols-3 gap-1 text-sm mb-2">
         <div className="flex justify-between px-1.5 py-0.5 bg-surface-muted/30 rounded">
           <span className="text-text-muted">Temp</span>
           <span className="font-medium text-text-primary">{buoy.temp}</span>
@@ -58,7 +58,7 @@ export function BuoyCard({
       </div>
 
       <div className="flex items-center justify-between pt-2 border-t border-border/30">
-        <div className="flex items-center gap-2 text-[10px] text-text-muted">
+        <div className="flex items-center gap-2 text-xs text-text-muted">
           <span className="flex items-center gap-0.5">
             <Battery size={9} /> {buoy.battery}
           </span>
