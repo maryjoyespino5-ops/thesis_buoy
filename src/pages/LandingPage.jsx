@@ -352,24 +352,34 @@ function CoralReef() {
     <section
       id="coral-reef"
       ref={ref}
-      className="relative py-20 overflow-hidden"
+      className="relative min-h-[500px] flex items-center overflow-hidden"
       style={{ background: C.bg }}>
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Background video */}
+      <div className="absolute inset-0">
+        <video
+          className="w-full h-full object-cover"
+          src="/video/coralreef.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
         <div
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(60% 50% at 80% 50%, rgba(0,180,160,0.08), transparent 50%)",
+              "linear-gradient(135deg, rgba(3,15,30,0.85) 0%, rgba(3,15,30,0.6) 40%, rgba(3,15,30,0.75) 100%)",
           }}
         />
       </div>
 
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      {/* Content overlay */}
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 w-full">
+        <div className="max-w-2xl">
           <Reveal>
             <div>
               <div className="text-xs uppercase tracking-wider text-[#00D4FF]">
-                CORAL REEF MONITORING
+                Coral Reef Monitoring
               </div>
               <h3
                 className="text-3xl md:text-4xl font-semibold mt-4"
@@ -412,26 +422,6 @@ function CoralReef() {
                   View Live Data
                 </button>
               </div>
-            </div>
-          </Reveal>
-
-          <Reveal delay={120}>
-            <div className="w-full h-[420px] md:h-[520px] relative">
-              <video
-                className="w-full h-full object-cover rounded-xl"
-                src="/video/coralreef.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
-              />
-              <div
-                className="absolute inset-0 rounded-xl"
-                style={{
-                  background:
-                    "linear-gradient(180deg, rgba(3,7,12,0.0), rgba(3,7,12,0.5))",
-                }}
-              />
             </div>
           </Reveal>
         </div>
