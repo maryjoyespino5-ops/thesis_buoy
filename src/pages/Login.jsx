@@ -219,7 +219,8 @@ export default function Login() {
           <div
             className="relative z-10 grid grid-cols-3 gap-6 pt-6 border-t"
             style={{ borderColor: C.border }}>
-            {[n              ["240+", "reserves"],
+            {[
+              ["240+", "reserves"],
               ["24/7", "uptime"],
               ["98.6%", "accuracy"],
             ].map(([n, l]) => (
