@@ -176,7 +176,7 @@ export default function Login() {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.6) 30%, rgba(255,255,255,0.0) 70%)",
+                "linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0.0) 50%)",
             }}
           />
           <div className="relative z-10 flex flex-col items-center gap-3">
@@ -196,7 +196,7 @@ export default function Login() {
             </h1>
             <p
               className="mt-4 text-sm leading-relaxed max-w-sm mx-auto"
-              style={{ color: "#5a7a8a" }}>
+              style={{ color: "#3a5a6a" }}>
               Sign in to view live buoy telemetry, AI insights, and
               conservation alerts across your monitored waters.
             </p>
@@ -209,7 +209,7 @@ export default function Login() {
               ].map((label) => (
                 <div key={label} className="flex items-center gap-3">
                   <div style={{ color: C.accent }}>✔</div>
-                  <div className="text-sm" style={{ color: "#03131F" }}>
+                  <div className="text-sm" style={{ color: "#1a2a3a" }}>
                     {label}
                   </div>
                 </div>
@@ -229,12 +229,12 @@ export default function Login() {
                 <div
                   className="text-sm font-medium"
                   style={{
-                    color: "#03131F",
+                    color: "#1a2a3a",
                     fontFamily: "'JetBrains Mono', monospace",
                   }}>
                   {n}
                 </div>
-                <div className="text-[11px] mt-1" style={{ color: "#5a7a8a" }}>
+                <div className="text-[11px] mt-1" style={{ color: "#3a5a6a" }}>
                   {l}
                 </div>
               </div>
