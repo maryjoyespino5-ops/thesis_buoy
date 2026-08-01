@@ -1396,7 +1396,6 @@ function AIInsights() {
           <SectionHeading
             coord="FEATURE 02 · AI INSIGHTS"
             title="AI Prediction Engine"
-            sub="Models trained on historical readings forecast fish activity, water quality trends, weather shifts, and emerging environmental risk before they escalate."
           />
         </Reveal>
         <div
