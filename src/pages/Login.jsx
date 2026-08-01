@@ -161,7 +161,7 @@ export default function Login() {
         {/* ============ LEFT — INFO PANEL ============ */}
         <div
           className="hidden lg:flex flex-col justify-between p-9 border-r relative overflow-hidden"
-          style={{ borderColor: C.border, background: "#ffffff" }}>
+          style={{ borderColor: C.border, background: "transparent" }}>
           {/* Video background for left panel */}
           <video
             className="absolute inset-0 w-full h-full object-cover"
@@ -171,11 +171,12 @@ export default function Login() {
             loop
             playsInline
           />
+          {/* White gradient only at top to make name.png visible over dark video */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.75) 50%, rgba(255,255,255,0.88) 100%)",
+                "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.6) 30%, rgba(255,255,255,0.0) 70%)",
             }}
           />
           <div className="relative z-10 flex flex-col items-center gap-3">
