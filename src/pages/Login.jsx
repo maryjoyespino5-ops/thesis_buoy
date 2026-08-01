@@ -147,6 +147,23 @@ export default function Login() {
         />
       </div>
 
+      {/* Background video */}
+      <video
+        className="absolute inset-0 w-full h-full object-cover"
+        src="/video/loginvideo.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(3,15,30,0.92) 0%, rgba(3,15,30,0.7) 50%, rgba(3,15,30,0.85) 100%)",
+        }}
+      />
+
       <Link
         to="/"
         className="fixed top-6 left-6 z-30 flex items-center gap-2 text-[13px] font-medium border px-4 py-2 transition-colors duration-300 hover:text-white"
