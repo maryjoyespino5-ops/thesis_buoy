@@ -73,19 +73,19 @@ export default function AICommandCenter() {
             <Brain size={18} className="text-primary-500" />
           </div>
           <div>
-            <h1 className="text-base font-bold text-text-primary tracking-tight">
+            <h1 className="text-3xl font-bold text-text-primary tracking-tight">
               AI Command Center
             </h1>
-            <p className="text-[10px] text-text-muted">
+            <p className="text-sm text-text-muted">
               Real-time intelligence · Risk assessment · Predictive analytics
             </p>
           </div>
         </div>
         <div className="flex gap-1.5">
-          <Button variant="ghost" size="sm" className="h-7 text-[10px] px-3">
+          <Button variant="ghost" size="sm" className="h-7 text-sm px-3">
             <FileText size={12} /> Report
           </Button>
-          <Button variant="primary" size="sm" className="h-7 text-[10px] px-3">
+          <Button variant="primary" size="sm" className="h-7 text-sm px-3">
             <Sparkles size={12} /> Analyze
           </Button>
         </div>
@@ -124,10 +124,10 @@ export default function AICommandCenter() {
               <Sparkles size={14} className="text-primary-500" />
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="text-sm font-semibold text-text-primary mb-0.5">
+              <h3 className="text-lg font-semibold text-text-primary mb-0.5">
                 AI Summary
               </h3>
-              <p className="text-[11px] text-text-secondary leading-relaxed">
+              <p className="text-sm text-text-secondary leading-relaxed">
                 Conditions stable across all buoys. Water quality:{" "}
                 <strong className="text-text-primary">Good</strong>. Slight
                 turbidity increase at Buoy 03 within limits.
@@ -143,7 +143,7 @@ export default function AICommandCenter() {
       {/* Risk Assessment */}
       <div>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2.5">
-          <h2 className="text-sm font-semibold text-text-primary flex items-center gap-1.5">
+          <h2 className="text-2xl font-semibold text-text-primary flex items-center gap-1.5">
             <Target size={14} className="text-primary-500" />
             Risk Assessment
           </h2>
@@ -153,7 +153,7 @@ export default function AICommandCenter() {
                 key={f}
                 onClick={() => setRiskFilter(f)}
                 className={cn(
-                  "px-2 py-0.5 rounded text-[9px] font-medium transition-colors",
+                  "px-2 py-0.5 rounded text-sm font-medium transition-colors",
                   riskFilter === f
                     ? "bg-primary-500 text-white"
                     : "bg-surface border border-border/50 text-text-secondary hover:bg-surface-muted",
@@ -175,12 +175,12 @@ export default function AICommandCenter() {
                     {r.label}
                   </span>
                   <span
-                    className="text-[10px] font-medium"
+                    className="text-sm font-medium"
                     style={{ color: r.color }}>
                     ● {r.level}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 text-[9px] text-text-muted mb-1.5">
+                <div className="flex items-center gap-2 text-xs text-text-muted mb-1.5">
                   <span>Confidence {r.confidence}</span>
                   <span>·</span>
                   <span className="flex items-center gap-0.5">
@@ -192,7 +192,7 @@ export default function AICommandCenter() {
                     {r.trend}
                   </span>
                 </div>
-                <p className="text-[10px] text-text-secondary line-clamp-2">
+                <p className="text-sm text-text-secondary line-clamp-2">
                   {r.desc}
                 </p>
                 {expandedRisk === i && (
@@ -200,14 +200,14 @@ export default function AICommandCenter() {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     className="mt-2 pt-2 border-t border-border/30">
-                    <p className="text-[9px] text-text-muted mb-1.5">
+                    <p className="text-xs text-text-muted mb-1.5">
                       Based on 12 sensors, historical patterns, and
                       environmental models.
                     </p>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-6 text-[9px] px-2"
+                      className="h-6 text-sm px-2"
                       onClick={(e) => {
                         e.stopPropagation();
                         navigate("/reports");
@@ -224,7 +224,7 @@ export default function AICommandCenter() {
 
       {/* Predictions */}
       <div>
-        <h2 className="text-sm font-semibold text-text-primary mb-2.5 flex items-center gap-1.5">
+        <h2 className="text-2xl font-semibold text-text-primary mb-2.5 flex items-center gap-1.5">
           <TrendingUp size={14} className="text-primary-500" />
           Predictions
         </h2>
@@ -232,13 +232,13 @@ export default function AICommandCenter() {
           {predictions.map((p, i) => (
             <Card key={i} className="text-center">
               <CardContent className="p-3">
-                <div className="text-[9px] text-text-muted uppercase tracking-wide">
+                <div className="text-xs text-text-muted uppercase tracking-wide">
                   {p.label}
                 </div>
                 <div className="text-base font-bold text-text-primary mt-0.5">
                   {p.val}
                 </div>
-                <div className="text-[9px] text-text-muted mt-0.5">
+                <div className="text-xs text-text-muted mt-0.5">
                   {p.desc}
                 </div>
               </CardContent>
@@ -249,7 +249,7 @@ export default function AICommandCenter() {
 
       {/* Recommendations */}
       <div>
-        <h2 className="text-sm font-semibold text-text-primary mb-2.5 flex items-center gap-1.5">
+        <h2 className="text-2xl font-semibold text-text-primary mb-2.5 flex items-center gap-1.5">
           <Lightbulb size={14} className="text-amber-500" />
           Recommendations
         </h2>
@@ -278,7 +278,7 @@ export default function AICommandCenter() {
                         {r.priority}
                       </Badge>
                     </div>
-                    <p className="text-[9px] text-text-muted">
+                    <p className="text-xs text-text-muted">
                       Reason: {r.reason}
                     </p>
                     {expandedRec === i && (
@@ -289,13 +289,13 @@ export default function AICommandCenter() {
                         <Button
                           variant="primary"
                           size="sm"
-                          className="h-6 text-[9px] px-2.5">
+                          className="h-6 text-sm px-2.5">
                           Schedule
                         </Button>
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-6 text-[9px] px-2.5">
+                          className="h-6 text-sm px-2.5">
                           Dismiss
                         </Button>
                       </motion.div>
@@ -332,17 +332,17 @@ export default function AICommandCenter() {
             <div className="grid grid-cols-2 gap-1.5">
               {sensorData.map((s, i) => (
                 <div key={i} className="bg-surface-muted/30 rounded-md p-2">
-                  <div className="text-[8px] font-medium uppercase tracking-wider text-text-muted">
+                  <div className="text-xs font-medium uppercase tracking-wider text-text-muted">
                     {s.label}
                   </div>
                   <div className="text-sm font-semibold text-text-primary">
                     {s.value}
                   </div>
                   <div className="flex items-center justify-between mt-0.5">
-                    <span className="text-[8px] text-text-muted">
+                    <span className="text-xs text-text-muted">
                       {s.range}
                     </span>
-                    <span className="text-[8px] font-medium text-primary-500">
+                    <span className="text-xs font-medium text-primary-500">
                       {s.contrib}
                     </span>
                   </div>
@@ -364,20 +364,20 @@ export default function AICommandCenter() {
               size={13}
               className="text-emerald-500 mt-0.5 flex-shrink-0"
             />
-            <div className="text-[10px]">
+            <div className="text-sm">
               <strong>Detected:</strong> Turbidity increase (3.1 NTU) at Buoy 02
             </div>
           </div>
           <div className="flex items-start gap-2.5">
             <Info size={13} className="text-primary-500 mt-0.5 flex-shrink-0" />
-            <div className="text-[10px]">
+            <div className="text-sm">
               <strong>Why:</strong> Sediment disturbance from recent rainfall.
               Sensor contribution: Turbidity (34%), DO (22%), pH (18%).
             </div>
           </div>
           <div className="flex items-start gap-2.5">
             <Zap size={13} className="text-amber-500 mt-0.5 flex-shrink-0" />
-            <div className="text-[10px]">
+            <div className="text-sm">
               <strong>Confidence:</strong> 94% · <strong>Impact:</strong>{" "}
               Moderate — monitor for algal bloom risk.
             </div>
@@ -387,7 +387,7 @@ export default function AICommandCenter() {
               size={13}
               className="text-primary-500 mt-0.5 flex-shrink-0"
             />
-            <div className="text-[10px]">
+            <div className="text-sm">
               <strong>Recommendation:</strong> Inspect Buoy 02 within 48 hours.
             </div>
           </div>
@@ -395,10 +395,10 @@ export default function AICommandCenter() {
             <Button
               variant="primary"
               size="sm"
-              className="h-7 text-[10px] px-3">
+              className="h-7 text-sm px-3">
               <Download size={12} /> Report
             </Button>
-            <Button variant="ghost" size="sm" className="h-7 text-[10px] px-3">
+            <Button variant="ghost" size="sm" className="h-7 text-sm px-3">
               Methodology
             </Button>
           </div>
