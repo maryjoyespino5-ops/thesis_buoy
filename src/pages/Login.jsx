@@ -205,7 +205,6 @@ export default function Login() {
           </div>
 
           <div className="mb-6">
-            <Coord>Sign In</Coord>
             <h2
               className="text-2xl font-semibold tracking-tight"
               style={{ color: C.white }}>
