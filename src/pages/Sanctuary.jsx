@@ -108,17 +108,17 @@ export default function Sanctuary() {
             <h1 className="text-3xl font-bold text-text-primary tracking-tight">
               Sanctuary Intelligence
             </h1>
-            <p className="text-xs text-text-muted">
+            <p className="text-sm text-text-muted">
               {stats.normal} normal · {stats.info} info · {stats.warning}{" "}
               warnings
             </p>
           </div>
         </div>
         <div className="flex gap-1.5">
-          <Button variant="ghost" size="sm" className="h-7 text-xs px-2.5">
+          <Button variant="ghost" size="sm" className="h-7 text-sm px-2.5">
             <Waves size={11} /> Sonar
           </Button>
-          <Button variant="primary" size="sm" className="h-7 text-xs px-2.5">
+          <Button variant="primary" size="sm" className="h-7 text-sm px-2.5">
             <Sparkles size={11} /> Analyze
           </Button>
         </div>
@@ -262,7 +262,7 @@ export default function Sanctuary() {
               key={f}
               onClick={() => setFilter(f)}
               className={cn(
-                "px-2.5 py-1 rounded-md text-xs font-medium transition-all",
+                "px-2.5 py-1 rounded-md text-sm font-medium transition-all",
                 filter === f
                   ? "bg-primary-500 text-white shadow-sm"
                   : "bg-surface border border-border/50 text-text-secondary hover:bg-surface-muted",
@@ -287,7 +287,7 @@ export default function Sanctuary() {
                   size={24}
                   className="text-text-muted mx-auto mb-1 opacity-30"
                 />
-                <div className="text-xs text-text-muted">No alerts found</div>
+                <div className="text-sm text-text-muted">No alerts found</div>
               </CardContent>
             </Card>
           ) : (
@@ -314,7 +314,7 @@ export default function Sanctuary() {
                           )}
                         />
                         <div>
-                          <span className="text-xs text-text-primary">
+                          <span className="text-sm text-text-primary">
                             {a.event}
                           </span>
                           <div className="flex items-center gap-2 text-xs text-text-muted">
@@ -352,7 +352,7 @@ export default function Sanctuary() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-6 text-xs px-2">
+                          className="h-6 text-sm px-2">
                           <Eye size={10} /> Details
                         </Button>
                       </div>
@@ -374,7 +374,7 @@ export default function Sanctuary() {
               Acoustic
             </span>
           </div>
-          <div className="text-xs text-text-muted mt-0.5">Normal</div>
+          <div className="text-sm text-text-muted mt-0.5">Normal</div>
         </div>
         <div className="bg-surface-muted/30 rounded-md p-2.5 text-center">
           <div className="flex items-center justify-center gap-1">
@@ -383,7 +383,7 @@ export default function Sanctuary() {
               Vessel
             </span>
           </div>
-          <div className="text-xs text-text-muted mt-0.5">No threats</div>
+          <div className="text-sm text-text-muted mt-0.5">No threats</div>
         </div>
         <div className="bg-surface-muted/30 rounded-md p-2.5 text-center">
           <div className="flex items-center justify-center gap-1">
@@ -392,7 +392,7 @@ export default function Sanctuary() {
               Hydrophone
             </span>
           </div>
-          <div className="text-xs text-text-muted mt-0.5">Operational</div>
+          <div className="text-sm text-text-muted mt-0.5">Operational</div>
         </div>
         <div className="bg-surface-muted/30 rounded-md p-2.5 text-center">
           <div className="flex items-center justify-center gap-1">
@@ -401,7 +401,7 @@ export default function Sanctuary() {
               Coverage
             </span>
           </div>
-          <div className="text-xs text-text-muted mt-0.5">92%</div>
+          <div className="text-sm text-text-muted mt-0.5">92%</div>
         </div>
       </div>
 

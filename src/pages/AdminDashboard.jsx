@@ -104,7 +104,7 @@ export default function AdminDashboard() {
                 <h1 className="text-3xl font-bold text-text-primary tracking-tight">
                   Good morning, {user?.name?.split(" ")[0] || "John"}
                 </h1>
-                <p className="text-xs text-text-muted">
+                <p className="text-sm text-text-muted">
                   {buoys.filter((b) => b.status === "green").length} healthy ·{" "}
                   {alerts.filter((a) => a.priority === "Critical").length}{" "}
                   critical alerts
@@ -211,7 +211,7 @@ export default function AdminDashboard() {
                 <p className="text-sm font-medium text-text-primary leading-tight">
                   {item.label}
                 </p>
-                <p className="text-xs text-text-muted">{item.desc}</p>
+                <p className="text-sm text-text-muted">{item.desc}</p>
               </div>
               <ArrowRight
                 size={14}
@@ -339,10 +339,10 @@ export default function AdminDashboard() {
                           : "bg-emerald-500"
                     }`}
                   />
-                  <span className="text-sm text-text-muted w-12 flex-shrink-0">
+                  <span className="text-xs text-text-muted w-12 flex-shrink-0">
                     {a.time}
                   </span>
-                  <span className="text-sm text-text-secondary flex-1 truncate">
+                  <span className="text-xs text-text-secondary flex-1 truncate">
                     {a.buoy} · {a.desc}
                   </span>
                   <Badge
@@ -396,7 +396,7 @@ export default function AdminDashboard() {
                     <p className="text-sm text-text-primary font-medium truncate leading-tight">
                       {m.task}
                     </p>
-                    <p className="text-xs text-text-muted">{m.buoy}</p>
+                    <p className="text-sm text-text-muted">{m.buoy}</p>
                   </div>
                   <Badge
                     variant={
@@ -463,10 +463,10 @@ export default function AdminDashboard() {
                         : "bg-emerald-500"
                   }`}
                 />
-                <span className="text-sm text-text-muted w-12 flex-shrink-0">
+                <span className="text-xs text-text-muted w-12 flex-shrink-0">
                   {a.time}
                 </span>
-                <span className="text-sm text-text-secondary flex-1 truncate">
+                <span className="text-xs text-text-secondary flex-1 truncate">
                   {a.event}
                 </span>
               </div>

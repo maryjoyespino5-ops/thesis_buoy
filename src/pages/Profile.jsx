@@ -110,7 +110,7 @@ export default function Profile() {
             <Button
               variant="primary"
               size="sm"
-              className="h-7 text-xs px-2.5"
+              className="h-7 text-sm px-2.5"
               onClick={() => setIsEditing(true)}>
               <Edit size={11} /> Edit Profile
             </Button>
@@ -119,14 +119,14 @@ export default function Profile() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-7 text-xs px-2.5"
+                className="h-7 text-sm px-2.5"
                 onClick={handleCancel}>
                 <X size={11} /> Cancel
               </Button>
               <Button
                 variant="primary"
                 size="sm"
-                className="h-7 text-xs px-2.5"
+                className="h-7 text-sm px-2.5"
                 onClick={handleSave}>
                 <Save size={11} /> Save
               </Button>
@@ -161,7 +161,7 @@ export default function Profile() {
                   Active
                 </Badge>
               </div>
-              <p className="text-xs text-text-muted">
+              <p className="text-sm text-text-muted">
                 {userData.department} · {userData.organization}
               </p>
             </div>
@@ -228,7 +228,7 @@ export default function Profile() {
                       className="w-full text-xs bg-surface-muted/50 border border-border/30 rounded px-1.5 py-0.5 text-text-primary outline-none focus:border-primary-400"
                     />
                   ) : (
-                    <div className="text-xs text-text-primary truncate">
+                    <div className="text-sm text-text-primary truncate">
                       {item.value}
                     </div>
                   )}
@@ -302,7 +302,7 @@ export default function Profile() {
           </CardTitle>
           <div className="flex items-center gap-2">
             <span className="text-xs text-text-muted">Last 24h</span>
-            <Button variant="ghost" size="sm" className="h-6 text-xs px-2">
+            <Button variant="ghost" size="sm" className="h-6 text-sm px-2">
               View All <ChevronRight size={10} />
             </Button>
           </div>
@@ -326,7 +326,7 @@ export default function Profile() {
                 <span className="text-xs text-text-muted w-12 flex-shrink-0">
                   {a.time}
                 </span>
-                <span className="text-xs text-text-secondary flex-1">
+                <span className="text-sm text-text-secondary flex-1">
                   {a.event}
                 </span>
                 <Badge

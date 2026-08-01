@@ -136,17 +136,17 @@ export default function Maintenance() {
             <h1 className="text-3xl font-bold text-text-primary tracking-tight">
               Maintenance
             </h1>
-            <p className="text-xs text-text-muted">
+            <p className="text-sm text-text-muted">
               {stats.pending} pending · {stats.scheduled} scheduled ·{" "}
               {stats.completed} completed
             </p>
           </div>
         </div>
         <div className="flex gap-1.5">
-          <Button variant="ghost" size="sm" className="h-7 text-xs px-2.5">
+          <Button variant="ghost" size="sm" className="h-7 text-sm px-2.5">
             <RefreshCw size={11} /> Sync
           </Button>
-          <Button variant="primary" size="sm" className="h-7 text-xs px-2.5">
+          <Button variant="primary" size="sm" className="h-7 text-sm px-2.5">
             <Plus size={11} /> New Task
           </Button>
         </div>
@@ -240,7 +240,7 @@ export default function Maintenance() {
               key={f}
               onClick={() => setStatusFilter(f)}
               className={cn(
-                "px-2.5 py-1 rounded-md text-xs font-medium transition-all",
+                "px-2.5 py-1 rounded-md text-sm font-medium transition-all",
                 statusFilter === f
                   ? "bg-primary-500 text-white shadow-sm"
                   : "bg-surface border border-border/50 text-text-secondary hover:bg-surface-muted",
@@ -255,7 +255,7 @@ export default function Maintenance() {
               key={f}
               onClick={() => setPriorityFilter(f)}
               className={cn(
-                "px-2 py-1 rounded-md text-xs font-medium transition-all",
+                "px-2 py-1 rounded-md text-sm font-medium transition-all",
                 priorityFilter === f
                   ? "bg-primary-500 text-white shadow-sm"
                   : "bg-surface border border-border/50 text-text-secondary hover:bg-surface-muted",
@@ -274,7 +274,7 @@ export default function Maintenance() {
               size={32}
               className="text-text-muted mx-auto mb-2 opacity-30"
             />
-            <div className="text-xs text-text-muted">
+            <div className="text-sm text-text-muted">
               No maintenance tasks found
             </div>
             <p className="text-sm text-text-muted mt-1">
@@ -342,14 +342,14 @@ export default function Maintenance() {
                         <Button
                           variant="primary"
                           size="sm"
-                          className="h-6 text-xs px-2 flex-1"
+                          className="h-6 text-sm px-2 flex-1"
                           onClick={() => handleComplete(m.id)}>
                           <Check size={8} /> Complete
                         </Button>
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-6 text-xs px-2 flex-1"
+                          className="h-6 text-sm px-2 flex-1"
                           onClick={() => handleSchedule(m.id)}>
                           <Calendar size={8} /> Schedule
                         </Button>
@@ -381,7 +381,7 @@ export default function Maintenance() {
             <Zap size={13} className="text-amber-500" />
             AI Maintenance Insights
           </CardTitle>
-          <Button variant="ghost" size="sm" className="h-6 text-xs px-2">
+          <Button variant="ghost" size="sm" className="h-6 text-sm px-2">
             View All <ArrowRight size={10} />
           </Button>
         </CardHeader>
@@ -396,7 +396,7 @@ export default function Maintenance() {
                 <p className="text-xs font-medium text-text-primary">
                   Battery replacement due
                 </p>
-                <p className="text-xs text-text-muted">
+                <p className="text-sm text-text-muted">
                   Buoy 04 · 2 days remaining
                 </p>
               </div>
@@ -407,7 +407,7 @@ export default function Maintenance() {
                 <p className="text-xs font-medium text-text-primary">
                   Sensor calibration predicted
                 </p>
-                <p className="text-xs text-text-muted">
+                <p className="text-sm text-text-muted">
                   Buoy 02 · 7 days from now
                 </p>
               </div>

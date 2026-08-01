@@ -187,7 +187,7 @@ export default function Settings() {
           <Button
             variant="primary"
             size="sm"
-            className="h-7 text-xs px-2.5"
+            className="h-7 text-sm px-2.5"
             onClick={handleSave}>
             <Save size={11} /> Save Changes
           </Button>
@@ -226,7 +226,7 @@ export default function Settings() {
                     <div className="text-[11px] font-medium text-text-primary leading-tight">
                       {section.title}
                     </div>
-                    <div className="text-xs text-text-muted">
+                    <div className="text-sm text-text-muted">
                       {section.description}
                     </div>
                   </div>
@@ -254,7 +254,7 @@ export default function Settings() {
                 className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
                 <div className="flex items-center gap-1.5">
                   <setting.icon size={12} className="text-text-muted" />
-                  <span className="text-xs text-text-primary">
+                  <span className="text-sm text-text-primary">
                     {setting.label}
                   </span>
                 </div>
@@ -292,7 +292,7 @@ export default function Settings() {
                 JSON · CSV · PDF
               </span>
             </div>
-            <Button variant="ghost" size="sm" className="h-6 text-xs px-2">
+            <Button variant="ghost" size="sm" className="h-6 text-sm px-2">
               <Download size={10} /> Export
             </Button>
           </div>
@@ -305,7 +305,7 @@ export default function Settings() {
                 Last: Today 14:00
               </span>
             </div>
-            <Button variant="ghost" size="sm" className="h-6 text-xs px-2">
+            <Button variant="ghost" size="sm" className="h-6 text-sm px-2">
               <Upload size={10} /> Backup
             </Button>
           </div>
@@ -318,7 +318,7 @@ export default function Settings() {
                 Restore all settings
               </span>
             </div>
-            <Button variant="danger" size="sm" className="h-6 text-xs px-2">
+            <Button variant="danger" size="sm" className="h-6 text-sm px-2">
               <AlertTriangle size={10} /> Reset
             </Button>
           </div>
@@ -346,7 +346,7 @@ export default function Settings() {
                 Extra security layer
               </span>
             </div>
-            <Button variant="primary" size="sm" className="h-6 text-xs px-2">
+            <Button variant="primary" size="sm" className="h-6 text-sm px-2">
               <Shield size={10} /> Enable
             </Button>
           </div>
@@ -359,7 +359,7 @@ export default function Settings() {
                 2 active sessions
               </span>
             </div>
-            <Button variant="ghost" size="sm" className="h-6 text-xs px-2">
+            <Button variant="ghost" size="sm" className="h-6 text-sm px-2">
               <Eye size={10} /> View
             </Button>
           </div>

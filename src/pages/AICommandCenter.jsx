@@ -76,7 +76,7 @@ export default function AICommandCenter() {
             <h1 className="text-3xl font-bold text-text-primary tracking-tight">
               AI Command Center
             </h1>
-            <p className="text-xs text-text-muted">
+            <p className="text-sm text-text-muted">
               Real-time intelligence · Risk assessment · Predictive analytics
             </p>
           </div>
@@ -278,7 +278,7 @@ export default function AICommandCenter() {
                         {r.priority}
                       </Badge>
                     </div>
-                    <p className="text-xs text-text-muted">
+                    <p className="text-sm text-text-muted">
                       Reason: {r.reason}
                     </p>
                     {expandedRec === i && (

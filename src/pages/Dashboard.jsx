@@ -194,7 +194,7 @@ export default function Dashboard() {
                 <p className="text-[11px] font-medium text-text-primary leading-tight">
                   {item.label}
                 </p>
-                <p className="text-xs text-text-muted">{item.desc}</p>
+                <p className="text-sm text-text-muted">{item.desc}</p>
               </div>
               <ArrowRight
                 size={11}
@@ -252,7 +252,7 @@ export default function Dashboard() {
                       <div className="text-sm font-bold text-text-primary leading-tight">
                         {s.value}
                       </div>
-                      <div className="text-xs text-text-muted">
+                      <div className="text-sm text-text-muted">
                         AI {s.contrib}
                       </div>
                     </div>
@@ -418,7 +418,7 @@ export default function Dashboard() {
                       <p className="text-[11px] font-medium text-text-primary truncate leading-tight">
                         {a.buoy}
                       </p>
-                      <p className="text-xs text-text-muted truncate">
+                      <p className="text-sm text-text-muted truncate">
                         {a.desc}
                       </p>
                     </div>
@@ -437,7 +437,7 @@ export default function Dashboard() {
                 <p className="text-[11px] text-text-muted">
                   No critical alerts
                 </p>
-                <p className="text-xs text-text-muted">
+                <p className="text-sm text-text-muted">
                   All systems operational
                 </p>
               </div>

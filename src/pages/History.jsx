@@ -105,16 +105,16 @@ export default function History() {
             <h1 className="text-3xl font-bold text-text-primary tracking-tight">
               Historical Analytics
             </h1>
-            <p className="text-xs text-text-muted">
+            <p className="text-sm text-text-muted">
               AI trend analysis · 6-month water quality
             </p>
           </div>
         </div>
         <div className="flex gap-1.5">
-          <Button variant="ghost" size="sm" className="h-7 text-xs px-2.5">
+          <Button variant="ghost" size="sm" className="h-7 text-sm px-2.5">
             <Download size={11} /> Export
           </Button>
-          <Button variant="primary" size="sm" className="h-7 text-xs px-2.5">
+          <Button variant="primary" size="sm" className="h-7 text-sm px-2.5">
             <BarChart3 size={11} /> Full Report
           </Button>
         </div>
@@ -254,7 +254,7 @@ export default function History() {
             <Calendar size={13} className="text-text-muted" />
             Milestones
           </CardTitle>
-          <Button variant="ghost" size="sm" className="h-6 text-xs px-2">
+          <Button variant="ghost" size="sm" className="h-6 text-sm px-2">
             View All <ArrowRight size={10} />
           </Button>
         </CardHeader>
@@ -277,7 +277,7 @@ export default function History() {
                 <span className="text-xs text-text-muted w-16 flex-shrink-0">
                   {m.date}
                 </span>
-                <span className="text-xs text-text-secondary flex-1">
+                <span className="text-sm text-text-secondary flex-1">
                   {m.event}
                 </span>
                 <Badge

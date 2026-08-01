@@ -146,13 +146,13 @@ export default function Reports() {
           </div>
         </div>
         <div className="flex gap-1.5">
-          <Button variant="ghost" size="sm" className="h-7 text-xs px-2.5">
+          <Button variant="ghost" size="sm" className="h-7 text-sm px-2.5">
             <PieChart size={11} /> Analytics
           </Button>
           <Button
             variant="primary"
             size="sm"
-            className="h-7 text-xs px-2.5"
+            className="h-7 text-sm px-2.5"
             loading={generating}
             onClick={handleGenerate}>
             <Sparkles size={11} /> {generating ? "Generating..." : "New Report"}
@@ -245,7 +245,7 @@ export default function Reports() {
         <Button
           variant="ghost"
           size="sm"
-          className="h-7 text-xs px-2.5 sm:ml-auto">
+          className="h-7 text-sm px-2.5 sm:ml-auto">
           <Filter size={11} /> Sort
         </Button>
       </div>
@@ -258,7 +258,7 @@ export default function Reports() {
               size={32}
               className="text-text-muted mx-auto mb-2 opacity-30"
             />
-            <div className="text-xs text-text-muted">No reports found</div>
+            <div className="text-sm text-text-muted">No reports found</div>
             <p className="text-sm text-text-muted mt-1">
               Try adjusting your search or filters
             </p>
@@ -338,13 +338,13 @@ export default function Reports() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-6 text-xs px-2">
+                          className="h-6 text-sm px-2">
                           <Eye size={10} /> View
                         </Button>
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-6 text-xs px-2">
+                          className="h-6 text-sm px-2">
                           <Download size={10} /> PDF
                         </Button>
                       </div>

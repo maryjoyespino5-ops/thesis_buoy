@@ -137,7 +137,7 @@ export default function LiveMonitoring() {
             <h1 className="text-3xl font-bold text-text-primary tracking-tight">
               Live Monitoring
             </h1>
-            <p className="text-xs text-text-muted">
+            <p className="text-sm text-text-muted">
               {stats.online} online · {stats.warning} warning · {stats.critical}{" "}
               critical
             </p>
@@ -158,11 +158,11 @@ export default function LiveMonitoring() {
           <Button
             variant="ghost"
             size="sm"
-            className="h-7 text-xs px-2.5"
+            className="h-7 text-sm px-2.5"
             onClick={handleRefresh}>
             <RefreshCw size={11} className={cn(!isLive && "animate-spin")} />
           </Button>
-          <Button variant="primary" size="sm" className="h-7 text-xs px-2.5">
+          <Button variant="primary" size="sm" className="h-7 text-sm px-2.5">
             <Zap size={11} /> Connect All
           </Button>
         </div>
@@ -270,7 +270,7 @@ export default function LiveMonitoring() {
         <Button
           variant="ghost"
           size="sm"
-          className="h-7 text-xs px-2.5 sm:ml-auto">
+          className="h-7 text-sm px-2.5 sm:ml-auto">
           <Filter size={11} /> More
         </Button>
       </div>
@@ -283,7 +283,7 @@ export default function LiveMonitoring() {
               size={32}
               className="text-text-muted mx-auto mb-2 opacity-30"
             />
-            <div className="text-xs text-text-muted">No buoys found</div>
+            <div className="text-sm text-text-muted">No buoys found</div>
             <p className="text-sm text-text-muted mt-1">
               Try adjusting your search or filter
             </p>
@@ -317,7 +317,7 @@ export default function LiveMonitoring() {
               <Activity size={13} className="text-primary-500" />
               Recent Activity
             </CardTitle>
-            <span className="text-xs text-text-muted">
+            <span className="text-sm text-text-muted">
               Last {recentActivities.length} events
             </span>
           </CardHeader>
@@ -345,7 +345,7 @@ export default function LiveMonitoring() {
                   <span className="text-xs font-medium text-text-primary w-14 flex-shrink-0">
                     {a.buoy}
                   </span>
-                  <span className="text-xs text-text-secondary flex-1 truncate">
+                  <span className="text-sm text-text-secondary flex-1 truncate">
                     {a.event}
                   </span>
                   <Badge
@@ -382,7 +382,7 @@ export default function LiveMonitoring() {
           <CardContent className="px-3.5 pb-3.5">
             <div className="space-y-2">
               <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
-                <span className="text-xs text-text-muted flex items-center gap-1.5">
+                <span className="text-sm text-text-muted flex items-center gap-1.5">
                   <Wifi size={10} className="text-emerald-500" />
                   Network Connection
                 </span>
@@ -391,7 +391,7 @@ export default function LiveMonitoring() {
                 </span>
               </div>
               <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
-                <span className="text-xs text-text-muted flex items-center gap-1.5">
+                <span className="text-sm text-text-muted flex items-center gap-1.5">
                   <Signal size={10} className="text-emerald-500" />
                   Data Sync
                 </span>
@@ -400,7 +400,7 @@ export default function LiveMonitoring() {
                 </span>
               </div>
               <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
-                <span className="text-xs text-text-muted flex items-center gap-1.5">
+                <span className="text-sm text-text-muted flex items-center gap-1.5">
                   <Radio size={10} className="text-amber-500" />
                   Sensor Health
                 </span>
@@ -409,7 +409,7 @@ export default function LiveMonitoring() {
                 </span>
               </div>
               <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
-                <span className="text-xs text-text-muted flex items-center gap-1.5">
+                <span className="text-sm text-text-muted flex items-center gap-1.5">
                   <Clock size={10} className="text-primary-500" />
                   Last Update
                 </span>
