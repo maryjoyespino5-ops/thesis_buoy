@@ -13,7 +13,7 @@ import {
 } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
 import { Badge } from "../components/ui/Badge";
-import { BuoyCard } from "../components/ui/BuoyCard";
+
 import { TemperatureChart } from "../components/charts/TemperatureChart";
 import { DOChart } from "../components/charts/DOChart";
 import { RadarChartWidget } from "../components/charts/RadarChart";
@@ -35,7 +35,6 @@ import {
   Zap,
   Eye,
   TrendingUp,
-  Activity,
   ArrowRight,
   Clock,
   MapPin,
@@ -56,7 +55,6 @@ export default function AdminDashboard() {
   const { currentRole, hasPermission } = useRole();
   const navigate = useNavigate();
   const [buoys, setBuoys] = useState([]);
-  const [selectedBuoy, setSelectedBuoy] = useState(null);
   const [alertFilter, setAlertFilter] = useState("All");
 
   useEffect(() => {
@@ -275,30 +273,6 @@ export default function AdminDashboard() {
           </div>
         </CardContent>
       </Card>
-
-      {/* Compact Buoy Status */}
-      <div>
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="text-2xl font-semibold text-text-primary flex items-center gap-1.5">
-            <Activity size={14} className="text-ocean-500" />
-            Buoy Status
-          </h2>
-          <Badge variant="success" className="text-sm">
-            {buoys.filter((b) => b.status === "green").length} online
-          </Badge>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-          {buoys.slice(0, 5).map((buoy) => (
-            <BuoyCard
-              key={buoy.id}
-              buoy={buoy}
-              onView={(b) => setSelectedBuoy(b)}
-              onFish={(b) => navigate("/fish")}
-              compact
-            />
-          ))}
-        </div>
-      </div>
 
       {/* Compact Alerts & Maintenance */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
