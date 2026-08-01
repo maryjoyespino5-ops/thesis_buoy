@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRole } from "../hooks/useRole";
 import { useAuth } from "../hooks/useAuth";
 import { cn } from "../lib/utils";
+import { supabase } from "../lib/supabaseClient";
+import { toast } from "react-hot-toast";
 import {
   Shield,
   Building2,
@@ -180,6 +182,7 @@ export default function Login() {
   const [rememberMe, setRememberMe] = useState(false);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [authError, setAuthError] = useState(null);
 
   const validate = () => {
     const newErrors = {};
@@ -197,11 +200,31 @@ export default function Login() {
     e.preventDefault();
     if (!validate()) return;
     setIsLoading(true);
-    setTimeout(() => {
-      switchRole(selectedRole);
-      navigate(selectedRole === "admin" ? "/admin/dashboard" : "/dashboard");
+    setAuthError(null);
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      setAuthError(error.message);
       setIsLoading(false);
-    }, 1200);
+      toast.error(error.message);
+      return;
+    }
+
+    if (!data.user) {
+      setAuthError("No account found. Please check your credentials.");
+      setIsLoading(false);
+      toast.error("No account found.");
+      return;
+    }
+
+    switchRole(selectedRole);
+    navigate(selectedRole === "admin" ? "/admin/dashboard" : "/dashboard");
+    toast.success("Welcome back!");
+    setIsLoading(false);
   };
 
   return (
@@ -520,6 +543,19 @@ export default function Login() {
                   })}
                 </div>
               </div>
+
+              {/* Auth error */}
+              <AnimatePresence>
+                {authError && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="text-[#ff7a59] text-[11px] flex items-center gap-1.5" role="alert">
+                    <AlertCircle size={13} /> {authError}
+                  </motion.p>
+                )}
+              </AnimatePresence>
 
               {/* Sign in button */}
               <button
