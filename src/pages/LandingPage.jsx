@@ -412,16 +412,6 @@ function CoralReef() {
                 ))}
               </div>
 
-              <div className="mt-8 flex gap-4">
-                <button className="px-6 py-3 bg-[#00D4FF] text-[#03131F] font-medium">
-                  Learn More
-                </button>
-                <button
-                  className="px-6 py-3 border"
-                  style={{ borderColor: C.border, color: C.white }}>
-                  View Live Data
-                </button>
-              </div>
             </div>
           </Reveal>
         </div>
