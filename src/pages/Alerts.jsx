@@ -122,7 +122,7 @@ export default function Alerts() {
             <Bell size={17} className="text-red-500" />
           </div>
           <div>
-            <h1 className="text-base font-bold text-text-primary tracking-tight">
+            <h1 className="text-3xl font-bold text-text-primary tracking-tight">
               Alerts
             </h1>
             <p className="text-[11px] text-text-muted">
@@ -144,25 +144,25 @@ export default function Alerts() {
       <div className="grid grid-cols-4 gap-2">
         <div className="bg-surface rounded-lg border border-border/50 p-2.5 text-center">
           <div className="text-sm font-bold text-text-primary leading-tight">12</div>
-          <div className="text-[10px] text-text-muted uppercase tracking-wide">
+          <div className="text-xs text-text-muted uppercase tracking-wide">
             Total
           </div>
         </div>
         <div className="bg-red-50/50 rounded-lg border border-red-200/30 p-2.5 text-center">
           <div className="text-sm font-bold text-red-600 leading-tight">{criticalCount}</div>
-          <div className="text-[10px] text-red-500 uppercase tracking-wide">
+          <div className="text-xs text-red-500 uppercase tracking-wide">
             Critical
           </div>
         </div>
         <div className="bg-amber-50/50 rounded-lg border border-amber-200/30 p-2.5 text-center">
           <div className="text-sm font-bold text-amber-600 leading-tight">3</div>
-          <div className="text-[10px] text-amber-500 uppercase tracking-wide">
+          <div className="text-xs text-amber-500 uppercase tracking-wide">
             Warning
           </div>
         </div>
         <div className="bg-emerald-50/50 rounded-lg border border-emerald-200/30 p-2.5 text-center">
           <div className="text-sm font-bold text-emerald-600 leading-tight">5</div>
-          <div className="text-[10px] text-emerald-500 uppercase tracking-wide">
+          <div className="text-xs text-emerald-500 uppercase tracking-wide">
             Info
           </div>
         </div>
@@ -182,7 +182,7 @@ export default function Alerts() {
               key={f}
               onClick={() => setFilter(f)}
               className={cn(
-                "px-2.5 py-1 rounded-md text-[10px] font-medium transition-all",
+                "px-2.5 py-1 rounded-md text-sm font-medium transition-all",
                 filter === f
                   ? "bg-primary-500 text-white shadow-sm"
                   : "bg-surface border border-border/50 text-text-secondary hover:bg-surface-muted",
@@ -230,7 +230,7 @@ export default function Alerts() {
                           <span className="font-medium text-text-primary text-sm">
                             {a.buoy}
                           </span>
-                          <span className="text-[10px] text-text-muted flex items-center gap-0.5">
+                          <span className="text-xs text-text-muted flex items-center gap-0.5">
                             <Clock size={9} /> {a.time}
                           </span>
                           {a.acknowledged && (
@@ -256,14 +256,14 @@ export default function Alerts() {
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="h-6 text-[10px] px-2 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50"
+                            className="h-6 text-sm px-2 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50"
                             onClick={() => handleAcknowledge(a.id)}>
                             <Check size={10} /> Acknowledge
                           </Button>
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="h-6 text-[10px] px-2 text-red-600 hover:text-red-700 hover:bg-red-50"
+                            className="h-6 text-sm px-2 text-red-600 hover:text-red-700 hover:bg-red-50"
                             onClick={() => handleResolve(a.id)}>
                             <X size={10} /> Resolve
                           </Button>
@@ -273,7 +273,7 @@ export default function Alerts() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-6 text-[10px] px-2 text-red-600 hover:text-red-700 hover:bg-red-50"
+                          className="h-6 text-sm px-2 text-red-600 hover:text-red-700 hover:bg-red-50"
                           onClick={() => handleResolve(a.id)}>
                           <X size={10} /> Remove
                         </Button>
@@ -289,7 +289,7 @@ export default function Alerts() {
 
       {/* Footer Stats */}
       {filtered.length > 0 && (
-        <div className="flex items-center justify-between text-[10px] text-text-muted pt-1">
+        <div className="flex items-center justify-between text-xs text-text-muted pt-1">
           <span>
             Showing {filtered.length} of {alerts.length} alerts
           </span>

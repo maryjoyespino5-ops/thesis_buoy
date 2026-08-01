@@ -134,10 +134,10 @@ export default function LiveMonitoring() {
             <Satellite size={17} className="text-primary-500" />
           </div>
           <div>
-            <h1 className="text-base font-bold text-text-primary tracking-tight">
+            <h1 className="text-3xl font-bold text-text-primary tracking-tight">
               Live Monitoring
             </h1>
-            <p className="text-[10px] text-text-muted">
+            <p className="text-xs text-text-muted">
               {stats.online} online · {stats.warning} warning · {stats.critical}{" "}
               critical
             </p>
@@ -151,18 +151,18 @@ export default function LiveMonitoring() {
                 isLive ? "bg-emerald-500 animate-pulse" : "bg-gray-400",
               )}
             />
-            <span className="text-[9px] font-medium text-text-muted">
+            <span className="text-xs font-medium text-text-muted">
               {isLive ? "LIVE" : "Paused"}
             </span>
           </div>
           <Button
             variant="ghost"
             size="sm"
-            className="h-7 text-[9px] px-2.5"
+            className="h-7 text-xs px-2.5"
             onClick={handleRefresh}>
             <RefreshCw size={11} className={cn(!isLive && "animate-spin")} />
           </Button>
-          <Button variant="primary" size="sm" className="h-7 text-[9px] px-2.5">
+          <Button variant="primary" size="sm" className="h-7 text-xs px-2.5">
             <Zap size={11} /> Connect All
           </Button>
         </div>
@@ -171,7 +171,7 @@ export default function LiveMonitoring() {
       {/* Stats Row */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
         <div className="bg-surface rounded-lg border border-border/50 p-2 text-center">
-          <div className="text-base font-bold text-text-primary">
+          <div className="text-xl font-bold text-text-primary">
             {stats.total}
           </div>
           <div className="text-[7px] text-text-muted uppercase tracking-wide">
@@ -179,7 +179,7 @@ export default function LiveMonitoring() {
           </div>
         </div>
         <div className="bg-emerald-50/50 rounded-lg border border-emerald-200/30 p-2 text-center">
-          <div className="text-base font-bold text-emerald-600">
+          <div className="text-xl font-bold text-emerald-600">
             {stats.online}
           </div>
           <div className="text-[7px] text-emerald-500 uppercase tracking-wide">
@@ -187,7 +187,7 @@ export default function LiveMonitoring() {
           </div>
         </div>
         <div className="bg-amber-50/50 rounded-lg border border-amber-200/30 p-2 text-center">
-          <div className="text-base font-bold text-amber-600">
+          <div className="text-xl font-bold text-amber-600">
             {stats.warning}
           </div>
           <div className="text-[7px] text-amber-500 uppercase tracking-wide">
@@ -195,7 +195,7 @@ export default function LiveMonitoring() {
           </div>
         </div>
         <div className="bg-red-50/50 rounded-lg border border-red-200/30 p-2 text-center">
-          <div className="text-base font-bold text-red-600">
+          <div className="text-xl font-bold text-red-600">
             {stats.critical}
           </div>
           <div className="text-[7px] text-red-500 uppercase tracking-wide">
@@ -203,7 +203,7 @@ export default function LiveMonitoring() {
           </div>
         </div>
         <div className="bg-sky-50/50 rounded-lg border border-sky-200/30 p-2 text-center">
-          <div className="text-base font-bold text-sky-600">
+          <div className="text-xl font-bold text-sky-600">
             {stats.uptime}%
           </div>
           <div className="text-[7px] text-sky-500 uppercase tracking-wide">
@@ -258,7 +258,7 @@ export default function LiveMonitoring() {
               key={f}
               onClick={() => setFilter(f)}
               className={cn(
-                "px-2.5 py-1 rounded-md text-[9px] font-medium transition-all",
+                "px-2.5 py-1 rounded-md text-xs font-medium transition-all",
                 filter === f
                   ? "bg-primary-500 text-white shadow-sm"
                   : "bg-surface border border-border/50 text-text-secondary hover:bg-surface-muted",
@@ -270,7 +270,7 @@ export default function LiveMonitoring() {
         <Button
           variant="ghost"
           size="sm"
-          className="h-7 text-[9px] px-2.5 sm:ml-auto">
+          className="h-7 text-xs px-2.5 sm:ml-auto">
           <Filter size={11} /> More
         </Button>
       </div>
@@ -283,7 +283,7 @@ export default function LiveMonitoring() {
               size={32}
               className="text-text-muted mx-auto mb-2 opacity-30"
             />
-            <div className="text-sm text-text-muted">No buoys found</div>
+            <div className="text-xs text-text-muted">No buoys found</div>
             <p className="text-sm text-text-muted mt-1">
               Try adjusting your search or filter
             </p>
@@ -317,7 +317,7 @@ export default function LiveMonitoring() {
               <Activity size={13} className="text-primary-500" />
               Recent Activity
             </CardTitle>
-            <span className="text-[8px] text-text-muted">
+            <span className="text-xs text-text-muted">
               Last {recentActivities.length} events
             </span>
           </CardHeader>
@@ -339,13 +339,13 @@ export default function LiveMonitoring() {
                             : "bg-sky-500",
                     )}
                   />
-                  <span className="text-[8px] text-text-muted w-12 flex-shrink-0">
+                  <span className="text-xs text-text-muted w-12 flex-shrink-0">
                     {a.time}
                   </span>
-                  <span className="text-[9px] font-medium text-text-primary w-14 flex-shrink-0">
+                  <span className="text-xs font-medium text-text-primary w-14 flex-shrink-0">
                     {a.buoy}
                   </span>
-                  <span className="text-[9px] text-text-secondary flex-1 truncate">
+                  <span className="text-xs text-text-secondary flex-1 truncate">
                     {a.event}
                   </span>
                   <Badge
@@ -382,38 +382,38 @@ export default function LiveMonitoring() {
           <CardContent className="px-3.5 pb-3.5">
             <div className="space-y-2">
               <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
-                <span className="text-[9px] text-text-muted flex items-center gap-1.5">
+                <span className="text-xs text-text-muted flex items-center gap-1.5">
                   <Wifi size={10} className="text-emerald-500" />
                   Network Connection
                 </span>
-                <span className="text-[9px] font-medium text-emerald-600">
+                <span className="text-xs font-medium text-emerald-600">
                   Stable
                 </span>
               </div>
               <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
-                <span className="text-[9px] text-text-muted flex items-center gap-1.5">
+                <span className="text-xs text-text-muted flex items-center gap-1.5">
                   <Signal size={10} className="text-emerald-500" />
                   Data Sync
                 </span>
-                <span className="text-[9px] font-medium text-emerald-600">
+                <span className="text-xs font-medium text-emerald-600">
                   99.8%
                 </span>
               </div>
               <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
-                <span className="text-[9px] text-text-muted flex items-center gap-1.5">
+                <span className="text-xs text-text-muted flex items-center gap-1.5">
                   <Radio size={10} className="text-amber-500" />
                   Sensor Health
                 </span>
-                <span className="text-[9px] font-medium text-amber-600">
+                <span className="text-xs font-medium text-amber-600">
                   3 warnings
                 </span>
               </div>
               <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
-                <span className="text-[9px] text-text-muted flex items-center gap-1.5">
+                <span className="text-xs text-text-muted flex items-center gap-1.5">
                   <Clock size={10} className="text-primary-500" />
                   Last Update
                 </span>
-                <span className="text-[9px] font-medium text-text-primary">
+                <span className="text-xs font-medium text-text-primary">
                   {lastUpdate.toLocaleTimeString()}
                 </span>
               </div>
@@ -423,7 +423,7 @@ export default function LiveMonitoring() {
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between text-[8px] text-text-muted pt-1">
+      <div className="flex items-center justify-between text-xs text-text-muted pt-1">
         <span>Last updated: {lastUpdate.toLocaleTimeString()}</span>
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-0.5">

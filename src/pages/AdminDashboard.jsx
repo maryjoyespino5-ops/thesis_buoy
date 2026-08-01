@@ -104,7 +104,7 @@ export default function AdminDashboard() {
                 <h1 className="text-3xl font-bold text-text-primary tracking-tight">
                   Good morning, {user?.name?.split(" ")[0] || "John"}
                 </h1>
-                <p className="text-sm text-text-muted">
+                <p className="text-xs text-text-muted">
                   {buoys.filter((b) => b.status === "green").length} healthy ·{" "}
                   {alerts.filter((a) => a.priority === "Critical").length}{" "}
                   critical alerts
@@ -113,12 +113,12 @@ export default function AdminDashboard() {
               <div className="flex gap-1.5">
                 <Badge
                   variant="primary"
-                  className="bg-primary-50 text-primary-600 text-[10px]">
+                  className="bg-primary-50 text-primary-600 text-xs">
                   <Sparkles size={10} /> AI
                 </Badge>
                 <Badge
                   variant="info"
-                  className="bg-sky-50 text-sky-600 text-[10px]">
+                  className="bg-sky-50 text-sky-600 text-xs">
                   <Shield size={10} /> Admin
                 </Badge>
               </div>
@@ -150,7 +150,7 @@ export default function AdminDashboard() {
                 <div className="text-xl font-bold text-text-primary leading-tight">
                   {s.num}
                 </div>
-                <div className="text-sm text-text-muted uppercase tracking-wide">
+                <div className="text-xs text-text-muted uppercase tracking-wide">
                   {s.label}
                 </div>
               </div>
@@ -211,7 +211,7 @@ export default function AdminDashboard() {
                 <p className="text-sm font-medium text-text-primary leading-tight">
                   {item.label}
                 </p>
-                <p className="text-sm text-text-muted">{item.desc}</p>
+                <p className="text-xs text-text-muted">{item.desc}</p>
               </div>
               <ArrowRight
                 size={14}
@@ -268,7 +268,7 @@ export default function AdminDashboard() {
                   <div className="text-sm font-bold text-text-primary leading-tight">
                     {s.value}
                   </div>
-                  <div className="text-sm text-text-muted">{s.contrib}</div>
+                  <div className="text-xs text-text-muted">{s.contrib}</div>
                 </div>
               ))}
             </div>
@@ -396,7 +396,7 @@ export default function AdminDashboard() {
                     <p className="text-sm text-text-primary font-medium truncate leading-tight">
                       {m.task}
                     </p>
-                    <p className="text-sm text-text-muted">{m.buoy}</p>
+                    <p className="text-xs text-text-muted">{m.buoy}</p>
                   </div>
                   <Badge
                     variant={

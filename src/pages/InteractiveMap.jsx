@@ -100,20 +100,20 @@ export default function InteractiveMap() {
             <Navigation size={17} className="text-primary-500" />
           </div>
           <div>
-            <h1 className="text-base font-bold text-text-primary tracking-tight">
+            <h1 className="text-3xl font-bold text-text-primary tracking-tight">
               Interactive Map
             </h1>
-            <p className="text-[10px] text-text-muted">
+            <p className="text-xs text-text-muted">
               {buoyData.length} buoys deployed ·{" "}
               {buoyData.filter((b) => b.status === "green").length} online
             </p>
           </div>
         </div>
         <div className="flex gap-1.5">
-          <Button variant="ghost" size="sm" className="h-7 text-[9px] px-2.5">
+          <Button variant="ghost" size="sm" className="h-7 text-xs px-2.5">
             <Layers size={11} /> Layers
           </Button>
-          <Button variant="primary" size="sm" className="h-7 text-[9px] px-2.5">
+          <Button variant="primary" size="sm" className="h-7 text-xs px-2.5">
             <Crosshair size={11} /> Locate Me
           </Button>
         </div>
@@ -244,7 +244,7 @@ export default function InteractiveMap() {
                     )}>
                     <MapPin size={14} className="text-white" />
                     {isSelected && (
-                      <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap bg-surface text-text-primary text-[8px] font-medium px-1.5 py-0.5 rounded shadow-lg border border-border/50">
+                      <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap bg-surface text-text-primary text-xs font-medium px-1.5 py-0.5 rounded shadow-lg border border-border/50">
                         {buoy.name}
                       </div>
                     )}
@@ -282,15 +282,15 @@ export default function InteractiveMap() {
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  <span className="text-[8px] text-text-muted">Healthy</span>
+                  <span className="text-xs text-text-muted">Healthy</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                  <span className="text-[8px] text-text-muted">Warning</span>
+                  <span className="text-xs text-text-muted">Warning</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                  <span className="text-[8px] text-text-muted">Critical</span>
+                  <span className="text-xs text-text-muted">Critical</span>
                 </div>
               </div>
               <div className="flex items-center gap-2 mt-1 pt-1 border-t border-border/30">
@@ -314,7 +314,7 @@ export default function InteractiveMap() {
             {selectedBuoy && (
               <div className="absolute top-4 left-4 bg-surface/95 backdrop-blur-sm rounded-lg border border-border/50 p-3 max-w-[200px] shadow-lg">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm font-semibold text-text-primary">
+                  <span className="text-xs font-semibold text-text-primary">
                     {selectedBuoy.name}
                   </span>
                   <Badge
@@ -329,10 +329,10 @@ export default function InteractiveMap() {
                     {selectedBuoy.status}
                   </Badge>
                 </div>
-                <p className="text-[9px] text-text-muted">
+                <p className="text-xs text-text-muted">
                   {selectedBuoy.coords}
                 </p>
-                <div className="grid grid-cols-2 gap-1 mt-1.5 text-[8px]">
+                <div className="grid grid-cols-2 gap-1 mt-1.5 text-xs">
                   <span>
                     Temp: <strong>{selectedBuoy.temp}</strong>
                   </span>
@@ -350,14 +350,14 @@ export default function InteractiveMap() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-6 text-[8px] px-2 flex-1"
+                    className="h-6 text-xs px-2 flex-1"
                     onClick={() => navigate("/buoys")}>
                     View <ArrowRight size={8} />
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-6 text-[8px] px-2 flex-1"
+                    className="h-6 text-xs px-2 flex-1"
                     onClick={() => setSelectedBuoy(null)}>
                     Close
                   </Button>
@@ -368,11 +368,11 @@ export default function InteractiveMap() {
             {/* Map Stats - Top Left */}
             <div className="absolute top-4 left-4 bg-surface/80 backdrop-blur-sm rounded-lg border border-border/50 px-2.5 py-1.5">
               <div className="flex items-center gap-3">
-                <span className="text-[8px] text-text-muted flex items-center gap-0.5">
+                <span className="text-xs text-text-muted flex items-center gap-0.5">
                   <Activity size={10} className="text-emerald-500" />
                   {buoyData.filter((b) => b.status === "green").length} Online
                 </span>
-                <span className="text-[8px] text-text-muted flex items-center gap-0.5">
+                <span className="text-xs text-text-muted flex items-center gap-0.5">
                   <Radio size={10} className="text-primary-500" />
                   {buoyData.length} Total
                 </span>
@@ -396,7 +396,7 @@ export default function InteractiveMap() {
                   key={f}
                   onClick={() => setFilter(f)}
                   className={cn(
-                    "px-2 py-1 rounded-md text-[8px] font-medium transition-all whitespace-nowrap",
+                    "px-2 py-1 rounded-md text-xs font-medium transition-all whitespace-nowrap",
                     filter === f
                       ? "bg-primary-500 text-white shadow-sm"
                       : "bg-surface border border-border/50 text-text-secondary hover:bg-surface-muted",
@@ -406,7 +406,7 @@ export default function InteractiveMap() {
               ))}
             </div>
           </div>
-          <span className="text-[8px] text-text-muted whitespace-nowrap">
+          <span className="text-xs text-text-muted whitespace-nowrap">
             {filteredBuoys.length} buoys shown · Coverage area: 12.4 km²
           </span>
         </CardContent>
@@ -415,7 +415,7 @@ export default function InteractiveMap() {
       {/* Buoy List */}
       <div>
         <div className="flex items-center justify-between mb-2.5">
-          <h2 className="text-sm font-semibold text-text-primary flex items-center gap-1.5">
+          <h2 className="text-2xl font-semibold text-text-primary flex items-center gap-1.5">
             <MapPin size={14} className="text-primary-500" />
             Buoy Details
           </h2>

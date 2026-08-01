@@ -133,20 +133,20 @@ export default function Maintenance() {
             <Wrench size={17} className="text-amber-500" />
           </div>
           <div>
-            <h1 className="text-base font-bold text-text-primary tracking-tight">
+            <h1 className="text-3xl font-bold text-text-primary tracking-tight">
               Maintenance
             </h1>
-            <p className="text-[10px] text-text-muted">
+            <p className="text-xs text-text-muted">
               {stats.pending} pending · {stats.scheduled} scheduled ·{" "}
               {stats.completed} completed
             </p>
           </div>
         </div>
         <div className="flex gap-1.5">
-          <Button variant="ghost" size="sm" className="h-7 text-[9px] px-2.5">
+          <Button variant="ghost" size="sm" className="h-7 text-xs px-2.5">
             <RefreshCw size={11} /> Sync
           </Button>
-          <Button variant="primary" size="sm" className="h-7 text-[9px] px-2.5">
+          <Button variant="primary" size="sm" className="h-7 text-xs px-2.5">
             <Plus size={11} /> New Task
           </Button>
         </div>
@@ -155,7 +155,7 @@ export default function Maintenance() {
       {/* Stats Row */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
         <div className="bg-surface rounded-lg border border-border/50 p-2 text-center">
-          <div className="text-base font-bold text-text-primary">
+          <div className="text-xl font-bold text-text-primary">
             {stats.total}
           </div>
           <div className="text-[7px] text-text-muted uppercase tracking-wide">
@@ -163,7 +163,7 @@ export default function Maintenance() {
           </div>
         </div>
         <div className="bg-amber-50/50 rounded-lg border border-amber-200/30 p-2 text-center">
-          <div className="text-base font-bold text-amber-600">
+          <div className="text-xl font-bold text-amber-600">
             {stats.pending}
           </div>
           <div className="text-[7px] text-amber-500 uppercase tracking-wide">
@@ -171,7 +171,7 @@ export default function Maintenance() {
           </div>
         </div>
         <div className="bg-sky-50/50 rounded-lg border border-sky-200/30 p-2 text-center">
-          <div className="text-base font-bold text-sky-600">
+          <div className="text-xl font-bold text-sky-600">
             {stats.scheduled}
           </div>
           <div className="text-[7px] text-sky-500 uppercase tracking-wide">
@@ -179,7 +179,7 @@ export default function Maintenance() {
           </div>
         </div>
         <div className="bg-emerald-50/50 rounded-lg border border-emerald-200/30 p-2 text-center">
-          <div className="text-base font-bold text-emerald-600">
+          <div className="text-xl font-bold text-emerald-600">
             {stats.completed}
           </div>
           <div className="text-[7px] text-emerald-500 uppercase tracking-wide">
@@ -187,7 +187,7 @@ export default function Maintenance() {
           </div>
         </div>
         <div className="bg-red-50/50 rounded-lg border border-red-200/30 p-2 text-center">
-          <div className="text-base font-bold text-red-600">{stats.high}</div>
+          <div className="text-xl font-bold text-red-600">{stats.high}</div>
           <div className="text-[7px] text-red-500 uppercase tracking-wide">
             High Priority
           </div>
@@ -240,7 +240,7 @@ export default function Maintenance() {
               key={f}
               onClick={() => setStatusFilter(f)}
               className={cn(
-                "px-2.5 py-1 rounded-md text-[9px] font-medium transition-all",
+                "px-2.5 py-1 rounded-md text-xs font-medium transition-all",
                 statusFilter === f
                   ? "bg-primary-500 text-white shadow-sm"
                   : "bg-surface border border-border/50 text-text-secondary hover:bg-surface-muted",
@@ -255,7 +255,7 @@ export default function Maintenance() {
               key={f}
               onClick={() => setPriorityFilter(f)}
               className={cn(
-                "px-2 py-1 rounded-md text-[8px] font-medium transition-all",
+                "px-2 py-1 rounded-md text-xs font-medium transition-all",
                 priorityFilter === f
                   ? "bg-primary-500 text-white shadow-sm"
                   : "bg-surface border border-border/50 text-text-secondary hover:bg-surface-muted",
@@ -274,7 +274,7 @@ export default function Maintenance() {
               size={32}
               className="text-text-muted mx-auto mb-2 opacity-30"
             />
-            <div className="text-sm text-text-muted">
+            <div className="text-xs text-text-muted">
               No maintenance tasks found
             </div>
             <p className="text-sm text-text-muted mt-1">
@@ -310,21 +310,21 @@ export default function Maintenance() {
                         <Badge
                           variant={s.variant}
                           size="sm"
-                          className="text-[8px]">
+                          className="text-xs">
                           <Icon size={8} className="mr-0.5" />
                           {m.status}
                         </Badge>
                         <Badge
                           variant={p.variant}
                           size="sm"
-                          className="text-[8px]">
+                          className="text-xs">
                           {m.priority}
                         </Badge>
                       </div>
                     </div>
 
                     {/* Use Wrench instead of Tool */}
-                    <div className="flex items-center gap-1.5 text-[10px] text-text-secondary mb-1">
+                    <div className="flex items-center gap-1.5 text-xs text-text-secondary mb-1">
                       <Wrench
                         size={10}
                         className="text-text-muted flex-shrink-0"
@@ -332,7 +332,7 @@ export default function Maintenance() {
                       <span className="truncate">{m.task}</span>
                     </div>
 
-                    <div className="flex items-center gap-1.5 text-[9px] text-text-muted">
+                    <div className="flex items-center gap-1.5 text-xs text-text-muted">
                       <Calendar size={9} className="flex-shrink-0" />
                       Due: {m.due}
                     </div>
@@ -342,14 +342,14 @@ export default function Maintenance() {
                         <Button
                           variant="primary"
                           size="sm"
-                          className="h-6 text-[8px] px-2 flex-1"
+                          className="h-6 text-xs px-2 flex-1"
                           onClick={() => handleComplete(m.id)}>
                           <Check size={8} /> Complete
                         </Button>
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-6 text-[8px] px-2 flex-1"
+                          className="h-6 text-xs px-2 flex-1"
                           onClick={() => handleSchedule(m.id)}>
                           <Calendar size={8} /> Schedule
                         </Button>
@@ -360,7 +360,7 @@ export default function Maintenance() {
                         <Badge
                           variant="success"
                           size="sm"
-                          className="text-[8px] w-full justify-center">
+                          className="text-xs w-full justify-center">
                           <CheckCircle size={8} className="mr-0.5" />
                           Completed
                         </Badge>
@@ -381,7 +381,7 @@ export default function Maintenance() {
             <Zap size={13} className="text-amber-500" />
             AI Maintenance Insights
           </CardTitle>
-          <Button variant="ghost" size="sm" className="h-6 text-[8px] px-2">
+          <Button variant="ghost" size="sm" className="h-6 text-xs px-2">
             View All <ArrowRight size={10} />
           </Button>
         </CardHeader>
@@ -393,10 +393,10 @@ export default function Maintenance() {
                 className="text-amber-500 mt-0.5 flex-shrink-0"
               />
               <div>
-                <p className="text-[10px] font-medium text-text-primary">
+                <p className="text-xs font-medium text-text-primary">
                   Battery replacement due
                 </p>
-                <p className="text-[8px] text-text-muted">
+                <p className="text-xs text-text-muted">
                   Buoy 04 · 2 days remaining
                 </p>
               </div>
@@ -404,10 +404,10 @@ export default function Maintenance() {
             <div className="flex items-start gap-2.5 p-2 bg-sky-50/50 rounded-md border border-sky-200/30">
               <Target size={12} className="text-sky-500 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-[10px] font-medium text-text-primary">
+                <p className="text-xs font-medium text-text-primary">
                   Sensor calibration predicted
                 </p>
-                <p className="text-[8px] text-text-muted">
+                <p className="text-xs text-text-muted">
                   Buoy 02 · 7 days from now
                 </p>
               </div>
@@ -417,7 +417,7 @@ export default function Maintenance() {
       </Card>
 
       {/* Footer */}
-      <div className="flex items-center justify-between text-[8px] text-text-muted pt-1">
+      <div className="flex items-center justify-between text-xs text-text-muted pt-1">
         <span>
           Showing {filtered.length} of {maintenanceData.length} tasks
         </span>

@@ -438,7 +438,7 @@ function MapContent({ buoys, setSelectedBuoy, selectedBuoy }) {
                             : "warning"
                       }
                       size="sm"
-                      className="text-[10px]">
+                      className="text-xs">
                       {getFishLabel(probability)}
                     </Badge>
                   </div>
@@ -497,7 +497,7 @@ function MapContent({ buoys, setSelectedBuoy, selectedBuoy }) {
                   </div>
 
                   <div className="mt-2 pt-2 border-t border-border/30">
-                    <p className="text-[10px] text-emerald-600 bg-emerald-50/50 p-2 rounded-md">
+                    <p className="text-xs text-emerald-600 bg-emerald-50/50 p-2 rounded-md">
                       {probability >= 75
                         ? "🎣 Excellent fishing location. Multiple sonar echoes detected with optimal water quality."
                         : probability >= 50
@@ -561,7 +561,7 @@ function MapLegend() {
 
   return (
     <div className="absolute bottom-6 right-4 z-[1000] bg-surface/90 backdrop-blur-sm border border-border/50 rounded-lg p-3 shadow-lg min-w-[150px]">
-      <div className="text-[9px] font-semibold uppercase tracking-wider text-text-muted mb-2 flex items-center gap-1">
+      <div className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-2 flex items-center gap-1">
         <Radar size={10} className="text-red-500" /> Sonar Radar
       </div>
       {legendItems.map((item) => (
@@ -573,7 +573,7 @@ function MapLegend() {
             style={{ backgroundColor: item.color }}
           />
           <div className="flex-1">
-            <div className="text-[9px] font-medium text-text-primary">
+            <div className="text-xs font-medium text-text-primary">
               {item.label}
             </div>
             <div className="text-[7px] text-text-muted">{item.range}</div>
@@ -609,7 +609,7 @@ function BottomPanel({ buoys }) {
       <CardContent className="p-3">
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 text-center">
           <div>
-            <div className="text-[8px] text-text-muted uppercase tracking-wide">
+            <div className="text-xs text-text-muted uppercase tracking-wide">
               Highest Fish Zone
             </div>
             <div className="text-sm font-bold text-primary-500">
@@ -617,7 +617,7 @@ function BottomPanel({ buoys }) {
             </div>
           </div>
           <div>
-            <div className="text-[8px] text-text-muted uppercase tracking-wide">
+            <div className="text-xs text-text-muted uppercase tracking-wide">
               Best Fishing Time
             </div>
             <div className="text-sm font-bold text-text-primary">
@@ -625,7 +625,7 @@ function BottomPanel({ buoys }) {
             </div>
           </div>
           <div>
-            <div className="text-[8px] text-text-muted uppercase tracking-wide">
+            <div className="text-xs text-text-muted uppercase tracking-wide">
               Avg Depth
             </div>
             <div className="text-sm font-bold text-text-primary">
@@ -633,7 +633,7 @@ function BottomPanel({ buoys }) {
             </div>
           </div>
           <div>
-            <div className="text-[8px] text-text-muted uppercase tracking-wide">
+            <div className="text-xs text-text-muted uppercase tracking-wide">
               Est. Fish Count
             </div>
             <div className="text-sm font-bold text-emerald-600">
@@ -641,7 +641,7 @@ function BottomPanel({ buoys }) {
             </div>
           </div>
           <div>
-            <div className="text-[8px] text-text-muted uppercase tracking-wide">
+            <div className="text-xs text-text-muted uppercase tracking-wide">
               Most Active Buoy
             </div>
             <div className="text-sm font-bold text-primary-500">
@@ -649,13 +649,13 @@ function BottomPanel({ buoys }) {
             </div>
           </div>
           <div>
-            <div className="text-[8px] text-text-muted uppercase tracking-wide">
+            <div className="text-xs text-text-muted uppercase tracking-wide">
               Water Quality
             </div>
             <div className="text-sm font-bold text-emerald-600">Good</div>
           </div>
           <div>
-            <div className="text-[8px] text-text-muted uppercase tracking-wide">
+            <div className="text-xs text-text-muted uppercase tracking-wide">
               AI Confidence
             </div>
             <div className="text-sm font-bold text-text-primary">
@@ -750,20 +750,20 @@ export default function FishActivity() {
             <Fish size={17} className="text-emerald-500" />
           </div>
           <div>
-            <h1 className="text-base font-bold text-text-primary tracking-tight">
+            <h1 className="text-3xl font-bold text-text-primary tracking-tight">
               AI Fish Distribution Map
             </h1>
-            <p className="text-[10px] text-text-muted">
+            <p className="text-xs text-text-muted">
               {stats.high} high · {stats.moderate} moderate · {stats.low} low
               activity zones · Live sonar data
             </p>
           </div>
         </div>
         <div className="flex gap-1.5">
-          <Button variant="ghost" size="sm" className="h-7 text-[9px] px-2.5">
+          <Button variant="ghost" size="sm" className="h-7 text-xs px-2.5">
             <Download size={11} /> Export
           </Button>
-          <Button variant="primary" size="sm" className="h-7 text-[9px] px-2.5">
+          <Button variant="primary" size="sm" className="h-7 text-xs px-2.5">
             <Radar size={11} /> Scan
           </Button>
         </div>
@@ -772,32 +772,32 @@ export default function FishActivity() {
       {/* Stats Row */}
       <div className="grid grid-cols-4 gap-2">
         <div className="bg-surface rounded-lg border border-border/50 p-2 text-center">
-          <div className="text-base font-bold text-text-primary">
+          <div className="text-xl font-bold text-text-primary">
             {stats.total}
           </div>
-          <div className="text-[8px] text-text-muted uppercase tracking-wide">
+          <div className="text-xs text-text-muted uppercase tracking-wide">
             Total Buoys
           </div>
         </div>
         <div className="bg-purple-50/50 rounded-lg border border-purple-200/30 p-2 text-center">
-          <div className="text-base font-bold text-purple-600">
+          <div className="text-xl font-bold text-purple-600">
             {stats.high}
           </div>
-          <div className="text-[8px] text-purple-500 uppercase tracking-wide">
+          <div className="text-xs text-purple-500 uppercase tracking-wide">
             High Activity
           </div>
         </div>
         <div className="bg-blue-50/50 rounded-lg border border-blue-200/30 p-2 text-center">
-          <div className="text-base font-bold text-blue-600">
+          <div className="text-xl font-bold text-blue-600">
             {stats.moderate}
           </div>
-          <div className="text-[8px] text-blue-500 uppercase tracking-wide">
+          <div className="text-xs text-blue-500 uppercase tracking-wide">
             Moderate
           </div>
         </div>
         <div className="bg-yellow-50/50 rounded-lg border border-yellow-200/30 p-2 text-center">
-          <div className="text-base font-bold text-yellow-600">{stats.low}</div>
-          <div className="text-[8px] text-yellow-500 uppercase tracking-wide">
+          <div className="text-xl font-bold text-yellow-600">{stats.low}</div>
+          <div className="text-xs text-yellow-500 uppercase tracking-wide">
             Low Activity
           </div>
         </div>
@@ -849,7 +849,7 @@ export default function FishActivity() {
               key={f}
               onClick={() => setFilter(f)}
               className={cn(
-                "px-2.5 py-1 rounded-md text-[9px] font-medium transition-all",
+                "px-2.5 py-1 rounded-md text-xs font-medium transition-all",
                 filter === f
                   ? "bg-primary-500 text-white shadow-sm"
                   : "bg-surface border border-border/50 text-text-secondary hover:bg-surface-muted",
@@ -871,16 +871,16 @@ export default function FishActivity() {
             </Badge>
           </CardTitle>
           <div className="flex items-center gap-2">
-            <span className="text-[8px] text-text-muted flex items-center gap-1">
+            <span className="text-xs text-text-muted flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-red-600" /> Extreme
             </span>
-            <span className="text-[8px] text-text-muted flex items-center gap-1">
+            <span className="text-xs text-text-muted flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-orange-500" /> High
             </span>
-            <span className="text-[8px] text-text-muted flex items-center gap-1">
+            <span className="text-xs text-text-muted flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-green-500" /> Light
             </span>
-            <Button variant="ghost" size="sm" className="h-6 text-[8px] px-2">
+            <Button variant="ghost" size="sm" className="h-6 text-xs px-2">
               <RefreshCw size={10} /> Update
             </Button>
           </div>
@@ -913,7 +913,7 @@ export default function FishActivity() {
       {/* Buoy Activity Grid */}
       <div>
         <div className="flex items-center justify-between mb-2.5">
-          <h2 className="text-sm font-semibold text-text-primary flex items-center gap-1.5">
+          <h2 className="text-2xl font-semibold text-text-primary flex items-center gap-1.5">
             <Activity size={14} className="text-primary-500" />
             Buoy Activity
           </h2>
@@ -938,7 +938,7 @@ export default function FishActivity() {
                   onClick={() => navigate("/buoys")}>
                   <CardContent className="p-3">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-[10px] font-medium text-text-primary">
+                      <span className="text-xs font-medium text-text-primary">
                         {b.name}
                       </span>
                       <Badge
@@ -957,15 +957,15 @@ export default function FishActivity() {
                       <span className="text-sm font-bold text-text-primary">
                         {prob}%
                       </span>
-                      <span className="text-[8px] text-text-muted">
+                      <span className="text-xs text-text-muted">
                         probability
                       </span>
                     </div>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-[8px] text-text-muted flex items-center gap-0.5">
+                      <span className="text-xs text-text-muted flex items-center gap-0.5">
                         <Fish size={8} /> {b.fishCount || 5} fish
                       </span>
-                      <span className="text-[8px] text-text-muted flex items-center gap-0.5">
+                      <span className="text-xs text-text-muted flex items-center gap-0.5">
                         <Waves size={8} /> {b.depth || "6.3"}m
                       </span>
                     </div>
@@ -978,7 +978,7 @@ export default function FishActivity() {
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between text-[8px] text-text-muted pt-1">
+      <div className="flex items-center justify-between text-xs text-text-muted pt-1">
         <span>Last updated: {new Date().toLocaleTimeString()}</span>
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-0.5">

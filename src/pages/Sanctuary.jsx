@@ -105,20 +105,20 @@ export default function Sanctuary() {
             <Mic size={17} className="text-teal-500" />
           </div>
           <div>
-            <h1 className="text-base font-bold text-text-primary tracking-tight">
+            <h1 className="text-3xl font-bold text-text-primary tracking-tight">
               Sanctuary Intelligence
             </h1>
-            <p className="text-[10px] text-text-muted">
+            <p className="text-xs text-text-muted">
               {stats.normal} normal · {stats.info} info · {stats.warning}{" "}
               warnings
             </p>
           </div>
         </div>
         <div className="flex gap-1.5">
-          <Button variant="ghost" size="sm" className="h-7 text-[9px] px-2.5">
+          <Button variant="ghost" size="sm" className="h-7 text-xs px-2.5">
             <Waves size={11} /> Sonar
           </Button>
-          <Button variant="primary" size="sm" className="h-7 text-[9px] px-2.5">
+          <Button variant="primary" size="sm" className="h-7 text-xs px-2.5">
             <Sparkles size={11} /> Analyze
           </Button>
         </div>
@@ -209,7 +209,7 @@ export default function Sanctuary() {
             <Badge variant="success" size="sm">
               Live
             </Badge>
-            <span className="text-[8px] text-text-muted">Last hour</span>
+            <span className="text-xs text-text-muted">Last hour</span>
           </div>
         </CardHeader>
         <CardContent className="px-3.5 pb-3.5">
@@ -240,7 +240,7 @@ export default function Sanctuary() {
           <div className="mt-2 p-1.5 bg-emerald-50/50 rounded-md border border-emerald-200/30">
             <div className="flex items-center gap-1.5">
               <CheckCircle size={11} className="text-emerald-500" />
-              <span className="text-[9px] text-text-secondary">
+              <span className="text-sm text-text-secondary">
                 AI: No unusual acoustic signatures detected in the last 2 hours.
               </span>
             </div>
@@ -262,7 +262,7 @@ export default function Sanctuary() {
               key={f}
               onClick={() => setFilter(f)}
               className={cn(
-                "px-2.5 py-1 rounded-md text-[9px] font-medium transition-all",
+                "px-2.5 py-1 rounded-md text-xs font-medium transition-all",
                 filter === f
                   ? "bg-primary-500 text-white shadow-sm"
                   : "bg-surface border border-border/50 text-text-secondary hover:bg-surface-muted",
@@ -275,7 +275,7 @@ export default function Sanctuary() {
 
       {/* Sanctuary Alerts */}
       <div>
-        <h2 className="text-sm font-semibold text-text-primary mb-2.5 flex items-center gap-1.5">
+        <h2 className="text-2xl font-semibold text-text-primary mb-2.5 flex items-center gap-1.5">
           <Bell size={14} className="text-amber-500" />
           Sanctuary Alerts
         </h2>
@@ -287,7 +287,7 @@ export default function Sanctuary() {
                   size={24}
                   className="text-text-muted mx-auto mb-1 opacity-30"
                 />
-                <div className="text-sm text-text-muted">No alerts found</div>
+                <div className="text-xs text-text-muted">No alerts found</div>
               </CardContent>
             </Card>
           ) : (
@@ -314,10 +314,10 @@ export default function Sanctuary() {
                           )}
                         />
                         <div>
-                          <span className="text-sm text-text-primary">
+                          <span className="text-xs text-text-primary">
                             {a.event}
                           </span>
-                          <div className="flex items-center gap-2 text-[8px] text-text-muted">
+                          <div className="flex items-center gap-2 text-xs text-text-muted">
                             <Clock size={8} /> {a.time}
                           </div>
                         </div>
@@ -334,7 +334,7 @@ export default function Sanctuary() {
                                   : "danger"
                           }
                           size="sm"
-                          className="text-[8px]">
+                          className="text-xs">
                           {a.status}
                         </Badge>
                         <Badge
@@ -346,13 +346,13 @@ export default function Sanctuary() {
                                 : "default"
                           }
                           size="sm"
-                          className="text-[8px]">
+                          className="text-xs">
                           {a.priority}
                         </Badge>
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-6 text-[8px] px-2">
+                          className="h-6 text-xs px-2">
                           <Eye size={10} /> Details
                         </Button>
                       </div>
@@ -370,43 +370,43 @@ export default function Sanctuary() {
         <div className="bg-surface-muted/30 rounded-md p-2.5 text-center">
           <div className="flex items-center justify-center gap-1">
             <Radio size={12} className="text-primary-500" />
-            <span className="text-[9px] font-medium text-text-primary">
+            <span className="text-xs font-medium text-text-primary">
               Acoustic
             </span>
           </div>
-          <div className="text-[8px] text-text-muted mt-0.5">Normal</div>
+          <div className="text-xs text-text-muted mt-0.5">Normal</div>
         </div>
         <div className="bg-surface-muted/30 rounded-md p-2.5 text-center">
           <div className="flex items-center justify-center gap-1">
             <Ship size={12} className="text-amber-500" />
-            <span className="text-[9px] font-medium text-text-primary">
+            <span className="text-xs font-medium text-text-primary">
               Vessel
             </span>
           </div>
-          <div className="text-[8px] text-text-muted mt-0.5">No threats</div>
+          <div className="text-xs text-text-muted mt-0.5">No threats</div>
         </div>
         <div className="bg-surface-muted/30 rounded-md p-2.5 text-center">
           <div className="flex items-center justify-center gap-1">
             <Ear size={12} className="text-emerald-500" />
-            <span className="text-[9px] font-medium text-text-primary">
+            <span className="text-xs font-medium text-text-primary">
               Hydrophone
             </span>
           </div>
-          <div className="text-[8px] text-text-muted mt-0.5">Operational</div>
+          <div className="text-xs text-text-muted mt-0.5">Operational</div>
         </div>
         <div className="bg-surface-muted/30 rounded-md p-2.5 text-center">
           <div className="flex items-center justify-center gap-1">
             <Activity size={12} className="text-primary-500" />
-            <span className="text-[9px] font-medium text-text-primary">
+            <span className="text-xs font-medium text-text-primary">
               Coverage
             </span>
           </div>
-          <div className="text-[8px] text-text-muted mt-0.5">92%</div>
+          <div className="text-xs text-text-muted mt-0.5">92%</div>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between text-[8px] text-text-muted pt-1">
+      <div className="flex items-center justify-between text-xs text-text-muted pt-1">
         <span>Last updated: Today, 14:23</span>
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-0.5">

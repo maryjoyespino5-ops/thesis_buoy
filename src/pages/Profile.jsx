@@ -97,7 +97,7 @@ export default function Profile() {
             <User size={17} className="text-primary-500" />
           </div>
           <div>
-            <h1 className="text-base font-bold text-text-primary tracking-tight">
+            <h1 className="text-3xl font-bold text-text-primary tracking-tight">
               Profile
             </h1>
             <p className="text-[11px] text-text-muted">
@@ -110,7 +110,7 @@ export default function Profile() {
             <Button
               variant="primary"
               size="sm"
-              className="h-7 text-[9px] px-2.5"
+              className="h-7 text-xs px-2.5"
               onClick={() => setIsEditing(true)}>
               <Edit size={11} /> Edit Profile
             </Button>
@@ -119,14 +119,14 @@ export default function Profile() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-7 text-[9px] px-2.5"
+                className="h-7 text-xs px-2.5"
                 onClick={handleCancel}>
                 <X size={11} /> Cancel
               </Button>
               <Button
                 variant="primary"
                 size="sm"
-                className="h-7 text-[9px] px-2.5"
+                className="h-7 text-xs px-2.5"
                 onClick={handleSave}>
                 <Save size={11} /> Save
               </Button>
@@ -161,7 +161,7 @@ export default function Profile() {
                   Active
                 </Badge>
               </div>
-              <p className="text-[10px] text-text-muted">
+              <p className="text-xs text-text-muted">
                 {userData.department} · {userData.organization}
               </p>
             </div>
@@ -212,7 +212,7 @@ export default function Profile() {
                   className="text-text-muted flex-shrink-0"
                 />
                 <div className="flex-1 min-w-0">
-                  <div className="text-[8px] text-text-muted uppercase tracking-wide">
+                  <div className="text-xs text-text-muted uppercase tracking-wide">
                     {item.label}
                   </div>
                   {isEditing ? (
@@ -225,10 +225,10 @@ export default function Profile() {
                           [item.field]: e.target.value,
                         })
                       }
-                      className="w-full text-[10px] bg-surface-muted/50 border border-border/30 rounded px-1.5 py-0.5 text-text-primary outline-none focus:border-primary-400"
+                      className="w-full text-xs bg-surface-muted/50 border border-border/30 rounded px-1.5 py-0.5 text-text-primary outline-none focus:border-primary-400"
                     />
                   ) : (
-                    <div className="text-[10px] text-text-primary truncate">
+                    <div className="text-xs text-text-primary truncate">
                       {item.value}
                     </div>
                   )}
@@ -286,7 +286,7 @@ export default function Profile() {
               size={14}
               className={`text-${item.color}-500 mx-auto mb-0.5`}
             />
-            <div className="text-[8px] font-medium text-text-secondary">
+            <div className="text-xs font-medium text-text-secondary">
               {item.label}
             </div>
           </button>
@@ -301,8 +301,8 @@ export default function Profile() {
             Recent Activity
           </CardTitle>
           <div className="flex items-center gap-2">
-            <span className="text-[8px] text-text-muted">Last 24h</span>
-            <Button variant="ghost" size="sm" className="h-6 text-[8px] px-2">
+            <span className="text-xs text-text-muted">Last 24h</span>
+            <Button variant="ghost" size="sm" className="h-6 text-xs px-2">
               View All <ChevronRight size={10} />
             </Button>
           </div>
@@ -323,10 +323,10 @@ export default function Profile() {
                         : "bg-amber-500",
                   )}
                 />
-                <span className="text-[8px] text-text-muted w-12 flex-shrink-0">
+                <span className="text-xs text-text-muted w-12 flex-shrink-0">
                   {a.time}
                 </span>
-                <span className="text-[9px] text-text-secondary flex-1">
+                <span className="text-xs text-text-secondary flex-1">
                   {a.event}
                 </span>
                 <Badge
@@ -352,7 +352,7 @@ export default function Profile() {
         <div className="bg-surface rounded-lg border border-border/50 p-2.5 text-center">
           <div className="flex items-center justify-center gap-1.5">
             <Clock size={12} className="text-text-muted" />
-            <span className="text-[10px] text-text-primary">Last Login</span>
+            <span className="text-xs text-text-primary">Last Login</span>
           </div>
           <div className="text-sm font-medium text-text-primary mt-0.5">
             {userData.lastLogin}
@@ -361,7 +361,7 @@ export default function Profile() {
         <div className="bg-surface rounded-lg border border-border/50 p-2.5 text-center">
           <div className="flex items-center justify-center gap-1.5">
             <Calendar size={12} className="text-text-muted" />
-            <span className="text-[10px] text-text-primary">Member Since</span>
+            <span className="text-xs text-text-primary">Member Since</span>
           </div>
           <div className="text-sm font-medium text-text-primary mt-0.5">
             {userData.joinDate}
@@ -370,7 +370,7 @@ export default function Profile() {
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between text-[8px] text-text-muted pt-1">
+      <div className="flex items-center justify-between text-xs text-text-muted pt-1">
         <span>Profile last updated: Today, 14:20</span>
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-0.5">

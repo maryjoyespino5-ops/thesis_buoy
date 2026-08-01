@@ -76,7 +76,7 @@ export default function AICommandCenter() {
             <h1 className="text-3xl font-bold text-text-primary tracking-tight">
               AI Command Center
             </h1>
-            <p className="text-sm text-text-muted">
+            <p className="text-xs text-text-muted">
               Real-time intelligence · Risk assessment · Predictive analytics
             </p>
           </div>
@@ -200,7 +200,7 @@ export default function AICommandCenter() {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     className="mt-2 pt-2 border-t border-border/30">
-                    <p className="text-xs text-text-muted mb-1.5">
+                    <p className="text-sm text-text-muted mb-1.5">
                       Based on 12 sensors, historical patterns, and
                       environmental models.
                     </p>
@@ -238,7 +238,7 @@ export default function AICommandCenter() {
                 <div className="text-base font-bold text-text-primary mt-0.5">
                   {p.val}
                 </div>
-                <div className="text-xs text-text-muted mt-0.5">
+                <div className="text-sm text-text-muted mt-0.5">
                   {p.desc}
                 </div>
               </CardContent>

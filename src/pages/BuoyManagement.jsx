@@ -52,7 +52,7 @@ export default function BuoyManagement() {
             <Ship size={17} className="text-primary-500" />
           </div>
           <div>
-            <h1 className="text-base font-bold text-text-primary tracking-tight">
+            <h1 className="text-3xl font-bold text-text-primary tracking-tight">
               Buoy Management
             </h1>
             <p className="text-[11px] text-text-muted">
@@ -77,7 +77,7 @@ export default function BuoyManagement() {
           <div className="text-sm font-bold text-text-primary leading-tight">
             {stats.total}
           </div>
-          <div className="text-[10px] text-text-muted uppercase tracking-wide">
+          <div className="text-xs text-text-muted uppercase tracking-wide">
             Total
           </div>
         </div>
@@ -85,7 +85,7 @@ export default function BuoyManagement() {
           <div className="text-sm font-bold text-emerald-600 leading-tight">
             {stats.healthy}
           </div>
-          <div className="text-[10px] text-emerald-500 uppercase tracking-wide">
+          <div className="text-xs text-emerald-500 uppercase tracking-wide">
             Healthy
           </div>
         </div>
@@ -93,7 +93,7 @@ export default function BuoyManagement() {
           <div className="text-sm font-bold text-amber-600 leading-tight">
             {stats.warning}
           </div>
-          <div className="text-[10px] text-amber-500 uppercase tracking-wide">
+          <div className="text-xs text-amber-500 uppercase tracking-wide">
             Warning
           </div>
         </div>
@@ -101,7 +101,7 @@ export default function BuoyManagement() {
           <div className="text-sm font-bold text-red-600 leading-tight">
             {stats.critical}
           </div>
-          <div className="text-[10px] text-red-500 uppercase tracking-wide">
+          <div className="text-xs text-red-500 uppercase tracking-wide">
             Critical
           </div>
         </div>
@@ -121,7 +121,7 @@ export default function BuoyManagement() {
               key={f}
               onClick={() => setFilter(f)}
               className={cn(
-                "px-2.5 py-1 rounded-md text-[9px] font-medium transition-all",
+                "px-2.5 py-1 rounded-md text-xs font-medium transition-all",
                 filter === f
                   ? "bg-primary-500 text-white shadow-sm"
                   : "bg-surface border border-border/50 text-text-secondary hover:bg-surface-muted",
@@ -167,7 +167,7 @@ export default function BuoyManagement() {
 
       {/* Footer */}
       {filtered.length > 0 && (
-        <div className="flex items-center justify-between text-[10px] text-text-muted pt-1">
+        <div className="flex items-center justify-between text-xs text-text-muted pt-1">
           <span>
             Showing {filtered.length} of {buoys.length} buoys
           </span>

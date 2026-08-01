@@ -102,19 +102,19 @@ export default function History() {
             <Clock size={17} className="text-primary-500" />
           </div>
           <div>
-            <h1 className="text-base font-bold text-text-primary tracking-tight">
+            <h1 className="text-3xl font-bold text-text-primary tracking-tight">
               Historical Analytics
             </h1>
-            <p className="text-[10px] text-text-muted">
+            <p className="text-xs text-text-muted">
               AI trend analysis · 6-month water quality
             </p>
           </div>
         </div>
         <div className="flex gap-1.5">
-          <Button variant="ghost" size="sm" className="h-7 text-[9px] px-2.5">
+          <Button variant="ghost" size="sm" className="h-7 text-xs px-2.5">
             <Download size={11} /> Export
           </Button>
-          <Button variant="primary" size="sm" className="h-7 text-[9px] px-2.5">
+          <Button variant="primary" size="sm" className="h-7 text-xs px-2.5">
             <BarChart3 size={11} /> Full Report
           </Button>
         </div>
@@ -128,7 +128,7 @@ export default function History() {
               key={p.value}
               onClick={() => setPeriod(p.value)}
               className={cn(
-                "px-2.5 py-1 rounded-md text-[9px] font-medium transition-all",
+                "px-2.5 py-1 rounded-md text-xs font-medium transition-all",
                 period === p.value
                   ? "bg-primary-500 text-white shadow-sm"
                   : "bg-surface border border-border/50 text-text-secondary hover:bg-surface-muted",
@@ -143,7 +143,7 @@ export default function History() {
               key={m.value}
               onClick={() => setMetric(m.value)}
               className={cn(
-                "px-2 py-1 rounded-md text-[9px] font-medium transition-all flex items-center gap-1",
+                "px-2 py-1 rounded-md text-xs font-medium transition-all flex items-center gap-1",
                 metric === m.value
                   ? "bg-primary-500 text-white shadow-sm"
                   : "bg-surface border border-border/50 text-text-secondary hover:bg-surface-muted",
@@ -188,7 +188,7 @@ export default function History() {
 
       {/* Key Insights */}
       <div>
-        <h2 className="text-sm font-semibold text-text-primary mb-2.5 flex items-center gap-1.5">
+        <h2 className="text-2xl font-semibold text-text-primary mb-2.5 flex items-center gap-1.5">
           <TrendingUp size={14} className="text-emerald-500" />
           Key Insights
         </h2>
@@ -197,12 +197,12 @@ export default function History() {
             <Card key={i}>
               <CardContent className="p-3">
                 <div className="flex items-center justify-between mb-0.5">
-                  <span className="text-[9px] text-text-muted">
+                  <span className="text-xs text-text-muted">
                     {insight.label}
                   </span>
                   <span
                     className={cn(
-                      "text-[9px] font-medium",
+                      "text-xs font-medium",
                       insight.trend === "up"
                         ? "text-emerald-600"
                         : "text-sky-600",
@@ -210,7 +210,7 @@ export default function History() {
                     {insight.trend === "up" ? "↑" : "→"} {insight.value}
                   </span>
                 </div>
-                <p className="text-[10px] text-text-secondary">
+                <p className="text-sm text-text-secondary">
                   {insight.desc}
                 </p>
               </CardContent>
@@ -222,26 +222,26 @@ export default function History() {
       {/* Stats Overview */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         <div className="bg-surface rounded-lg border border-border/50 p-2.5 text-center">
-          <div className="text-base font-bold text-emerald-600">+8%</div>
-          <div className="text-[8px] text-text-muted uppercase tracking-wide">
+          <div className="text-xl font-bold text-emerald-600">+8%</div>
+          <div className="text-xs text-text-muted uppercase tracking-wide">
             Quality Improvement
           </div>
         </div>
         <div className="bg-surface rounded-lg border border-border/50 p-2.5 text-center">
-          <div className="text-base font-bold text-primary-500">96%</div>
-          <div className="text-[8px] text-text-muted uppercase tracking-wide">
+          <div className="text-xl font-bold text-primary-500">96%</div>
+          <div className="text-xs text-text-muted uppercase tracking-wide">
             Current Score
           </div>
         </div>
         <div className="bg-surface rounded-lg border border-border/50 p-2.5 text-center">
-          <div className="text-base font-bold text-text-primary">6mo</div>
-          <div className="text-[8px] text-text-muted uppercase tracking-wide">
+          <div className="text-xl font-bold text-text-primary">6mo</div>
+          <div className="text-xs text-text-muted uppercase tracking-wide">
             Tracking Period
           </div>
         </div>
         <div className="bg-surface rounded-lg border border-border/50 p-2.5 text-center">
-          <div className="text-base font-bold text-sky-600">12</div>
-          <div className="text-[8px] text-text-muted uppercase tracking-wide">
+          <div className="text-xl font-bold text-sky-600">12</div>
+          <div className="text-xs text-text-muted uppercase tracking-wide">
             Active Buoys
           </div>
         </div>
@@ -254,7 +254,7 @@ export default function History() {
             <Calendar size={13} className="text-text-muted" />
             Milestones
           </CardTitle>
-          <Button variant="ghost" size="sm" className="h-6 text-[8px] px-2">
+          <Button variant="ghost" size="sm" className="h-6 text-xs px-2">
             View All <ArrowRight size={10} />
           </Button>
         </CardHeader>
@@ -274,10 +274,10 @@ export default function History() {
                         : "bg-emerald-500",
                   )}
                 />
-                <span className="text-[9px] text-text-muted w-16 flex-shrink-0">
+                <span className="text-xs text-text-muted w-16 flex-shrink-0">
                   {m.date}
                 </span>
-                <span className="text-[10px] text-text-secondary flex-1">
+                <span className="text-xs text-text-secondary flex-1">
                   {m.event}
                 </span>
                 <Badge
@@ -336,7 +336,7 @@ export default function History() {
       </Card>
 
       {/* Footer */}
-      <div className="flex items-center justify-between text-[8px] text-text-muted pt-1">
+      <div className="flex items-center justify-between text-xs text-text-muted pt-1">
         <span>Data updated: Today, 14:23</span>
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-0.5">
