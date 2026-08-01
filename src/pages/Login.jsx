@@ -123,7 +123,7 @@ export default function Login() {
 
   return (
     <div
-      className="min-h-screen w-full relative flex items-center justify-center px-4 py-10 antialiased overflow-hidden"
+      className="min-h-screen h-screen w-full relative flex items-center justify-center px-4 py-10 antialiased overflow-hidden"
       style={{ background: C.bg, fontFamily: "'Inter', sans-serif" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -166,12 +166,12 @@ export default function Login() {
             <img
               src="/image/favicon1.png"
               alt="NELEUS1 logo"
-              className="h-7 w-7 object-contain"
+              className="h-10 w-10 object-contain"
             />
             <img
               src="/image/name.png"
               alt="NELEUS1"
-              className="h-5 w-auto object-contain"
+              className="h-8 w-auto object-contain"
             />
           </div>
 
@@ -237,12 +237,12 @@ export default function Login() {
             <img
               src="/image/favicon1.png"
               alt="NELEUS1 logo"
-              className="h-7 w-7 object-contain"
+              className="h-10 w-10 object-contain"
             />
             <img
               src="/image/name.png"
               alt="NELEUS1"
-              className="h-5 w-auto object-contain"
+              className="h-8 w-auto object-contain"
             />
           </div>
 
