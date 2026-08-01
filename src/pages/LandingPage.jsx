@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Anchor,
   Radio,
@@ -501,6 +502,7 @@ function FisheriesSection() {
 /*  NAVIGATION                                                          */
 /* ------------------------------------------------------------------ */
 function Nav() {
+  const navigate = useNavigate();
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -562,6 +564,7 @@ function Nav() {
 
         <div className="hidden lg:flex items-center gap-3">
           <button
+            onClick={() => navigate("/login")}
             className={`px-5 py-2.5 text-[13px] font-medium tracking-wide transition-colors duration-300 ${
               solid ? "hover:text-[#00D4FF]" : "hover:text-white"
             }`}
@@ -604,6 +607,7 @@ function Nav() {
             className="flex flex-col gap-3 pt-4"
             style={{ borderTop: `1px solid ${C.border}` }}>
             <button
+              onClick={() => navigate("/login")}
               className="px-5 py-3 text-sm text-left"
               style={{ color: solid ? "#042022" : C.textSub }}>
               Login
