@@ -1,6 +1,0 @@
-tree 724dfe0797d6d3fcfc4b2e62ca0fa0aef1595e72
-parent a34ddacc03dfd5a923473ee2b53e479777b2d6b4
-author maryjoyespino5-ops <villacampamichael123@gmail.com> 1785567086 +0800
-committer maryjoyespino5-ops <villacampamichael123@gmail.com> 1785567086 +0800
-
-remove loginvideo.mp4 from git (too large) - add to .gitignore
