@@ -1007,88 +1007,6 @@ function FeatureRow({ coord, title, desc, panel, reverse }) {
   );
 }
 
-
-/* ------------------------------------------------------------------ */
-/*  STAKEHOLDER SECTION                                               */
-/* ------------------------------------------------------------------ */
-function StakeholderSection() {
-  const [ref, visible] = useReveal(0.18);
-
-  const stakeholders = [
-    {
-      title: "Navigation Safety",
-      desc: "Monitor sea conditions, currents, and hazards to improve vessel safety.",
-    },
-    {
-      title: "Commercial Fisheries",
-      desc: "Track conditions and fish activity to plan smarter, safer trips.",
-    },
-    {
-      title: "Aquaculture",
-      desc: "Keep pens and farms within safe chemical and temperature ranges.",
-    },
-    {
-      title: "Marine Research",
-      desc: "Continuous, citable data streams for long-term ocean studies.",
-    },
-    {
-      title: "Government",
-      desc: "Coastal oversight and compliance monitoring at regional scale.",
-    },
-    {
-      title: "Disaster Monitoring",
-      desc: "Early signals on pressure and temperature shifts before storms.",
-    },
-    {
-      title: "Environmental Protection",
-      desc: "Detect pollution events and ecosystem stress as they develop.",
-    },
-    {
-      title: "Education",
-      desc: "Live ocean data for classrooms and student research projects.",
-    },
-  ];
-
-  return (
-    <section
-      id="stakeholders"
-      ref={ref}
-      className="py-20"
-      style={{ background: C.bg }}>
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-        <Reveal>
-          <SectionHeading
-            coord="01"
-            title="Built for Every Coastal Stakeholder"
-            sub="USE CASES"
-          />
-        </Reveal>
-
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {stakeholders.map((s, i) => (
-            <Reveal key={s.title} delay={i * 80}>
-              <div
-                className="p-6 border transition-colors duration-300 hover:border-[#00D4FF]/30"
-                style={{ borderColor: C.border, background: C.surface }}>
-                <h4
-                  className="text-base font-semibold"
-                  style={{ color: C.white }}>
-                  {s.title}
-                </h4>
-                <p
-                  className="mt-3 text-sm leading-relaxed"
-                  style={{ color: C.textSub }}>
-                  {s.desc}
-                </p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Features() {
   return (
     <section id="features" className="py-8" style={{ background: C.bg }}>
@@ -1752,7 +1670,6 @@ export default function LandingPage() {
       <Platform />
       <CoralReef />
       <FisheriesSection />
-      <StakeholderSection />
       <Features />
       <DashboardPreview />
       <HowItWorks />
