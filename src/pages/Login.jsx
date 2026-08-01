@@ -150,7 +150,7 @@ export default function Login() {
       {/* Background video */}
       <video
         className="absolute inset-0 w-full h-full object-cover"
-        src="/video/loginvideo.mp4"
+        src="/video/loginvideo1.mp4"
         autoPlay
         muted
         loop
