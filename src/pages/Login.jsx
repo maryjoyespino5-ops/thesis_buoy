@@ -187,7 +187,7 @@ export default function Login() {
             <img
               src="/image/name.png"
               alt="NELEUS1"
-              className="h-12 w-auto object-contain"
+              className="h-20 w-auto object-contain"
             />
           </div>
 
@@ -258,7 +258,7 @@ export default function Login() {
             <img
               src="/image/name.png"
               alt="NELEUS1"
-              className="h-12 w-auto object-contain"
+              className="h-20 w-auto object-contain"
             />
           </div>
 
