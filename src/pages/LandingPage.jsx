@@ -521,7 +521,6 @@ function Nav() {
     "Contact",
   ];
 
-  const linkColor = solid ? C.white : C.textSub;
   const textColor = C.white;
   return (
     <header
@@ -556,7 +555,7 @@ function Nav() {
               className={`text-[13px] tracking-wide transition-colors duration-300 ${
                 solid ? "hover:text-[#00D4FF]" : "hover:text-white"
               }`}
-              style={{ color: linkColor }}>
+              style={{ color: solid ? C.textSub : C.white }}>
               {l}
             </a>
           ))}
@@ -568,7 +567,7 @@ function Nav() {
             className={`px-5 py-2.5 text-[13px] font-medium tracking-wide transition-colors duration-300 ${
               solid ? "hover:text-[#00D4FF]" : "hover:text-white"
             }`}
-            style={{ color: linkColor }}>
+            style={{ color: solid ? C.textSub : C.white }}>
             Login
           </button>
           <button
@@ -590,7 +589,7 @@ function Nav() {
         <div
           className="lg:hidden px-6 pb-8 pt-2 flex flex-col gap-5"
           style={{
-            background: solid ? "rgba(3,23,38,0.96)" : "rgba(3,23,38,0.98)",
+            background: "rgba(3,23,38,0.98)",
             borderTop: `1px solid ${solid ? "rgba(255,255,255,0.04)" : C.border}`,
           }}>
           {links.map((l) => (
@@ -598,7 +597,7 @@ function Nav() {
               key={l}
               href={`#${l.toLowerCase().replace(/\s/g, "-")}`}
               className="text-sm"
-              style={{ color: solid ? "#042022" : C.textSub }}
+              style={{ color: C.white }}
               onClick={() => setOpen(false)}>
               {l}
             </a>
@@ -609,7 +608,7 @@ function Nav() {
             <button
               onClick={() => navigate("/login")}
               className="px-5 py-3 text-sm text-left"
-              style={{ color: solid ? "#042022" : C.textSub }}>
+              style={{ color: C.white }}>
               Login
             </button>
             <button
