@@ -147,23 +147,6 @@ export default function Login() {
         />
       </div>
 
-      {/* Background video */}
-      <video
-        className="absolute inset-0 w-full h-full object-cover"
-        src="/video/loginvideo1.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(3,15,30,0.92) 0%, rgba(3,15,30,0.7) 50%, rgba(3,15,30,0.85) 100%)",
-        }}
-      />
-
       <Link
         to="/"
         className="fixed top-6 left-6 z-30 flex items-center gap-2 text-[13px] font-medium border px-4 py-2 transition-colors duration-300 hover:text-white"
@@ -177,9 +160,25 @@ export default function Login() {
         style={{ borderColor: C.border, background: C.surface, boxShadow: "0 30px 80px rgba(0,0,0,0.35)" }}>
         {/* ============ LEFT — INFO PANEL ============ */}
         <div
-          className="hidden lg:flex flex-col justify-between p-9 border-r"
+          className="hidden lg:flex flex-col justify-between p-9 border-r relative overflow-hidden"
           style={{ borderColor: C.border, background: C.bg }}>
-          <div className="flex items-center gap-2.5">
+          {/* Video background for left panel */}
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            src="/video/loginvideo1.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(3,15,30,0.85) 0%, rgba(3,15,30,0.5) 50%, rgba(3,15,30,0.7) 100%)",
+            }}
+          />
+          <div className="relative z-10 flex items-center gap-2.5">
             <img
               src="/image/favicon1.png"
               alt="NELEUS1 logo"
@@ -192,7 +191,7 @@ export default function Login() {
             />
           </div>
 
-          <div>
+          <div className="relative z-10">
             <Coord>Secure Access</Coord>
             <h1
               className="text-3xl font-semibold leading-[1.15] tracking-tight"
@@ -223,7 +222,7 @@ export default function Login() {
           </div>
 
           <div
-            className="grid grid-cols-3 gap-6 pt-6 border-t"
+            className="relative z-10 grid grid-cols-3 gap-6 pt-6 border-t"
             style={{ borderColor: C.border }}>
             {[
               ["240+", "reserves"],
