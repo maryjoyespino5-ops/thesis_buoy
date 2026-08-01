@@ -2,9 +2,10 @@
 // App.jsx
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { Layout } from "./components/layout/Layout";
 import Login from "./pages/Login";
-import LandingPage from "./pages/LandingPage"; // ✅ Import LandingPage
+import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import AICommandCenter from "./pages/AICommandCenter";
@@ -23,7 +24,6 @@ import { Toaster } from "react-hot-toast";
 import { useRole } from "./hooks/useRole";
 
 function ProtectedRoute({ children }) {
-  // Future: check authentication here
   return children;
 }
 
@@ -31,7 +31,8 @@ function App() {
   const { currentRole } = useRole();
 
   return (
-    <>
+    <HelmetProvider>
+      <>
       <Routes>
         {/* 🆕 Landing Page as default route */}
         <Route path="/" element={<LandingPage />} />
@@ -80,7 +81,8 @@ function App() {
           },
         }}
       />
-    </>
+      </>
+    </HelmetProvider>
   );
 }
 

@@ -1,0 +1,29 @@
+{
+  "name": "neleus1 · AI Decision Support",
+  "short_name": "neleus1",
+  "description": "AI-powered ocean monitoring and decision support platform for coastal stakeholders.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#03131F",
+  "theme_color": "#00D4FF",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/image/favicon1.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/image/favicon1.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/image/favicon1.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["weather", "marine", "ocean", "monitoring"],
+  "lang": "en"
+}

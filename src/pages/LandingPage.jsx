@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { SEO, defaultStructuredData } from "../components/seo/SEO";
 import {
   Anchor,
   Radio,
@@ -1660,9 +1661,15 @@ function Footer() {
 /* ------------------------------------------------------------------ */
 export default function LandingPage() {
   return (
-    <div
-      style={{ background: C.bg, fontFamily: "'Inter', sans-serif" }}
-      className="min-h-screen antialiased">
+    <>
+      <SEO
+        title="neleus1 · AI Decision Support"
+        description="AI-powered ocean monitoring and decision support platform for coastal stakeholders. Track sea conditions, fish activity, and marine data in real time."
+        structuredData={defaultStructuredData}
+      />
+      <div
+        style={{ background: C.bg, fontFamily: "'Inter', sans-serif" }}
+        className="min-h-screen antialiased">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
         * { border-radius: 0 !important; }
@@ -1684,5 +1691,6 @@ export default function LandingPage() {
       <CTA />
       <Footer />
     </div>
+    </>
   );
 }

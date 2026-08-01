@@ -6,6 +6,7 @@ import { useAuth } from "../hooks/useAuth";
 import { cn } from "../lib/utils";
 import { supabase } from "../lib/supabaseClient";
 import { toast } from "react-hot-toast";
+import { SEO, defaultStructuredData } from "../components/seo/SEO";
 import {
   Shield,
   Building2,
@@ -122,9 +123,15 @@ export default function Login() {
   };
 
   return (
-    <div
-      className="min-h-screen h-screen w-full relative flex items-center justify-center px-4 py-10 antialiased overflow-y-auto lg:overflow-hidden"
-      style={{ background: C.bg, fontFamily: "'Inter', sans-serif" }}>
+    <>
+      <SEO
+        title="Sign In · neleus1"
+        description="Sign in to neleus1 AI Decision Support. Access real-time ocean monitoring, buoy telemetry, AI insights, and conservation alerts."
+        structuredData={defaultStructuredData}
+      />
+      <div
+        className="min-h-screen h-screen w-full relative flex items-center justify-center px-4 py-10 antialiased overflow-y-auto lg:overflow-hidden"
+        style={{ background: C.bg, fontFamily: "'Inter', sans-serif" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
         * { border-radius: 0 !important; }
@@ -471,5 +478,6 @@ export default function Login() {
         </div>
       </div>
     </div>
+    </>
   );
 }

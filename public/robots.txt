@@ -1,0 +1,25 @@
+# robots.txt - Production ready
+# Generated for neleus1 · AI Decision Support
+
+User-agent: *
+Allow: /
+Allow: /login
+Allow: /landing
+
+# Block admin and private areas
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+
+# Block development files
+Disallow: /.env
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /dist/
+Disallow: /src/
+Disallow: /vite.config.js
+Disallow: /postcss.config.js
+Disallow: /tailwind.config.js
+
+# Sitemap
+Sitemap: https://thesis-buoy.vercel.app/sitemap.xml
