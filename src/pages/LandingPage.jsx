@@ -1493,6 +1493,10 @@ function Applications() {
       "Education",
       FileText,
       "Live ocean data for classrooms and student research projects.",
+    ],[
+      "Navigation Safety",
+      FileText,
+      "Monitor sea conditions, currents, and hazards to improve vessel safety.",
     ],
   ];
   return (
