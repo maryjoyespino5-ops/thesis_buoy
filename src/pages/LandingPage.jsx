@@ -1370,13 +1370,33 @@ function AIInsights() {
     ],
   ];
   return (
-    <section id="ai-insights" className="py-28" style={{ background: C.bg }}>
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+    <section id="ai-insights" className="py-28 relative overflow-hidden" style={{ background: C.bg }}>
+      {/* Background video */}
+      <div className="absolute inset-0">
+        <video
+          className="w-full h-full object-cover"
+          src="/video/ai.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(3,15,30,0.92) 0%, rgba(3,15,30,0.7) 50%, rgba(3,15,30,0.85) 100%)",
+          }}
+        />
+      </div>
+
+      {/* Content overlay */}
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
         <Reveal>
           <SectionHeading
-            coord="AI ENGINE"
-            title="Predictions the Moment They Matter"
-            sub="NELEUS1 doesn't just report numbers — it interprets them, surfacing what a trained analyst would flag, continuously and at fleet scale."
+            coord="FEATURE 02 · AI INSIGHTS"
+            title="AI Prediction Engine"
+            sub="Models trained on historical readings forecast fish activity, water quality trends, weather shifts, and emerging environmental risk before they escalate."
           />
         </Reveal>
         <div
