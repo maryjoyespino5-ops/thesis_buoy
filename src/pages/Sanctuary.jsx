@@ -201,7 +201,7 @@ export default function Sanctuary() {
       {/* Acoustic Timeline */}
       <Card>
         <CardHeader className="px-3.5 py-2.5 flex flex-row items-center justify-between">
-          <CardTitle className="text-xs flex items-center gap-1.5">
+          <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
             <Volume2 size={13} className="text-primary-500" />
             Acoustic Timeline
           </CardTitle>
@@ -287,7 +287,7 @@ export default function Sanctuary() {
                   size={24}
                   className="text-text-muted mx-auto mb-1 opacity-30"
                 />
-                <div className="text-xs text-text-muted">No alerts found</div>
+                <div className="text-sm text-text-muted">No alerts found</div>
               </CardContent>
             </Card>
           ) : (
@@ -314,7 +314,7 @@ export default function Sanctuary() {
                           )}
                         />
                         <div>
-                          <span className="text-xs text-text-primary">
+                          <span className="text-sm text-text-primary">
                             {a.event}
                           </span>
                           <div className="flex items-center gap-2 text-[8px] text-text-muted">

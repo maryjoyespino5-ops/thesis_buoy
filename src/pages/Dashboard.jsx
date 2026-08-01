@@ -220,7 +220,7 @@ export default function Dashboard() {
         <div className="lg:col-span-2">
           <Card>
             <CardHeader className="px-3.5 py-2.5 flex flex-row items-center justify-between">
-              <CardTitle className="text-xs">Sensor AI Contribution</CardTitle>
+              <CardTitle className="text-lg font-semibold">Sensor AI Contribution</CardTitle>
               <Badge variant="info" size="sm">
                 {sensorData.length} sensors
               </Badge>
@@ -249,7 +249,7 @@ export default function Dashboard() {
                       <div className="text-[9px] font-medium uppercase tracking-wider text-text-muted">
                         {s.label}
                       </div>
-                      <div className="text-xs font-bold text-text-primary leading-tight">
+                      <div className="text-sm font-bold text-text-primary leading-tight">
                         {s.value}
                       </div>
                       <div className="text-[9px] text-text-muted">
@@ -265,28 +265,28 @@ export default function Dashboard() {
         <div className="lg:col-span-1">
           <Card>
             <CardHeader className="px-3.5 py-2.5">
-              <CardTitle className="text-xs">Quick Stats</CardTitle>
+              <CardTitle className="text-lg font-semibold">Quick Stats</CardTitle>
             </CardHeader>
             <CardContent className="px-3.5 pb-3.5 space-y-2">
               <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
                 <span className="text-[10px] text-text-muted">Total Users</span>
-                <span className="text-xs font-bold text-text-primary">24</span>
+                <span className="text-sm font-bold text-text-primary">24</span>
               </div>
               <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
                 <span className="text-[10px] text-text-muted">
                   Active Sessions
                 </span>
-                <span className="text-xs font-bold text-text-primary">8</span>
+                <span className="text-sm font-bold text-text-primary">8</span>
               </div>
               <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
                 <span className="text-[10px] text-text-muted">Data Points</span>
-                <span className="text-xs font-bold text-text-primary">
+                <span className="text-sm font-bold text-text-primary">
                   12.4K
                 </span>
               </div>
               <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
                 <span className="text-[10px] text-text-muted">Uptime</span>
-                <span className="text-xs font-bold text-emerald-600">
+                <span className="text-sm font-bold text-emerald-600">
                   99.8%
                 </span>
               </div>
@@ -333,7 +333,7 @@ export default function Dashboard() {
         {/* Recent Activity */}
         <Card>
           <CardHeader className="px-3.5 py-2.5 flex flex-row items-center justify-between">
-            <CardTitle className="text-xs flex items-center gap-1.5">
+            <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
               <Clock size={13} className="text-text-muted" />
               Recent Activity
             </CardTitle>
@@ -391,7 +391,7 @@ export default function Dashboard() {
         {/* Quick Alerts */}
         <Card>
           <CardHeader className="px-3.5 py-2.5 flex flex-row items-center justify-between">
-            <CardTitle className="text-xs flex items-center gap-1.5">
+            <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
               <Bell size={13} className="text-amber-500" />
               Quick Alerts
             </CardTitle>

@@ -26,7 +26,7 @@ export function DOChart({ className }) {
     <div
       className={`bg-surface rounded-lg border border-border/50 p-3 ${className || ""}`}>
       <div className="flex items-center justify-between mb-2">
-        <h4 className="text-xs font-semibold text-text-primary">
+        <h4 className="text-sm font-semibold text-text-primary">
           Dissolved Oxygen & pH
         </h4>
         <span className="text-[9px] text-text-muted">7-day trend</span>

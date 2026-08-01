@@ -284,7 +284,7 @@ export default function LiveMonitoring() {
               className="text-text-muted mx-auto mb-2 opacity-30"
             />
             <div className="text-sm text-text-muted">No buoys found</div>
-            <p className="text-xs text-text-muted mt-1">
+            <p className="text-sm text-text-muted mt-1">
               Try adjusting your search or filter
             </p>
           </CardContent>
@@ -313,7 +313,7 @@ export default function LiveMonitoring() {
         {/* Recent Activity */}
         <Card>
           <CardHeader className="px-3.5 py-2.5 flex flex-row items-center justify-between">
-            <CardTitle className="text-xs flex items-center gap-1.5">
+            <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
               <Activity size={13} className="text-primary-500" />
               Recent Activity
             </CardTitle>
@@ -371,7 +371,7 @@ export default function LiveMonitoring() {
         {/* System Status */}
         <Card>
           <CardHeader className="px-3.5 py-2.5 flex flex-row items-center justify-between">
-            <CardTitle className="text-xs flex items-center gap-1.5">
+            <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
               <Cpu size={13} className="text-primary-500" />
               System Status
             </CardTitle>

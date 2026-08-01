@@ -158,7 +158,7 @@ export default function History() {
       {/* Main Chart */}
       <Card>
         <CardHeader className="px-3.5 py-2.5 flex flex-row items-center justify-between">
-          <CardTitle className="text-xs flex items-center gap-1.5">
+          <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
             <LineChart size={13} className="text-primary-500" />
             {metrics.find((m) => m.value === metric)?.label ||
               "Water Quality"}{" "}
@@ -250,7 +250,7 @@ export default function History() {
       {/* Milestones / Timeline */}
       <Card>
         <CardHeader className="px-3.5 py-2.5 flex flex-row items-center justify-between">
-          <CardTitle className="text-xs flex items-center gap-1.5">
+          <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
             <Calendar size={13} className="text-text-muted" />
             Milestones
           </CardTitle>
@@ -300,7 +300,7 @@ export default function History() {
       {/* Data Quality */}
       <Card>
         <CardHeader className="px-3.5 py-2.5">
-          <CardTitle className="text-xs flex items-center gap-1.5">
+          <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
             <Activity size={13} className="text-primary-500" />
             Data Quality Overview
           </CardTitle>

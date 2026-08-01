@@ -101,10 +101,10 @@ export default function AdminDashboard() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div className="flex items-center gap-3">
               <div>
-                <h1 className="text-base font-bold text-text-primary tracking-tight">
+                <h1 className="text-3xl font-bold text-text-primary tracking-tight">
                   Good morning, {user?.name?.split(" ")[0] || "John"}
                 </h1>
-                <p className="text-[11px] text-text-muted">
+                <p className="text-sm text-text-muted">
                   {buoys.filter((b) => b.status === "green").length} healthy ·{" "}
                   {alerts.filter((a) => a.priority === "Critical").length}{" "}
                   critical alerts
@@ -127,14 +127,14 @@ export default function AdminDashboard() {
               <Button
                 variant="secondary"
                 size="sm"
-                className="h-7 text-xs px-3"
+                className="h-7 text-sm px-3"
                 onClick={() => navigate("/alerts")}>
                 <Bell size={12} /> Alerts
               </Button>
               <Button
                 variant="primary"
                 size="sm"
-                className="h-7 text-xs px-3"
+                className="h-7 text-sm px-3"
                 onClick={() => navigate("/buoys")}>
                 <Ship size={12} /> Buoys
               </Button>
@@ -147,10 +147,10 @@ export default function AdminDashboard() {
               <div
                 key={i}
                 className="bg-surface-muted/50 rounded-md px-3 py-1.5 text-center">
-                <div className="text-sm font-bold text-text-primary leading-tight">
+                <div className="text-xl font-bold text-text-primary leading-tight">
                   {s.num}
                 </div>
-                <div className="text-[10px] text-text-muted uppercase tracking-wide">
+                <div className="text-sm text-text-muted uppercase tracking-wide">
                   {s.label}
                 </div>
               </div>
@@ -208,10 +208,10 @@ export default function AdminDashboard() {
                 <item.icon size={16} className={`text-${item.color}-500`} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[11px] font-medium text-text-primary leading-tight">
+                <p className="text-sm font-medium text-text-primary leading-tight">
                   {item.label}
                 </p>
-                <p className="text-[11px] text-text-muted">{item.desc}</p>
+                <p className="text-sm text-text-muted">{item.desc}</p>
               </div>
               <ArrowRight
                 size={14}
@@ -235,10 +235,10 @@ export default function AdminDashboard() {
       {/* Compact Sensor Contribution */}
       <Card>
         <CardHeader className="p-3 flex flex-row items-center justify-between">
-          <CardTitle className="text-[11px] font-semibold">
+          <CardTitle className="text-lg font-semibold">
             Sensor AI Contribution
           </CardTitle>
-          <Badge variant="info" className="text-[10px]">
+          <Badge variant="info" className="text-sm">
             {sensorData.length} sensors
           </Badge>
         </CardHeader>
@@ -262,13 +262,13 @@ export default function AdminDashboard() {
                 <div
                   key={i}
                   className="bg-surface-muted/50 rounded-md p-2 text-center">
-                  <div className="text-[9px] font-medium uppercase tracking-wider text-text-muted">
+                  <div className="text-sm font-medium uppercase tracking-wider text-text-muted">
                     {s.label}
                   </div>
-                  <div className="text-xs font-bold text-text-primary leading-tight">
+                  <div className="text-sm font-bold text-text-primary leading-tight">
                     {s.value}
                   </div>
-                  <div className="text-[9px] text-text-muted">{s.contrib}</div>
+                  <div className="text-sm text-text-muted">{s.contrib}</div>
                 </div>
               ))}
             </div>
@@ -279,11 +279,11 @@ export default function AdminDashboard() {
       {/* Compact Buoy Status */}
       <div>
         <div className="flex items-center justify-between mb-2">
-          <h2 className="text-[11px] font-semibold text-text-primary flex items-center gap-1.5">
+          <h2 className="text-2xl font-semibold text-text-primary flex items-center gap-1.5">
             <Activity size={14} className="text-ocean-500" />
             Buoy Status
           </h2>
-          <Badge variant="success" className="text-[10px]">
+          <Badge variant="success" className="text-sm">
             {buoys.filter((b) => b.status === "green").length} online
           </Badge>
         </div>
@@ -305,7 +305,7 @@ export default function AdminDashboard() {
         {/* Recent Alerts */}
         <Card>
           <CardHeader className="p-3 flex flex-row items-center justify-between">
-            <CardTitle className="text-[11px] font-semibold flex items-center gap-1.5">
+            <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
               <Bell size={14} className="text-amber-500" />
               Recent Alerts
             </CardTitle>
@@ -314,7 +314,7 @@ export default function AdminDashboard() {
                 <button
                   key={f}
                   onClick={() => setAlertFilter(f)}
-                  className={`px-1.5 py-0.5 rounded text-[9px] font-medium transition-colors ${
+                  className={`px-1.5 py-0.5 rounded text-sm font-medium transition-colors ${
                     alertFilter === f
                       ? "bg-primary-500 text-white"
                       : "bg-surface-muted text-text-muted hover:bg-surface-muted/80"
@@ -339,10 +339,10 @@ export default function AdminDashboard() {
                           : "bg-emerald-500"
                     }`}
                   />
-                  <span className="text-[10px] text-text-muted w-12 flex-shrink-0">
+                  <span className="text-sm text-text-muted w-12 flex-shrink-0">
                     {a.time}
                   </span>
-                  <span className="text-[11px] text-text-secondary flex-1 truncate">
+                  <span className="text-sm text-text-secondary flex-1 truncate">
                     {a.buoy} · {a.desc}
                   </span>
                   <Badge
@@ -353,9 +353,9 @@ export default function AdminDashboard() {
                           ? "warning"
                           : "success"
                     }
-                    className="text-[9px] px-1.5">
-                  {a.priority}
-                  </Badge>
+                    className="text-sm px-1.5">
+                {a.priority}
+                </Badge>
                 </div>
               ))}
             </div>
@@ -365,14 +365,14 @@ export default function AdminDashboard() {
         {/* Maintenance Tasks */}
         <Card>
           <CardHeader className="p-3 flex flex-row items-center justify-between">
-            <CardTitle className="text-[11px] font-semibold flex items-center gap-1.5">
+            <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
               <Wrench size={14} className="text-teal-500" />
               Maintenance
             </CardTitle>
             <Button
               variant="ghost"
               size="sm"
-              className="h-6 text-[10px] px-2"
+              className="h-6 text-sm px-2"
               onClick={() => navigate("/maintenance")}>
               View <ChevronRight size={10} />
             </Button>
@@ -393,10 +393,10 @@ export default function AdminDashboard() {
                     }`}
                   />
                   <div className="flex-1 min-w-0">
-                    <p className="text-[11px] text-text-primary font-medium truncate leading-tight">
+                    <p className="text-sm text-text-primary font-medium truncate leading-tight">
                       {m.task}
                     </p>
-                    <p className="text-[10px] text-text-muted">{m.buoy}</p>
+                    <p className="text-sm text-text-muted">{m.buoy}</p>
                   </div>
                   <Badge
                     variant={
@@ -406,12 +406,12 @@ export default function AdminDashboard() {
                           ? "info"
                           : "warning"
                     }
-                    className="text-[9px] px-1.5">
-                  {m.status === "Completed"
-                    ? "✓"
-                    : m.status === "Scheduled"
-                      ? "📅"
-                      : "⏳"}
+                    className="text-sm px-1.5">
+                {m.status === "Completed"
+                  ? "✓"
+                  : m.status === "Scheduled"
+                    ? "📅"
+                    : "⏳"}
                   </Badge>
                 </div>
               ))}
@@ -423,7 +423,7 @@ export default function AdminDashboard() {
       {/* Compact Recent Activity */}
       <Card>
         <CardHeader className="p-3">
-          <CardTitle className="text-[11px] font-semibold">
+          <CardTitle className="text-lg font-semibold">
             Recent Activity
           </CardTitle>
         </CardHeader>
@@ -463,10 +463,10 @@ export default function AdminDashboard() {
                         : "bg-emerald-500"
                   }`}
                 />
-                <span className="text-[10px] text-text-muted w-12 flex-shrink-0">
+                <span className="text-sm text-text-muted w-12 flex-shrink-0">
                   {a.time}
                 </span>
-                <span className="text-[11px] text-text-secondary flex-1 truncate">
+                <span className="text-sm text-text-secondary flex-1 truncate">
                   {a.event}
                 </span>
               </div>

@@ -259,7 +259,7 @@ export default function Reports() {
               className="text-text-muted mx-auto mb-2 opacity-30"
             />
             <div className="text-sm text-text-muted">No reports found</div>
-            <p className="text-xs text-text-muted mt-1">
+            <p className="text-sm text-text-muted mt-1">
               Try adjusting your search or filters
             </p>
           </CardContent>

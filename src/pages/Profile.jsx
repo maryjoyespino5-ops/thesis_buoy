@@ -296,7 +296,7 @@ export default function Profile() {
       {/* Recent Activity */}
       <Card>
         <CardHeader className="px-3.5 py-2.5 flex flex-row items-center justify-between">
-          <CardTitle className="text-xs flex items-center gap-1.5">
+          <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
             <Activity size={13} className="text-primary-500" />
             Recent Activity
           </CardTitle>
@@ -354,7 +354,7 @@ export default function Profile() {
             <Clock size={12} className="text-text-muted" />
             <span className="text-[10px] text-text-primary">Last Login</span>
           </div>
-          <div className="text-xs font-medium text-text-primary mt-0.5">
+          <div className="text-sm font-medium text-text-primary mt-0.5">
             {userData.lastLogin}
           </div>
         </div>
@@ -363,7 +363,7 @@ export default function Profile() {
             <Calendar size={12} className="text-text-muted" />
             <span className="text-[10px] text-text-primary">Member Since</span>
           </div>
-          <div className="text-xs font-medium text-text-primary mt-0.5">
+          <div className="text-sm font-medium text-text-primary mt-0.5">
             {userData.joinDate}
           </div>
         </div>

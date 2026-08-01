@@ -443,7 +443,7 @@ function MapContent({ buoys, setSelectedBuoy, selectedBuoy }) {
                     </Badge>
                   </div>
 
-                  <div className="space-y-1.5 text-xs">
+                  <div className="space-y-1.5 text-sm">
                     <div className="flex items-center justify-between">
                       <span className="text-text-muted">Fish Probability</span>
                       <span className="font-bold text-text-primary">
@@ -863,7 +863,7 @@ export default function FishActivity() {
       {/* Map */}
       <Card className="overflow-hidden">
         <CardHeader className="px-3.5 py-2.5 flex flex-row items-center justify-between">
-          <CardTitle className="text-xs flex items-center gap-1.5">
+          <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
             <MapPin size={13} className="text-primary-500" />
             Live Fish Distribution Map
             <Badge variant="success" size="sm">

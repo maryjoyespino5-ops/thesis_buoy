@@ -227,7 +227,7 @@ export default function Alerts() {
                       />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5 flex-wrap">
-                          <span className="font-medium text-text-primary text-xs">
+                          <span className="font-medium text-text-primary text-sm">
                             {a.buoy}
                           </span>
                           <span className="text-[10px] text-text-muted flex items-center gap-0.5">

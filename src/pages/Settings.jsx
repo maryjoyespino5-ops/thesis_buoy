@@ -241,7 +241,7 @@ export default function Settings() {
       {/* Quick Settings */}
       <Card>
         <CardHeader className="px-3.5 py-2.5">
-          <CardTitle className="text-xs flex items-center gap-1.5">
+          <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
             <Zap size={13} className="text-amber-500" />
             Quick Settings
           </CardTitle>
@@ -274,7 +274,7 @@ export default function Settings() {
       {/* Advanced Settings */}
       <Card>
         <CardHeader className="px-3.5 py-2.5 flex flex-row items-center justify-between">
-          <CardTitle className="text-xs flex items-center gap-1.5">
+          <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
             <Cpu size={13} className="text-primary-500" />
             Advanced Settings
           </CardTitle>
@@ -328,7 +328,7 @@ export default function Settings() {
       {/* Security */}
       <Card>
         <CardHeader className="px-3.5 py-2.5 flex flex-row items-center justify-between">
-          <CardTitle className="text-xs flex items-center gap-1.5">
+          <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
             <Lock size={13} className="text-red-500" />
             Security
           </CardTitle>

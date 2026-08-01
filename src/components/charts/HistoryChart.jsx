@@ -32,7 +32,7 @@ export function HistoryChart({
     <div
       className={`bg-surface rounded-lg border border-border/50 p-3 ${className || ""}`}>
       <div className="flex items-center justify-between mb-1">
-        <h4 className="text-xs font-semibold text-text-primary">
+        <h4 className="text-sm font-semibold text-text-primary">
           Historical Trend
         </h4>
         <span className="text-[9px] text-text-muted">Last 7 months</span>

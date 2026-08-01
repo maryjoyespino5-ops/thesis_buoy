@@ -124,7 +124,7 @@ export default function AICommandCenter() {
               <Sparkles size={14} className="text-primary-500" />
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="text-xs font-semibold text-text-primary mb-0.5">
+              <h3 className="text-sm font-semibold text-text-primary mb-0.5">
                 AI Summary
               </h3>
               <p className="text-[11px] text-text-secondary leading-relaxed">
@@ -171,7 +171,7 @@ export default function AICommandCenter() {
               onClick={() => setExpandedRisk(expandedRisk === i ? null : i)}>
               <CardContent className="p-3">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="font-medium text-text-primary text-xs">
+                  <span className="font-medium text-text-primary text-sm">
                     {r.label}
                   </span>
                   <span
@@ -269,7 +269,7 @@ export default function AICommandCenter() {
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5 mb-0.5 flex-wrap">
-                      <span className="font-medium text-text-primary text-xs">
+                      <span className="font-medium text-text-primary text-sm">
                         {r.text}
                       </span>
                       <Badge
@@ -311,7 +311,7 @@ export default function AICommandCenter() {
       {/* Sensor Contribution */}
       <Card>
         <CardHeader className="px-3.5 py-2.5">
-          <CardTitle className="text-xs">Sensor AI Contribution</CardTitle>
+          <CardTitle className="text-lg font-semibold">Sensor AI Contribution</CardTitle>
         </CardHeader>
         <CardContent className="px-3.5 pb-3.5">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -335,7 +335,7 @@ export default function AICommandCenter() {
                   <div className="text-[8px] font-medium uppercase tracking-wider text-text-muted">
                     {s.label}
                   </div>
-                  <div className="text-xs font-semibold text-text-primary">
+                  <div className="text-sm font-semibold text-text-primary">
                     {s.value}
                   </div>
                   <div className="flex items-center justify-between mt-0.5">
@@ -356,7 +356,7 @@ export default function AICommandCenter() {
       {/* Explainability - Compact */}
       <Card>
         <CardHeader className="px-3.5 py-2.5">
-          <CardTitle className="text-xs">AI Explainability</CardTitle>
+          <CardTitle className="text-lg font-semibold">AI Explainability</CardTitle>
         </CardHeader>
         <CardContent className="px-3.5 pb-3.5 space-y-2">
           <div className="flex items-start gap-2.5">

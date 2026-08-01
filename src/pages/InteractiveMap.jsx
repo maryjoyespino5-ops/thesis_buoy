@@ -314,7 +314,7 @@ export default function InteractiveMap() {
             {selectedBuoy && (
               <div className="absolute top-4 left-4 bg-surface/95 backdrop-blur-sm rounded-lg border border-border/50 p-3 max-w-[200px] shadow-lg">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-semibold text-text-primary">
+                  <span className="text-sm font-semibold text-text-primary">
                     {selectedBuoy.name}
                   </span>
                   <Badge

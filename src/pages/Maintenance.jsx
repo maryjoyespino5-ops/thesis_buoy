@@ -277,7 +277,7 @@ export default function Maintenance() {
             <div className="text-sm text-text-muted">
               No maintenance tasks found
             </div>
-            <p className="text-xs text-text-muted mt-1">
+            <p className="text-sm text-text-muted mt-1">
               Try adjusting your filters
             </p>
           </CardContent>
@@ -299,7 +299,7 @@ export default function Maintenance() {
                   <CardContent className="p-3">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-xs font-medium text-text-primary">
+                        <span className="text-sm font-medium text-text-primary">
                           {m.buoy}
                         </span>
                         <div
@@ -377,7 +377,7 @@ export default function Maintenance() {
       {/* AI Insights */}
       <Card>
         <CardHeader className="px-3.5 py-2.5 flex flex-row items-center justify-between">
-          <CardTitle className="text-xs flex items-center gap-1.5">
+          <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
             <Zap size={13} className="text-amber-500" />
             AI Maintenance Insights
           </CardTitle>
