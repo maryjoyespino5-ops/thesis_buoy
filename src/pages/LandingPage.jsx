@@ -1586,14 +1586,16 @@ function Footer() {
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 grid md:grid-cols-4 gap-12">
         <div>
           <div className="flex items-center gap-3">
-            <div
-              className="h-7 w-7 flex items-center justify-center"
-              style={{ background: C.accent }}>
-              <Anchor size={14} color="#03131F" />
-            </div>
-            <span className="text-white font-semibold tracking-[0.15em] text-sm">
-              NELEUS<span style={{ color: C.accent }}>1</span>
-            </span>
+            <img
+              src="/image/logow.png"
+              alt="NELEUS1 logo"
+              className="h-7 w-7 object-contain"
+            />
+            <img
+              src="/image/name.png"
+              alt="NELEUS1"
+              className="h-5 w-auto object-contain"
+            />
           </div>
           <p
             className="mt-5 text-xs leading-relaxed max-w-xs"
