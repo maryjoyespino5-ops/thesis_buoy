@@ -186,60 +186,6 @@ export default function Login() {
               className="h-30 w-auto object-contain"
             />
           </div>
-
-          <div className="relative z-10 text-center">
-            <Coord style={{ color: C.accent }}>Secure Access</Coord>
-            <h1
-              className="text-3xl font-semibold leading-[1.15] tracking-tight mt-4"
-              style={{ color: "#03131F" }}>
-              Command your ocean network
-            </h1>
-            <p
-              className="mt-4 text-sm leading-relaxed max-w-sm mx-auto"
-              style={{ color: "#3a5a6a" }}>
-              Sign in to view live buoy telemetry, AI insights, and
-              conservation alerts across your monitored waters.
-            </p>
-
-            <div className="mt-8 grid gap-3 text-left max-w-sm mx-auto">
-              {[
-                "Real-time sensor telemetry",
-                "AI-powered risk detection",
-                "Fleet-wide dashboard access",
-              ].map((label) => (
-                <div key={label} className="flex items-center gap-3">
-                  <div style={{ color: C.accent }}>✔</div>
-                  <div className="text-sm" style={{ color: "#1a2a3a" }}>
-                    {label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div
-            className="relative z-10 grid grid-cols-3 gap-6 pt-6 border-t"
-            style={{ borderColor: C.border }}>
-            {[
-              ["240+", "reserves"],
-              ["24/7", "uptime"],
-              ["98.6%", "accuracy"],
-            ].map(([n, l]) => (
-              <div key={l} className="text-center">
-                <div
-                  className="text-sm font-medium"
-                  style={{
-                    color: "#1a2a3a",
-                    fontFamily: "'JetBrains Mono', monospace",
-                  }}>
-                  {n}
-                </div>
-                <div className="text-[11px] mt-1" style={{ color: "#3a5a6a" }}>
-                  {l}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* ============ RIGHT — FORM PANEL ============ */}
