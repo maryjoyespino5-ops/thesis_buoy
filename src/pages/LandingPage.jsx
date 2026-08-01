@@ -1494,9 +1494,9 @@ function Applications() {
       FileText,
       "Live ocean data for classrooms and student research projects.",
     ],[
-      "Navigation Safety",
-      FileText,
-      "Monitor sea conditions, currents, and hazards to improve vessel safety.",
+      "Marine Pollution Monitoring",
+      GlobeIcon,
+      "Detect floating debris, pollution events, and ecosystem health in real time using AI and environmental sensors.",
     ],
   ];
   return (
