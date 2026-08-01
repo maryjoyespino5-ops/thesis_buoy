@@ -123,7 +123,7 @@ export default function Login() {
 
   return (
     <div
-      className="min-h-screen h-screen w-full relative flex items-center justify-center px-4 py-10 antialiased overflow-hidden"
+      className="min-h-screen h-screen w-full relative flex items-center justify-center px-4 py-10 antialiased overflow-y-auto lg:overflow-hidden"
       style={{ background: C.bg, fontFamily: "'Inter', sans-serif" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
