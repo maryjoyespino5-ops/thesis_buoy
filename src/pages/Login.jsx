@@ -123,7 +123,7 @@ export default function Login() {
 
   return (
     <div
-      className="min-h-screen w-full relative flex items-center justify-center px-4 py-10 antialiased"
+      className="min-h-screen w-full relative flex items-center justify-center px-4 py-10 antialiased overflow-hidden"
       style={{ background: C.bg, fontFamily: "'Inter', sans-serif" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -163,14 +163,16 @@ export default function Login() {
           className="hidden lg:flex flex-col justify-between p-9 border-r"
           style={{ borderColor: C.border, background: C.bg }}>
           <div className="flex items-center gap-2.5">
-            <div
-              className="h-7 w-7 flex items-center justify-center"
-              style={{ background: C.accent }}>
-              <Anchor size={14} color="#03131F" />
-            </div>
-            <span className="text-white font-semibold tracking-[0.15em] text-sm">
-              NELEUS<span style={{ color: C.accent }}>1</span>
-            </span>
+            <img
+              src="/image/favicon1.png"
+              alt="NELEUS1 logo"
+              className="h-7 w-7 object-contain"
+            />
+            <img
+              src="/image/name.png"
+              alt="NELEUS1"
+              className="h-5 w-auto object-contain"
+            />
           </div>
 
           <div>
@@ -232,14 +234,16 @@ export default function Login() {
         <div className="w-full p-7 sm:p-9 flex flex-col justify-center">
           {/* mobile logo */}
           <div className="lg:hidden flex items-center gap-2.5 mb-6">
-            <div
-              className="h-7 w-7 flex items-center justify-center"
-              style={{ background: C.accent }}>
-              <Anchor size={14} color="#03131F" />
-            </div>
-            <span className="text-white font-semibold tracking-[0.15em] text-sm">
-              NELEUS<span style={{ color: C.accent }}>1</span>
-            </span>
+            <img
+              src="/image/favicon1.png"
+              alt="NELEUS1 logo"
+              className="h-7 w-7 object-contain"
+            />
+            <img
+              src="/image/name.png"
+              alt="NELEUS1"
+              className="h-5 w-auto object-contain"
+            />
           </div>
 
           <div className="mb-6">
