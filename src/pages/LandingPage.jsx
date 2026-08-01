@@ -873,7 +873,7 @@ function Platform() {
     ],
   ];
   return (
-    <section id="platform" className="py-28" style={{ background: C.bg }}>
+    <section id="platform" className="py-20" style={{ background: C.bg }}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-16 items-center">
         <Reveal>
           <SectionHeading
@@ -1010,7 +1010,7 @@ function FeatureRow({ coord, title, desc, panel, reverse }) {
 
 function Features() {
   return (
-    <section id="features" className="py-8" style={{ background: C.bg }}>
+    <section id="features" className="py-20" style={{ background: C.bg }}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <Reveal>
           <SectionHeading
@@ -1064,7 +1064,7 @@ function DashboardPreview() {
   return (
     <section
       id="monitoring"
-      className="py-28"
+      className="py-20"
       style={{ background: C.surface }}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <Reveal>
@@ -1242,7 +1242,7 @@ function HowItWorks() {
     ],
   ];
   return (
-    <section className="py-28" style={{ background: C.bg }}>
+    <section className="py-20" style={{ background: C.bg }}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <Reveal>
           <SectionHeading
@@ -1444,7 +1444,7 @@ function Benefits() {
     ["Predictive Analytics", TrendingUp],
   ];
   return (
-    <section className="py-28" style={{ background: C.surface }}>
+    <section className="py-20" style={{ background: C.surface }}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <Reveal>
           <SectionHeading
@@ -1520,7 +1520,7 @@ function Applications() {
     ],
   ];
   return (
-    <section className="py-28" style={{ background: C.bg }}>
+    <section className="py-20" style={{ background: C.bg }}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <Reveal>
           <SectionHeading
