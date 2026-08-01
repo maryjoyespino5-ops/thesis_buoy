@@ -161,7 +161,7 @@ export default function Login() {
         {/* ============ LEFT — INFO PANEL ============ */}
         <div
           className="hidden lg:flex flex-col justify-between p-9 border-r relative overflow-hidden"
-          style={{ borderColor: C.border, background: C.bg }}>
+          style={{ borderColor: C.border, background: "#ffffff" }}>
           {/* Video background for left panel */}
           <video
             className="absolute inset-0 w-full h-full object-cover"
@@ -175,15 +175,10 @@ export default function Login() {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(180deg, rgba(3,15,30,0.85) 0%, rgba(3,15,30,0.5) 50%, rgba(3,15,30,0.7) 100%)",
+                "linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.75) 50%, rgba(255,255,255,0.88) 100%)",
             }}
           />
-          <div className="relative z-10 flex items-center gap-2.5">
-            <img
-              src="/image/favicon1.png"
-              alt="NELEUS1 logo"
-              className="h-12 w-12 object-contain"
-            />
+          <div className="relative z-10 flex flex-col items-center gap-3">
             <img
               src="/image/name.png"
               alt="NELEUS1"
@@ -191,21 +186,21 @@ export default function Login() {
             />
           </div>
 
-          <div className="relative z-10">
-            <Coord>Secure Access</Coord>
+          <div className="relative z-10 text-center">
+            <Coord style={{ color: C.accent }}>Secure Access</Coord>
             <h1
-              className="text-3xl font-semibold leading-[1.15] tracking-tight"
-              style={{ color: C.white }}>
+              className="text-3xl font-semibold leading-[1.15] tracking-tight mt-4"
+              style={{ color: "#03131F" }}>
               Command your ocean network
             </h1>
             <p
-              className="mt-4 text-sm leading-relaxed max-w-sm"
-              style={{ color: C.textSub }}>
+              className="mt-4 text-sm leading-relaxed max-w-sm mx-auto"
+              style={{ color: "#5a7a8a" }}>
               Sign in to view live buoy telemetry, AI insights, and
               conservation alerts across your monitored waters.
             </p>
 
-            <div className="mt-8 grid gap-3">
+            <div className="mt-8 grid gap-3 text-left max-w-sm mx-auto">
               {[
                 "Real-time sensor telemetry",
                 "AI-powered risk detection",
@@ -213,7 +208,7 @@ export default function Login() {
               ].map((label) => (
                 <div key={label} className="flex items-center gap-3">
                   <div style={{ color: C.accent }}>✔</div>
-                  <div className="text-sm" style={{ color: C.white }}>
+                  <div className="text-sm" style={{ color: "#03131F" }}>
                     {label}
                   </div>
                 </div>
@@ -224,21 +219,20 @@ export default function Login() {
           <div
             className="relative z-10 grid grid-cols-3 gap-6 pt-6 border-t"
             style={{ borderColor: C.border }}>
-            {[
-              ["240+", "reserves"],
+            {[n              ["240+", "reserves"],
               ["24/7", "uptime"],
               ["98.6%", "accuracy"],
             ].map(([n, l]) => (
-              <div key={l}>
+              <div key={l} className="text-center">
                 <div
                   className="text-sm font-medium"
                   style={{
-                    color: C.white,
+                    color: "#03131F",
                     fontFamily: "'JetBrains Mono', monospace",
                   }}>
                   {n}
                 </div>
-                <div className="text-[11px] mt-1" style={{ color: C.textSub }}>
+                <div className="text-[11px] mt-1" style={{ color: "#5a7a8a" }}>
                   {l}
                 </div>
               </div>
