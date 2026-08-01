@@ -5,3 +5,4 @@ dist/
 *.local
 .env.local
 .env
+public/video/loginvideo.mp4
