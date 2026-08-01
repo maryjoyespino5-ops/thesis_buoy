@@ -8,6 +8,7 @@ const SITE_DESCRIPTION =
   "AI-powered ocean monitoring and decision support platform for coastal stakeholders. Track sea conditions, fish activity, and marine data in real time.";
 const OG_IMAGE = `${SITE_URL}/image/favicon1.png`;
 const TWITTER_HANDLE = "@neleus1";
+const FB_APP_ID = ""; // Add your Facebook App ID for better social sharing
 
 export function SEO({
   title,
@@ -44,18 +45,21 @@ export function SEO({
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={fullDescription} />
       <meta property="og:image" content={fullImage} />
-      <meta property="og:image:width" content="128" />
-      <meta property="og:image:height" content="128" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content="neleus1 AI Decision Support - Ocean Monitoring Platform" />
       <meta property="og:type" content={type} />
       <meta property="og:url" content={fullUrl} />
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:locale" content="en_US" />
+      {FB_APP_ID && <meta property="fb:app_id" content={FB_APP_ID} />}
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={fullDescription} />
       <meta name="twitter:image" content={fullImage} />
+      <meta name="twitter:image:alt" content="neleus1 AI Decision Support - Ocean Monitoring Platform" />
       <meta name="twitter:site" content={TWITTER_HANDLE} />
       <meta name="twitter:creator" content={TWITTER_HANDLE} />
 
