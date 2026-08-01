@@ -46,7 +46,7 @@ export function CardFooter({ children, className, ...props }) {
 export function CardTitle({ children, className, ...props }) {
   return (
     <h3
-      className={cn("text-sm font-semibold text-text-primary", className)}
+      className={cn("text-sm font-semibold text-text-primary leading-snug", className)}
       {...props}>
       {children}
     </h3>

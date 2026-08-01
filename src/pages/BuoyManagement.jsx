@@ -52,20 +52,20 @@ export default function BuoyManagement() {
             <Ship size={17} className="text-primary-500" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-text-primary tracking-tight">
+            <h1 className="text-base font-bold text-text-primary tracking-tight">
               Buoy Management
             </h1>
-            <p className="text-[10px] text-text-muted">
+            <p className="text-[11px] text-text-muted">
               {stats.healthy} healthy · {stats.warning} warning ·{" "}
               {stats.critical} critical
             </p>
           </div>
         </div>
         <div className="flex gap-1.5">
-          <Button variant="primary" size="sm" className="h-7 text-[10px] px-3">
+          <Button variant="primary" size="sm" className="h-7 text-[11px] px-3">
             <Plus size={12} /> Add Buoy
           </Button>
-          <Button variant="ghost" size="sm" className="h-7 text-[10px] px-3">
+          <Button variant="ghost" size="sm" className="h-7 text-[11px] px-3">
             <Filter size={12} /> Filter
           </Button>
         </div>
@@ -74,34 +74,34 @@ export default function BuoyManagement() {
       {/* Compact Stats Row */}
       <div className="grid grid-cols-4 gap-2">
         <div className="bg-surface rounded-lg border border-border/50 p-2 text-center">
-          <div className="text-base font-bold text-text-primary">
+          <div className="text-sm font-bold text-text-primary leading-tight">
             {stats.total}
           </div>
-          <div className="text-[8px] text-text-muted uppercase tracking-wide">
+          <div className="text-[10px] text-text-muted uppercase tracking-wide">
             Total
           </div>
         </div>
         <div className="bg-emerald-50/50 rounded-lg border border-emerald-200/30 p-2 text-center">
-          <div className="text-base font-bold text-emerald-600">
+          <div className="text-sm font-bold text-emerald-600 leading-tight">
             {stats.healthy}
           </div>
-          <div className="text-[8px] text-emerald-500 uppercase tracking-wide">
+          <div className="text-[10px] text-emerald-500 uppercase tracking-wide">
             Healthy
           </div>
         </div>
         <div className="bg-amber-50/50 rounded-lg border border-amber-200/30 p-2 text-center">
-          <div className="text-base font-bold text-amber-600">
+          <div className="text-sm font-bold text-amber-600 leading-tight">
             {stats.warning}
           </div>
-          <div className="text-[8px] text-amber-500 uppercase tracking-wide">
+          <div className="text-[10px] text-amber-500 uppercase tracking-wide">
             Warning
           </div>
         </div>
         <div className="bg-red-50/50 rounded-lg border border-red-200/30 p-2 text-center">
-          <div className="text-base font-bold text-red-600">
+          <div className="text-sm font-bold text-red-600 leading-tight">
             {stats.critical}
           </div>
-          <div className="text-[8px] text-red-500 uppercase tracking-wide">
+          <div className="text-[10px] text-red-500 uppercase tracking-wide">
             Critical
           </div>
         </div>
@@ -140,8 +140,8 @@ export default function BuoyManagement() {
               size={32}
               className="text-text-muted mx-auto mb-2 opacity-30"
             />
-            <div className="text-sm text-text-muted">No buoys found</div>
-            <p className="text-xs text-text-muted mt-1">
+            <div className="text-[11px] text-text-muted">No buoys found</div>
+            <p className="text-[11px] text-text-muted mt-1">
               Try adjusting your search or filter
             </p>
           </CardContent>
@@ -167,7 +167,7 @@ export default function BuoyManagement() {
 
       {/* Footer */}
       {filtered.length > 0 && (
-        <div className="flex items-center justify-between text-[9px] text-text-muted pt-1">
+        <div className="flex items-center justify-between text-[10px] text-text-muted pt-1">
           <span>
             Showing {filtered.length} of {buoys.length} buoys
           </span>

@@ -87,11 +87,11 @@ export default function Dashboard() {
                 <Sparkles size={16} className="text-primary-500" />
               </div>
               <div>
-                <h1 className="text-sm font-bold text-text-primary tracking-tight">
+                <h1 className="text-base font-bold text-text-primary tracking-tight">
                   Good {new Date().getHours() < 12 ? "morning" : "afternoon"},{" "}
                   {user?.name?.split(" ")[0] || "John"}
                 </h1>
-                <p className="text-[10px] text-text-muted">
+                <p className="text-[11px] text-text-muted">
                   Health{" "}
                   <span className="font-semibold text-emerald-600">96%</span> ·
                   {healthyCount} buoys online ·{criticalAlerts.length} critical
@@ -103,14 +103,14 @@ export default function Dashboard() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-7 text-[9px] px-2.5"
+                className="h-7 text-[10px] px-2.5"
                 onClick={handleRefresh}>
                 <RefreshCw size={11} /> Refresh
               </Button>
               <Button
                 variant="primary"
                 size="sm"
-                className="h-7 text-[9px] px-2.5"
+                className="h-7 text-[10px] px-2.5"
                 onClick={() => navigate("/ai")}>
                 <Sparkles size={11} /> Analyze
               </Button>
@@ -123,10 +123,10 @@ export default function Dashboard() {
               <div
                 key={i}
                 className="bg-surface-muted/30 rounded-md px-2.5 py-1.5 text-center">
-                <div className="text-sm font-bold text-text-primary">
+                <div className="text-sm font-bold text-text-primary leading-tight">
                   {s.num}
                 </div>
-                <div className="text-[8px] text-text-muted uppercase tracking-wide">
+                <div className="text-[10px] text-text-muted uppercase tracking-wide">
                   {s.label}
                 </div>
               </div>
@@ -191,10 +191,10 @@ export default function Dashboard() {
                 <item.icon size={14} className={`text-${item.color}-500`} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[10px] font-medium text-text-primary">
+                <p className="text-[11px] font-medium text-text-primary leading-tight">
                   {item.label}
                 </p>
-                <p className="text-[8px] text-text-muted">{item.desc}</p>
+                <p className="text-[10px] text-text-muted">{item.desc}</p>
               </div>
               <ArrowRight
                 size={11}
@@ -246,13 +246,13 @@ export default function Dashboard() {
                     <div
                       key={i}
                       className="bg-surface-muted/30 rounded-md p-2 text-center">
-                      <div className="text-[7px] font-medium uppercase tracking-wider text-text-muted">
+                      <div className="text-[9px] font-medium uppercase tracking-wider text-text-muted">
                         {s.label}
                       </div>
-                      <div className="text-xs font-bold text-text-primary">
+                      <div className="text-xs font-bold text-text-primary leading-tight">
                         {s.value}
                       </div>
-                      <div className="text-[7px] text-text-muted">
+                      <div className="text-[9px] text-text-muted">
                         AI {s.contrib}
                       </div>
                     </div>
@@ -269,23 +269,23 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent className="px-3.5 pb-3.5 space-y-2">
               <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
-                <span className="text-[9px] text-text-muted">Total Users</span>
+                <span className="text-[10px] text-text-muted">Total Users</span>
                 <span className="text-xs font-bold text-text-primary">24</span>
               </div>
               <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
-                <span className="text-[9px] text-text-muted">
+                <span className="text-[10px] text-text-muted">
                   Active Sessions
                 </span>
                 <span className="text-xs font-bold text-text-primary">8</span>
               </div>
               <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
-                <span className="text-[9px] text-text-muted">Data Points</span>
+                <span className="text-[10px] text-text-muted">Data Points</span>
                 <span className="text-xs font-bold text-text-primary">
                   12.4K
                 </span>
               </div>
               <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
-                <span className="text-[9px] text-text-muted">Uptime</span>
+                <span className="text-[10px] text-text-muted">Uptime</span>
                 <span className="text-xs font-bold text-emerald-600">
                   99.8%
                 </span>
@@ -337,7 +337,7 @@ export default function Dashboard() {
               <Clock size={13} className="text-text-muted" />
               Recent Activity
             </CardTitle>
-            <span className="text-[8px] text-text-muted">Last 24h</span>
+            <span className="text-[10px] text-text-muted">Last 24h</span>
           </CardHeader>
           <CardContent className="px-3.5 pb-3.5">
             <div className="space-y-1.5">
@@ -376,10 +376,10 @@ export default function Dashboard() {
                           : "bg-emerald-500",
                     )}
                   />
-                  <span className="text-[9px] text-text-muted w-12 flex-shrink-0">
+                  <span className="text-[10px] text-text-muted w-12 flex-shrink-0">
                     {a.time}
                   </span>
-                  <span className="text-[10px] text-text-secondary flex-1 truncate">
+                  <span className="text-[11px] text-text-secondary flex-1 truncate">
                     {a.event}
                   </span>
                 </div>
@@ -398,7 +398,7 @@ export default function Dashboard() {
             <Button
               variant="ghost"
               size="sm"
-              className="h-6 text-[8px] px-2"
+              className="h-6 text-[9px] px-2"
               onClick={() => navigate("/alerts")}>
               View All <ArrowRight size={10} />
             </Button>
@@ -415,10 +415,10 @@ export default function Dashboard() {
                       className="text-red-500 flex-shrink-0"
                     />
                     <div className="flex-1 min-w-0">
-                      <p className="text-[10px] font-medium text-text-primary truncate">
+                      <p className="text-[11px] font-medium text-text-primary truncate leading-tight">
                         {a.buoy}
                       </p>
-                      <p className="text-[8px] text-text-muted truncate">
+                      <p className="text-[10px] text-text-muted truncate">
                         {a.desc}
                       </p>
                     </div>
@@ -434,10 +434,10 @@ export default function Dashboard() {
                   size={20}
                   className="text-emerald-500 mx-auto mb-1"
                 />
-                <p className="text-[10px] text-text-muted">
+                <p className="text-[11px] text-text-muted">
                   No critical alerts
                 </p>
-                <p className="text-[8px] text-text-muted">
+                <p className="text-[10px] text-text-muted">
                   All systems operational
                 </p>
               </div>
@@ -447,7 +447,7 @@ export default function Dashboard() {
       </div>
 
       {/* Footer Status */}
-      <div className="flex items-center justify-between text-[8px] text-text-muted pt-1">
+      <div className="flex items-center justify-between text-[10px] text-text-muted pt-1">
         <span>Last updated: {lastUpdated.toLocaleTimeString()}</span>
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-0.5">

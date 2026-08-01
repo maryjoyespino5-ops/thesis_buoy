@@ -136,23 +136,23 @@ export default function Reports() {
             <FileText size={17} className="text-primary-500" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-text-primary tracking-tight">
+            <h1 className="text-base font-bold text-text-primary tracking-tight">
               Reports
             </h1>
-            <p className="text-[10px] text-text-muted">
+            <p className="text-[11px] text-text-muted">
               {stats.ready} ready · {stats.processing} processing ·{" "}
               {stats.totalSize} total
             </p>
           </div>
         </div>
         <div className="flex gap-1.5">
-          <Button variant="ghost" size="sm" className="h-7 text-[9px] px-2.5">
+          <Button variant="ghost" size="sm" className="h-7 text-[10px] px-2.5">
             <PieChart size={11} /> Analytics
           </Button>
           <Button
             variant="primary"
             size="sm"
-            className="h-7 text-[9px] px-2.5"
+            className="h-7 text-[10px] px-2.5"
             loading={generating}
             onClick={handleGenerate}>
             <Sparkles size={11} /> {generating ? "Generating..." : "New Report"}
@@ -166,33 +166,33 @@ export default function Reports() {
           <div className="text-base font-bold text-text-primary">
             {stats.total}
           </div>
-          <div className="text-[7px] text-text-muted uppercase tracking-wide">
-            Total Reports
+          <div className="text-[9px] text-text-muted uppercase tracking-wide">
+          Total Reports
           </div>
         </div>
         <div className="bg-emerald-50/50 rounded-lg border border-emerald-200/30 p-2 text-center">
           <div className="text-base font-bold text-emerald-600">
             {stats.ready}
           </div>
-          <div className="text-[7px] text-emerald-500 uppercase tracking-wide">
-            Ready
-          </div>
+          <div className="text-[9px] text-emerald-500 uppercase tracking-wide">
+        Ready
+        </div>
         </div>
         <div className="bg-amber-50/50 rounded-lg border border-amber-200/30 p-2 text-center">
           <div className="text-base font-bold text-amber-600">
             {stats.processing}
           </div>
-          <div className="text-[7px] text-amber-500 uppercase tracking-wide">
-            Processing
-          </div>
+          <div className="text-[9px] text-amber-500 uppercase tracking-wide">
+        Processing
+        </div>
         </div>
         <div className="bg-sky-50/50 rounded-lg border border-sky-200/30 p-2 text-center">
           <div className="text-base font-bold text-sky-600">
             {stats.totalSize}
           </div>
-          <div className="text-[7px] text-sky-500 uppercase tracking-wide">
-            Total Size
-          </div>
+          <div className="text-[9px] text-sky-500 uppercase tracking-wide">
+        Total Size
+        </div>
         </div>
       </div>
 
@@ -204,10 +204,10 @@ export default function Reports() {
               <TrendingUp size={14} className="text-primary-500" />
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="text-xs font-semibold text-text-primary mb-0.5">
+              <h3 className="text-[11px] font-semibold text-text-primary mb-0.5 leading-tight">
                 AI Executive Summary
               </h3>
-              <p className="text-[10px] text-text-secondary leading-relaxed">
+              <p className="text-[11px] text-text-secondary leading-relaxed">
                 Water quality stable · 2 alerts active · AI confidence 97% ·
                 Recommend routine monitoring.
               </p>
@@ -233,7 +233,7 @@ export default function Reports() {
               key={f}
               onClick={() => setTypeFilter(f)}
               className={cn(
-                "px-2.5 py-1 rounded-md text-[9px] font-medium transition-all",
+                "px-2.5 py-1 rounded-md text-[10px] font-medium transition-all",
                 typeFilter === f
                   ? "bg-primary-500 text-white shadow-sm"
                   : "bg-surface border border-border/50 text-text-secondary hover:bg-surface-muted",
@@ -245,7 +245,7 @@ export default function Reports() {
         <Button
           variant="ghost"
           size="sm"
-          className="h-7 text-[9px] px-2.5 sm:ml-auto">
+          className="h-7 text-[10px] px-2.5 sm:ml-auto">
           <Filter size={11} /> Sort
         </Button>
       </div>
@@ -295,7 +295,7 @@ export default function Reports() {
                         </div>
                         <div className="min-w-0">
                           <div className="flex items-center gap-1.5 flex-wrap">
-                            <span className="text-xs font-medium text-text-primary truncate">
+                            <span className="text-[11px] font-medium text-text-primary truncate leading-tight">
                               {report.title}
                             </span>
                             <Badge
@@ -305,11 +305,11 @@ export default function Reports() {
                                   : "default"
                               }
                               size="sm"
-                              className="text-[8px]">
+                              className="text-[9px]">
                               {report.type}
                             </Badge>
                           </div>
-                          <div className="flex items-center gap-2 text-[8px] text-text-muted">
+                          <div className="flex items-center gap-2 text-[10px] text-text-muted">
                             <span className="flex items-center gap-0.5">
                               <Calendar size={8} /> {report.date}
                             </span>
@@ -324,7 +324,7 @@ export default function Reports() {
                         <Badge
                           variant={statusVariant}
                           size="sm"
-                          className="text-[8px] flex items-center gap-0.5">
+                          className="text-[9px] flex items-center gap-0.5">
                           <StatusIcon
                             size={8}
                             className={
@@ -338,13 +338,13 @@ export default function Reports() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-6 text-[8px] px-2">
+                          className="h-6 text-[9px] px-2">
                           <Eye size={10} /> View
                         </Button>
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-6 text-[8px] px-2">
+                          className="h-6 text-[9px] px-2">
                           <Download size={10} /> PDF
                         </Button>
                       </div>
@@ -360,7 +360,7 @@ export default function Reports() {
       {/* Quick Actions */}
       <Card>
         <CardHeader className="px-3.5 py-2.5">
-          <CardTitle className="text-xs flex items-center gap-1.5">
+          <CardTitle className="text-[11px] flex items-center gap-1.5">
             <Zap size={13} className="text-amber-500" />
             Quick Actions
           </CardTitle>
@@ -372,19 +372,19 @@ export default function Reports() {
                 size={16}
                 className="text-primary-500 mx-auto mb-1"
               />
-              <div className="text-[8px] font-medium text-text-primary">
+              <div className="text-[10px] font-medium text-text-primary">
                 Export CSV
               </div>
             </button>
             <button className="p-2.5 bg-surface-muted/30 rounded-md text-center hover:bg-surface-muted transition-colors">
               <BarChart3 size={16} className="text-primary-500 mx-auto mb-1" />
-              <div className="text-[8px] font-medium text-text-primary">
+              <div className="text-[10px] font-medium text-text-primary">
                 Analytics
               </div>
             </button>
             <button className="p-2.5 bg-surface-muted/30 rounded-md text-center hover:bg-surface-muted transition-colors">
               <Calendar size={16} className="text-primary-500 mx-auto mb-1" />
-              <div className="text-[8px] font-medium text-text-primary">
+              <div className="text-[10px] font-medium text-text-primary">
                 Schedule
               </div>
             </button>
@@ -393,7 +393,7 @@ export default function Reports() {
       </Card>
 
       {/* Footer */}
-      <div className="flex items-center justify-between text-[8px] text-text-muted pt-1">
+      <div className="flex items-center justify-between text-[10px] text-text-muted pt-1">
         <span>
           Showing {filtered.length} of {reports.length} reports
         </span>

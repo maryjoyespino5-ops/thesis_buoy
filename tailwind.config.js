@@ -57,7 +57,17 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        inter: ['Inter', 'sans-serif'],
+      },
+      fontSize: {
+        xs: ['0.6875rem', { lineHeight: '1.4' }],
+        sm: ['0.75rem', { lineHeight: '1.45' }],
+        base: ['0.8125rem', { lineHeight: '1.5' }],
+        md: ['0.875rem', { lineHeight: '1.5' }],
+        lg: ['1rem', { lineHeight: '1.5' }],
+        xl: ['1.125rem', { lineHeight: '1.45' }],
+        '2xl': ['1.25rem', { lineHeight: '1.4' }],
+        '3xl': ['1.5rem', { lineHeight: '1.35' }],
+        '4xl': ['1.75rem', { lineHeight: '1.3' }],
       },
       borderRadius: {
         xs: "4px",

@@ -73,7 +73,7 @@ export default function AICommandCenter() {
             <Brain size={18} className="text-primary-500" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-text-primary tracking-tight">
+            <h1 className="text-base font-bold text-text-primary tracking-tight">
               AI Command Center
             </h1>
             <p className="text-[10px] text-text-muted">

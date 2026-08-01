@@ -29,7 +29,7 @@ export function Dropdown({ trigger, items, className }) {
                 setOpen(false);
               }}
               className={cn(
-                "w-full text-left px-3 py-2 text-xs text-text-secondary hover:bg-surface-muted hover:text-text-primary transition-colors flex items-center gap-2",
+                "w-full text-left px-3 py-2 text-[11px] text-text-secondary hover:bg-surface-muted hover:text-text-primary transition-colors flex items-center gap-2",
                 item.danger && "text-red-600 hover:bg-red-50",
               )}>
               {item.icon && <span className="flex-shrink-0">{item.icon}</span>}

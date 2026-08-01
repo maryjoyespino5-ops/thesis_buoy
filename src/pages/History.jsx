@@ -102,7 +102,7 @@ export default function History() {
             <Clock size={17} className="text-primary-500" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-text-primary tracking-tight">
+            <h1 className="text-base font-bold text-text-primary tracking-tight">
               Historical Analytics
             </h1>
             <p className="text-[10px] text-text-muted">
@@ -308,25 +308,25 @@ export default function History() {
         <CardContent className="px-3.5 pb-3.5">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <div className="bg-emerald-50/50 rounded-md p-2 text-center">
-              <div className="text-xs font-bold text-emerald-600">99.8%</div>
+              <div className="text-sm font-bold text-emerald-600">99.8%</div>
               <div className="text-[7px] text-text-muted uppercase tracking-wide">
                 Uptime
               </div>
             </div>
             <div className="bg-sky-50/50 rounded-md p-2 text-center">
-              <div className="text-xs font-bold text-sky-600">12.4K</div>
+              <div className="text-sm font-bold text-sky-600">12.4K</div>
               <div className="text-[7px] text-text-muted uppercase tracking-wide">
                 Data Points
               </div>
             </div>
             <div className="bg-amber-50/50 rounded-md p-2 text-center">
-              <div className="text-xs font-bold text-amber-600">98.6%</div>
+              <div className="text-sm font-bold text-amber-600">98.6%</div>
               <div className="text-[7px] text-text-muted uppercase tracking-wide">
                 Accuracy
               </div>
             </div>
             <div className="bg-primary-50/50 rounded-md p-2 text-center">
-              <div className="text-xs font-bold text-primary-600">2.4M</div>
+              <div className="text-sm font-bold text-primary-600">2.4M</div>
               <div className="text-[7px] text-text-muted uppercase tracking-wide">
                 Records
               </div>

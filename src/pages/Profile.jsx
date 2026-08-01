@@ -97,10 +97,10 @@ export default function Profile() {
             <User size={17} className="text-primary-500" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-text-primary tracking-tight">
+            <h1 className="text-base font-bold text-text-primary tracking-tight">
               Profile
             </h1>
-            <p className="text-[10px] text-text-muted">
+            <p className="text-[11px] text-text-muted">
               Manage your account settings
             </p>
           </div>

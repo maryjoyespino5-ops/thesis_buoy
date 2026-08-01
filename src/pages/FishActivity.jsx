@@ -612,7 +612,7 @@ function BottomPanel({ buoys }) {
             <div className="text-[8px] text-text-muted uppercase tracking-wide">
               Highest Fish Zone
             </div>
-            <div className="text-xs font-bold text-primary-500">
+            <div className="text-sm font-bold text-primary-500">
               {highestZone?.name || "N/A"}
             </div>
           </div>
@@ -620,7 +620,7 @@ function BottomPanel({ buoys }) {
             <div className="text-[8px] text-text-muted uppercase tracking-wide">
               Best Fishing Time
             </div>
-            <div className="text-xs font-bold text-text-primary">
+            <div className="text-sm font-bold text-text-primary">
               5:00-9:00 AM
             </div>
           </div>
@@ -628,7 +628,7 @@ function BottomPanel({ buoys }) {
             <div className="text-[8px] text-text-muted uppercase tracking-wide">
               Avg Depth
             </div>
-            <div className="text-xs font-bold text-text-primary">
+            <div className="text-sm font-bold text-text-primary">
               {avgDepth.toFixed(1)}m
             </div>
           </div>
@@ -636,7 +636,7 @@ function BottomPanel({ buoys }) {
             <div className="text-[8px] text-text-muted uppercase tracking-wide">
               Est. Fish Count
             </div>
-            <div className="text-xs font-bold text-emerald-600">
+            <div className="text-sm font-bold text-emerald-600">
               {totalFish}
             </div>
           </div>
@@ -644,7 +644,7 @@ function BottomPanel({ buoys }) {
             <div className="text-[8px] text-text-muted uppercase tracking-wide">
               Most Active Buoy
             </div>
-            <div className="text-xs font-bold text-primary-500">
+            <div className="text-sm font-bold text-primary-500">
               {activeBuoys.length > 0 ? activeBuoys[0]?.name : "N/A"}
             </div>
           </div>
@@ -652,13 +652,13 @@ function BottomPanel({ buoys }) {
             <div className="text-[8px] text-text-muted uppercase tracking-wide">
               Water Quality
             </div>
-            <div className="text-xs font-bold text-emerald-600">Good</div>
+            <div className="text-sm font-bold text-emerald-600">Good</div>
           </div>
           <div>
             <div className="text-[8px] text-text-muted uppercase tracking-wide">
               AI Confidence
             </div>
-            <div className="text-xs font-bold text-text-primary">
+            <div className="text-sm font-bold text-text-primary">
               {avgConfidence.toFixed(0)}%
             </div>
           </div>
@@ -750,7 +750,7 @@ export default function FishActivity() {
             <Fish size={17} className="text-emerald-500" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-text-primary tracking-tight">
+            <h1 className="text-base font-bold text-text-primary tracking-tight">
               AI Fish Distribution Map
             </h1>
             <p className="text-[10px] text-text-muted">
@@ -954,7 +954,7 @@ export default function FishActivity() {
                       </Badge>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-lg font-bold text-text-primary">
+                      <span className="text-sm font-bold text-text-primary">
                         {prob}%
                       </span>
                       <span className="text-[8px] text-text-muted">

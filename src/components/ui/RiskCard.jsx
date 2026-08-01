@@ -11,15 +11,15 @@ export function RiskCard({ label, level, confidence, trend, color, desc }) {
       className="bg-surface rounded-lg p-3.5 border border-border/50 border-l-2 hover:shadow-sm transition-all"
       style={{ borderLeftColor: color }}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-text-primary">{label}</span>
-        <span className="text-[10px] font-medium" style={{ color }}>
+        <span className="text-[11px] font-medium text-text-primary leading-tight">{label}</span>
+        <span className="text-[11px] font-medium" style={{ color }}>
           {level}
         </span>
       </div>
-      <div className="text-[10px] text-text-muted mt-0.5">
+      <div className="text-[11px] text-text-muted mt-0.5">
         Confidence {confidence} · {trend}
       </div>
-      <div className="text-[10px] text-text-secondary mt-1">{desc}</div>
+      <div className="text-[11px] text-text-secondary mt-1">{desc}</div>
     </motion.div>
   );
 }

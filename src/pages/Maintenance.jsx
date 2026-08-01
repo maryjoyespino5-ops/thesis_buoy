@@ -133,7 +133,7 @@ export default function Maintenance() {
             <Wrench size={17} className="text-amber-500" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-text-primary tracking-tight">
+            <h1 className="text-base font-bold text-text-primary tracking-tight">
               Maintenance
             </h1>
             <p className="text-[10px] text-text-muted">

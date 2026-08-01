@@ -105,7 +105,7 @@ export default function Sanctuary() {
             <Mic size={17} className="text-teal-500" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-text-primary tracking-tight">
+            <h1 className="text-base font-bold text-text-primary tracking-tight">
               Sanctuary Intelligence
             </h1>
             <p className="text-[10px] text-text-muted">

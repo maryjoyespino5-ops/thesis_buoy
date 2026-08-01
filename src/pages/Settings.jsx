@@ -175,10 +175,10 @@ export default function Settings() {
             <SettingsIcon size={17} className="text-primary-500" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-text-primary tracking-tight">
+            <h1 className="text-base font-bold text-text-primary tracking-tight">
               Settings
             </h1>
-            <p className="text-[10px] text-text-muted">
+            <p className="text-[11px] text-text-muted">
               Configure your preferences
             </p>
           </div>
@@ -187,7 +187,7 @@ export default function Settings() {
           <Button
             variant="primary"
             size="sm"
-            className="h-7 text-[9px] px-2.5"
+            className="h-7 text-[10px] px-2.5"
             onClick={handleSave}>
             <Save size={11} /> Save Changes
           </Button>
@@ -201,7 +201,7 @@ export default function Settings() {
           animate={{ opacity: 1, y: 0 }}
           className="bg-emerald-50/80 rounded-lg border border-emerald-200/30 p-2.5 flex items-center gap-2.5">
           <CheckCircle size={14} className="text-emerald-500" />
-          <span className="text-[10px] text-text-secondary">
+          <span className="text-[11px] text-text-secondary">
             Settings saved successfully!
           </span>
         </motion.div>
@@ -223,10 +223,10 @@ export default function Settings() {
                     <section.icon size={14} className="text-text-muted" />
                   </div>
                   <div>
-                    <div className="text-[10px] font-medium text-text-primary">
+                    <div className="text-[11px] font-medium text-text-primary leading-tight">
                       {section.title}
                     </div>
-                    <div className="text-[8px] text-text-muted">
+                    <div className="text-[10px] text-text-muted">
                       {section.description}
                     </div>
                   </div>
@@ -254,7 +254,7 @@ export default function Settings() {
                 className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
                 <div className="flex items-center gap-1.5">
                   <setting.icon size={12} className="text-text-muted" />
-                  <span className="text-[9px] text-text-primary">
+                  <span className="text-[10px] text-text-primary">
                     {setting.label}
                   </span>
                 </div>
@@ -285,10 +285,10 @@ export default function Settings() {
         <CardContent className="px-3.5 pb-3.5 space-y-2">
           <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
             <div>
-              <span className="text-[9px] font-medium text-text-primary">
+              <span className="text-[10px] font-medium text-text-primary">
                 Data Export
               </span>
-              <span className="text-[7px] text-text-muted ml-2">
+              <span className="text-[9px] text-text-muted ml-2">
                 JSON · CSV · PDF
               </span>
             </div>
@@ -298,10 +298,10 @@ export default function Settings() {
           </div>
           <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
             <div>
-              <span className="text-[9px] font-medium text-text-primary">
+              <span className="text-[10px] font-medium text-text-primary">
                 Backup
               </span>
-              <span className="text-[7px] text-text-muted ml-2">
+              <span className="text-[9px] text-text-muted ml-2">
                 Last: Today 14:00
               </span>
             </div>
@@ -311,10 +311,10 @@ export default function Settings() {
           </div>
           <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
             <div>
-              <span className="text-[9px] font-medium text-text-primary">
+              <span className="text-[10px] font-medium text-text-primary">
                 Reset to Default
               </span>
-              <span className="text-[7px] text-text-muted ml-2">
+              <span className="text-[9px] text-text-muted ml-2">
                 Restore all settings
               </span>
             </div>
@@ -339,10 +339,10 @@ export default function Settings() {
         <CardContent className="px-3.5 pb-3.5 space-y-2">
           <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
             <div>
-              <span className="text-[9px] font-medium text-text-primary">
+              <span className="text-[10px] font-medium text-text-primary">
                 Two-Factor Auth
               </span>
-              <span className="text-[7px] text-text-muted ml-2">
+              <span className="text-[9px] text-text-muted ml-2">
                 Extra security layer
               </span>
             </div>
@@ -352,10 +352,10 @@ export default function Settings() {
           </div>
           <div className="flex items-center justify-between p-2 bg-surface-muted/30 rounded-md">
             <div>
-              <span className="text-[9px] font-medium text-text-primary">
+              <span className="text-[10px] font-medium text-text-primary">
                 Session Management
               </span>
-              <span className="text-[7px] text-text-muted ml-2">
+              <span className="text-[9px] text-text-muted ml-2">
                 2 active sessions
               </span>
             </div>
@@ -370,7 +370,7 @@ export default function Settings() {
       <div className="grid grid-cols-2 gap-2">
         <button className="p-2.5 bg-surface rounded-lg border border-border/50 text-center hover:bg-surface-muted transition-colors">
           <User size={14} className="text-primary-500 mx-auto mb-0.5" />
-          <div className="text-[8px] font-medium text-text-primary">
+          <div className="text-[10px] font-medium text-text-primary">
             Account
           </div>
         </button>
@@ -378,12 +378,12 @@ export default function Settings() {
           onClick={() => navigate("/login")}
           className="p-2.5 bg-red-50/50 rounded-lg border border-red-200/30 text-center hover:bg-red-50 transition-colors">
           <LogOut size={14} className="text-red-500 mx-auto mb-0.5" />
-          <div className="text-[8px] font-medium text-red-600">Sign Out</div>
+          <div className="text-[10px] font-medium text-red-600">Sign Out</div>
         </button>
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between text-[7px] text-text-muted pt-1">
+      <div className="flex items-center justify-between text-[10px] text-text-muted pt-1">
         <span>Version 2.4.1</span>
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-0.5">

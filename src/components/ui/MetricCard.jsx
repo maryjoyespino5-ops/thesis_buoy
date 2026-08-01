@@ -23,7 +23,7 @@ export function MetricCard({
       )}
       {...props}>
       <div className="flex items-center justify-between">
-        <span className="text-[10px] text-text-muted font-medium uppercase tracking-wide">
+        <span className="text-[11px] text-text-muted font-medium uppercase tracking-wide">
           {label}
         </span>
         {icon && (
@@ -36,14 +36,14 @@ export function MetricCard({
           </span>
         )}
       </div>
-      <div className="text-lg font-semibold text-text-primary mt-0.5">
+      <div className="text-lg font-semibold text-text-primary mt-0.5 leading-tight">
         {value}
       </div>
       {trend && (
         <div className="mt-1">
           <span
             className={cn(
-              "text-[9px] font-medium px-1.5 py-0.5 rounded inline-flex items-center gap-0.5",
+              "text-[10px] font-medium px-1.5 py-0.5 rounded inline-flex items-center gap-0.5",
               up ? "bg-emerald-50 text-emerald-700" : "bg-red-50 text-red-700",
             )}>
             {up ? "↑" : "↓"} {trend}

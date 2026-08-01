@@ -13,12 +13,12 @@ export function ModuleCard({ icon, title, status, tag, onClick }) {
       <div className="w-8 h-8 bg-primary-50 rounded-md flex items-center justify-center mb-2 group-hover:bg-primary-100 transition-colors">
         {icon}
       </div>
-      <h4 className="text-xs font-semibold text-text-primary mb-0.5">
+      <h4 className="text-[11px] font-semibold text-text-primary mb-0.5 leading-tight">
         {title}
       </h4>
-      <p className="text-[10px] text-text-secondary">{status}</p>
+      <p className="text-[11px] text-text-secondary">{status}</p>
       {tag && (
-        <span className="inline-block mt-1.5 text-[9px] font-medium text-primary-500 bg-primary-50 px-1.5 py-0.5 rounded">
+        <span className="inline-block mt-1.5 text-[10px] font-medium text-primary-500 bg-primary-50 px-1.5 py-0.5 rounded">
           {tag}
         </span>
       )}
