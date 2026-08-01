@@ -342,6 +342,103 @@ function TelemetryGlobe() {
     </div>
   );
 }
+/* ------------------------------------------------------------------ */
+/*  CORAL REEF                                                        */
+/* ------------------------------------------------------------------ */
+function CoralReef() {
+  const [ref, visible] = useReveal(0.18);
+
+  return (
+    <section
+      id="coral-reef"
+      ref={ref}
+      className="relative py-20 overflow-hidden"
+      style={{ background: C.bg }}>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(60% 50% at 80% 50%, rgba(0,180,160,0.08), transparent 50%)",
+          }}
+        />
+      </div>
+
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <Reveal>
+            <div>
+              <div className="text-xs uppercase tracking-wider text-[#00D4FF]">
+                CORAL REEF MONITORING
+              </div>
+              <h3
+                className="text-3xl md:text-4xl font-semibold mt-4"
+                style={{ color: C.white }}>
+                Protect Our Coral Reefs with AI-Powered Intelligence
+              </h3>
+              <p
+                className="mt-4 text-base text-[15px] max-w-xl"
+                style={{ color: C.textSub }}>
+                NELEUS1's smart buoys monitor coral reef health in real time,
+                tracking water temperature, pH, turbidity, and marine life
+                activity. Our AI detects early signs of bleaching and
+                environmental stress, helping conservationists act before
+                irreversible damage occurs.
+              </p>
+
+              <div className="mt-6 grid gap-3">
+                {[
+                  ["Coral Health Tracking", "✔"],
+                  ["Water Quality Sensors", "✔"],
+                  ["Bleaching Early Warning", "✔"],
+                  ["Marine Life Activity", "✔"],
+                  ["Temperature & pH Monitoring", "✔"],
+                  ["Conservation Alerts", "✔"],
+                ].map(([label, mark]) => (
+                  <div key={label} className="flex items-center gap-3">
+                    <div className="text-accent text-[#00D4FF]">{mark}</div>
+                    <div style={{ color: C.white }}>{label}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-8 flex gap-4">
+                <button className="px-6 py-3 bg-[#00D4FF] text-[#03131F] font-medium">
+                  Learn More
+                </button>
+                <button
+                  className="px-6 py-3 border"
+                  style={{ borderColor: C.border, color: C.white }}>
+                  View Live Data
+                </button>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={120}>
+            <div className="w-full h-[420px] md:h-[520px] relative">
+              <video
+                className="w-full h-full object-cover rounded-xl"
+                src="/video/coralreef.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+              <div
+                className="absolute inset-0 rounded-xl"
+                style={{
+                  background:
+                    "linear-gradient(180deg, rgba(3,7,12,0.0), rgba(3,7,12,0.5))",
+                }}
+              />
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 /* ------------------------------------------------------------------ */
 /*  FISHERIES SECTION                                                  */
@@ -1591,6 +1688,7 @@ export default function LandingPage() {
       <Hero />
       <Trust />
       <Platform />
+      <CoralReef />
       <FisheriesSection />
       <Features />
       <DashboardPreview />
