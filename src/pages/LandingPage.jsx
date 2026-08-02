@@ -1606,7 +1606,7 @@ function Footer() {
         <div>
           <div className="flex items-center gap-2">
             <img
-              src="/image/favicon.png"
+              src="/image/favicon1.png"
               alt="NELEUS1"
               className="h-8 w-8 object-contain"
             />
