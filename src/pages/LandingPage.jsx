@@ -1604,6 +1604,16 @@ function Footer() {
     <footer style={{ background: C.bg, borderTop: `1px solid ${C.border}` }}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 grid md:grid-cols-4 gap-12">
         <div>
+          <div className="flex items-center gap-2">
+            <img
+              src="/image/favicon.png"
+              alt="NELEUS1"
+              className="h-8 w-8 object-contain"
+            />
+            <span className="text-sm font-semibold" style={{ color: C.white }}>
+              NELEUS1
+            </span>
+          </div>
           <p
             className="mt-5 text-xs leading-relaxed max-w-xs"
             style={{ color: C.textSub }}>
