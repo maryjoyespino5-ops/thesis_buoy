@@ -612,16 +612,16 @@ function Nav() {
         color: textColor,
       }}>
       <div className="max-w-[1200px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
-        <div className="flex items-center relative -left-12">
+        <div className="flex items-center">
           <img
             src="/image/favicon1.png"
             alt="NELEUS1 logo"
-            className="h-20 md:h-24 w-auto object-contain relative top-1 md:top-2"
+            className="h-10 w-10 object-contain"
           />
           <img
             src="/image/name.png"
             alt="NELEUS1"
-            className="h-32 md:h-36 w-auto object-contain self-center -ml-26 md:-ml-16 relative top-[2px] md:top-[4px]"
+            className="h-28 md:h-32 w-auto object-contain self-center -ml-2 md:-ml-1 relative top-[1px] md:top-[2px]"
           />
         </div>
 
