@@ -1608,12 +1608,12 @@ function Footer() {
             <img
               src="/image/logow.png"
               alt="NELEUS1 logo"
-              className="h-7 w-7 object-contain"
+              className="h-10 w-10 object-contain"
             />
             <img
               src="/image/name.png"
               alt="NELEUS1"
-              className="h-5 w-auto object-contain"
+              className="h-7 w-auto object-contain"
             />
           </div>
           <p
