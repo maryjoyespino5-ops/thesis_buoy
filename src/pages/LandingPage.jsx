@@ -1604,18 +1604,6 @@ function Footer() {
     <footer style={{ background: C.bg, borderTop: `1px solid ${C.border}` }}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 grid md:grid-cols-4 gap-12">
         <div>
-          <div className="flex items-center gap-3">
-            <img
-              src="/image/logow.png"
-              alt="NELEUS1 logo"
-              className="h-25 w-12 object-contain"
-            />
-            <img
-              src="/image/name.png"
-              alt="NELEUS1"
-              className="h-25 w-auto object-contain"
-            />
-          </div>
           <p
             className="mt-5 text-xs leading-relaxed max-w-xs"
             style={{ color: C.textSub }}>
