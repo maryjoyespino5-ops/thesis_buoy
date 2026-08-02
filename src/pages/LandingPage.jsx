@@ -621,7 +621,7 @@ function Nav() {
           <img
             src="/image/name.png"
             alt="NELEUS1"
-            className="h-28 md:h-32 w-auto object-contain self-center -ml-2 md:-ml-1 relative top-[1px] md:top-[2px]"
+            className="h-28 md:h-32 w-auto object-contain self-center -ml-2 md:-ml-1 relative top-[3px] md:top-[4px]"
           />
         </div>
 
