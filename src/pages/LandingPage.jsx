@@ -614,7 +614,7 @@ function Nav() {
       <div className="max-w-[1200px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center relative -left-12">
           <img
-            src="/image/logow.png"
+            src="/image/favicon1.png"
             alt="NELEUS1 logo"
             className="h-20 md:h-24 w-auto object-contain relative top-1 md:top-2"
           />
