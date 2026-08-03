@@ -21,6 +21,9 @@ import {
   Mic,
   Microscope,
   Anchor,
+  Sun,
+  Users,
+  Thermometer,
 } from "lucide-react";
 import { useRole } from "../../hooks/useRole";
 import { cn } from "../../lib/utils";
@@ -44,6 +47,13 @@ const navGroups = [
     ],
   },
   {
+    section: "Environment",
+    items: [
+      { path: "/weather", label: "Weather", icon: Thermometer },
+      { path: "/community", label: "Community", icon: MessageSquare },
+    ],
+  },
+  {
     section: "Reports",
     items: [
       { path: "/alerts", label: "Alerts", icon: Bell },
@@ -61,18 +71,68 @@ const navGroups = [
   },
 ];
 
-const adminNavGroups = [
-  {
-    section: "Admin",
-    items: [
-      { path: "/admin/dashboard", label: "Admin Dashboard", icon: Shield },
-    ],
-  },
-];
+const roleSpecificNav = {
+  beach: [
+    {
+      section: "Beach Monitoring",
+      items: [
+        { path: "/beach", label: "Beach Monitor", icon: Sun },
+      ],
+    },
+  ],
+  coral_reef: [
+    {
+      section: "Coral Reef",
+      items: [
+        { path: "/coral", label: "Coral Reef Monitor", icon: Coral },
+      ],
+    },
+  ],
+  community: [
+    {
+      section: "Community",
+      items: [
+        { path: "/community", label: "Community Feed", icon: Users },
+      ],
+    },
+  ],
+  lgu: [
+    {
+      section: "LGU",
+      items: [
+        { path: "/reports", label: "LGU Reports", icon: FileText },
+      ],
+    },
+  ],
+  bfar: [
+    {
+      section: "BFAR",
+      items: [
+        { path: "/fish", label: "Fishery Reports", icon: Fish },
+      ],
+    },
+  ],
+  fisherman: [
+    {
+      section: "Fishing",
+      items: [
+        { path: "/fish", label: "Fish Activity", icon: Fish },
+      ],
+    },
+  ],
+  research: [
+    {
+      section: "Research",
+      items: [
+        { path: "/history", label: "Research Data", icon: Clock },
+      ],
+    },
+  ],
+};
 
 export function Sidebar() {
   const [open, setOpen] = useState(false);
-  const { hasPermission, currentRole } = useRole();
+  const { hasPermission, currentRole, getRoleLabel } = useRole();
   const location = useLocation();
 
   const isActivePath = (path) => {
@@ -88,15 +148,13 @@ export function Sidebar() {
     }))
     .filter((group) => group.items.length > 0);
 
-  const adminFilteredGroups =
-    currentRole === "admin"
-      ? adminNavGroups
-          .map((group) => ({
-            ...group,
-            items: group.items.filter((item) => hasPermission(item.path)),
-          }))
-          .filter((group) => group.items.length > 0)
-      : [];
+  const roleSpecificGroups = roleSpecificNav[currentRole] || [];
+  const filteredRoleGroups = roleSpecificGroups
+    .map((group) => ({
+      ...group,
+      items: group.items.filter((item) => hasPermission(item.path)),
+    }))
+    .filter((group) => group.items.length > 0);
 
   const renderNavItems = (items) => (
     <div className="space-y-0.5">
@@ -160,20 +218,29 @@ export function Sidebar() {
           </span>
         </div>
 
+        {/* Role Badge */}
+        <div className="px-4 py-2 border-b border-border/30">
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-text-muted">
+            Signed in as
+          </span>
+          <p className="text-xs font-medium text-text-primary truncate mt-0.5">
+            {getRoleLabel()}
+          </p>
+        </div>
+
         {/* Navigation */}
         <nav
           className="flex-1 overflow-y-auto px-3 py-4"
           aria-label="Main navigation">
-          {currentRole === "admin" &&
-            adminFilteredGroups.map((group, gi) => (
-              <div key={gi} className="mb-5">
-                <p className="text-xs font-semibold uppercase tracking-wider text-text-muted px-1 mb-2">
-                  {group.section}
-                </p>
-                {renderNavItems(group.items)}
-              </div>
-            ))}
           {filteredGroups.map((group, gi) => (
+            <div key={gi} className="mb-5">
+              <p className="text-xs font-semibold uppercase tracking-wider text-text-muted px-1 mb-2">
+                {group.section}
+              </p>
+              {renderNavItems(group.items)}
+            </div>
+          ))}
+          {filteredRoleGroups.map((group, gi) => (
             <div key={gi} className="mb-5">
               <p className="text-xs font-semibold uppercase tracking-wider text-text-muted px-1 mb-2">
                 {group.section}

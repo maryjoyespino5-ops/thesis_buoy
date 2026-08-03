@@ -6,8 +6,8 @@ import { HelmetProvider } from "react-helmet-async";
 import { Layout } from "./components/layout/Layout";
 import Login from "./pages/Login";
 import LandingPage from "./pages/LandingPage";
-import Dashboard from "./pages/Dashboard";
-import AdminDashboard from "./pages/AdminDashboard";
+import DashboardPage from "./pages/DashboardPage";
+import { AdminDashboard } from "./components/dashboards/AdminDashboard";
 import AICommandCenter from "./pages/AICommandCenter";
 import FishActivity from "./pages/FishActivity";
 import Sanctuary from "./pages/Sanctuary";
@@ -34,7 +34,7 @@ function App() {
     <HelmetProvider>
       <>
       <Routes>
-        {/* 🆕 Landing Page as default route */}
+        {/* Landing Page as default route */}
         <Route path="/" element={<LandingPage />} />
 
         {/* Login route */}
@@ -47,9 +47,12 @@ function App() {
             <ProtectedRoute>
               <Layout>
                 <Routes>
-                  {/* Remove the old redirect since '/' is now landing page */}
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                  {/* Unified Dashboard - role-aware */}
+                  <Route path="/dashboard" element={<DashboardPage />} />
+
+                  {/* Legacy admin dashboard route (redirects to unified) */}
+                  <Route path="/admin/dashboard" element={<Navigate to="/dashboard" replace />} />
+
                   <Route path="/ai" element={<AICommandCenter />} />
                   <Route path="/fish" element={<FishActivity />} />
                   <Route path="/sanctuary" element={<Sanctuary />} />
@@ -62,6 +65,13 @@ function App() {
                   <Route path="/history" element={<History />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/profile" element={<Profile />} />
+
+                  {/* Role-specific routes */}
+                  <Route path="/weather" element={<WeatherPage />} />
+                  <Route path="/community" element={<CommunityPage />} />
+                  <Route path="/beach" element={<BeachPage />} />
+                  <Route path="/coral" element={<CoralPage />} />
+
                   {/* 404 */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
@@ -100,6 +110,43 @@ function NotFound() {
       <a href="/dashboard" className="btn btn-primary px-6 py-3">
         Back to Dashboard
       </a>
+    </div>
+  );
+}
+
+// Placeholder pages for role-specific routes
+function WeatherPage() {
+  return (
+    <div className="flex flex-col items-center justify-center h-full text-center py-20">
+      <h1 className="text-3xl font-bold text-text-primary mb-3">Weather</h1>
+      <p className="text-text-muted">Weather monitoring page</p>
+    </div>
+  );
+}
+
+function CommunityPage() {
+  return (
+    <div className="flex flex-col items-center justify-center h-full text-center py-20">
+      <h1 className="text-3xl font-bold text-text-primary mb-3">Community</h1>
+      <p className="text-text-muted">Community feed page</p>
+    </div>
+  );
+}
+
+function BeachPage() {
+  return (
+    <div className="flex flex-col items-center justify-center h-full text-center py-20">
+      <h1 className="text-3xl font-bold text-text-primary mb-3">Beach Monitor</h1>
+      <p className="text-text-muted">Beach monitoring page</p>
+    </div>
+  );
+}
+
+function CoralPage() {
+  return (
+    <div className="flex flex-col items-center justify-center h-full text-center py-20">
+      <h1 className="text-3xl font-bold text-text-primary mb-3">Coral Reef</h1>
+      <p className="text-text-muted">Coral reef monitoring page</p>
     </div>
   );
 }
