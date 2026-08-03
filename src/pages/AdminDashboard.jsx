@@ -17,6 +17,8 @@ import { Badge } from "../components/ui/Badge";
 import { TemperatureChart } from "../components/charts/TemperatureChart";
 import { DOChart } from "../components/charts/DOChart";
 import { RadarChartWidget } from "../components/charts/RadarChart";
+import { WeatherCard } from "../components/ui/WeatherCard";
+import { useWeather } from "../hooks/useWeather";
 import {
   buoyData,
   stats,
@@ -56,6 +58,17 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
   const [buoys, setBuoys] = useState([]);
   const [alertFilter, setAlertFilter] = useState("All");
+  const [selectedBuoyId, setSelectedBuoyId] = useState(1);
+
+  const selectedBuoy = buoys.find((b) => b.id === selectedBuoyId) || buoys[0];
+  const defaultLat = selectedBuoy?.lat ?? 14.62;
+  const defaultLon = selectedBuoy?.lon ?? 120.97;
+
+  const { weather, loading, error, isOnline, lastUpdated, refresh } = useWeather(
+    defaultLat,
+    defaultLon,
+    { enabled: !!selectedBuoy }
+  );
 
   useEffect(() => {
     setBuoys(buoyData);
@@ -229,6 +242,37 @@ export default function AdminDashboard() {
           <DOChart className="p-3" />
         </div>
       </div>
+
+      {/* Weather Card */}
+      <Card>
+        <CardHeader className="p-3 flex flex-row items-center justify-between">
+          <CardTitle className="text-lg font-semibold flex items-center gap-1.5">
+            <Thermometer size={14} className="text-amber-500" />
+            Weather
+          </CardTitle>
+          <select
+            value={selectedBuoyId}
+            onChange={(e) => setSelectedBuoyId(Number(e.target.value))}
+            className="text-sm bg-surface-muted border border-border/50 rounded-md px-2 py-1 text-text-primary focus:outline-none focus:ring-1 focus:ring-primary-500">
+            {buoys.map((b) => (
+              <option key={b.id} value={b.id}>
+                {b.name}
+              </option>
+            ))}
+          </select>
+        </CardHeader>
+        <CardContent className="p-3 pt-0">
+          <WeatherCard
+            weather={weather}
+            buoyName={selectedBuoy?.name}
+            loading={loading}
+            error={error}
+            isOnline={isOnline}
+            lastUpdated={lastUpdated}
+            onRefresh={refresh}
+          />
+        </CardContent>
+      </Card>
 
       {/* Compact Sensor Contribution */}
       <Card>
