@@ -1,4 +1,4 @@
-// path: src/pages/FishActivity.jsx
+// path: src/pages/FishActivity.jsxxxxxxxxxxxsz
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";

@@ -1,12 +1,11 @@
 // path: src/App.jsx
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Layout } from "./components/layout/Layout";
 import { CommunityLayout } from "./components/layout/CommunityLayout";
 import Login from "./pages/Login";
 import LandingPage from "./pages/LandingPage";
-import DashboardPage from "./pages/DashboardPage";
 import { AdminDashboard } from "./components/dashboards/AdminDashboard";
 import AICommandCenter from "./pages/AICommandCenter";
 import FishActivity from "./pages/FishActivity";
@@ -76,14 +75,6 @@ function App() {
               <ProtectedRoute>
                 <Layout>
                   <Routes>
-                    {/* Unified Dashboard */}
-                    <Route path="/dashboard" element={<DashboardPage />} />
-
-                    {/* Legacy admin dashboard redirect */}
-                    <Route
-                      path="/admin/dashboard"
-                      element={<Navigate to="/dashboard" replace />}
-                    />
 
                     {/* Admin sub-routes */}
                     <Route path="/admin/*" element={<AdminDashboard />} />
@@ -140,7 +131,7 @@ function NotFound() {
       <p className="text-text-muted text-sm mb-8">
         The page you're looking for doesn't exist or has been moved.
       </p>
-      <a href="/dashboard" className="btn btn-primary px-6 py-3">
+      <a href="/community" className="btn btn-primary px-6 py-3">
         Back to Dashboard
       </a>
     </div>
