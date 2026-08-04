@@ -25,7 +25,6 @@ import {
   Users,
   Thermometer,
   MessageSquare,
-  Anchor,
 } from "lucide-react";
 import { useRole } from "../../hooks/useRole";
 import { cn } from "../../lib/utils";
