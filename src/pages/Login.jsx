@@ -1,4 +1,4 @@
-// path: src/pages/Login.jsx
+  // path: src/pages/Login.jsx
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRole } from "../hooks/useRole";
@@ -45,14 +45,7 @@ const C = {
   border: "rgba(255,255,255,0.08)",
 };
 
-const roles = [
-  { key: "admin", label: "Administrator", icon: Shield },
-  { key: "lgu", label: "LGU Officer", icon: Building2 },
-  { key: "bfar", label: "BFAR Officer", icon: Fish },
-  { key: "sanctuary", label: "Sanctuary Officer", icon: Eye },
-  { key: "researcher", label: "Researcher", icon: Microscope },
-  { key: "fisherman", label: "Fisherman", icon: Anchor },
-];
+
 
 function Coord({ children }) {
   return (
@@ -66,7 +59,7 @@ function Coord({ children }) {
 }
 
 export default function Login() {
-  const { switchRole } = useRole();
+  const { } = useRole();
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -354,45 +347,6 @@ export default function Login() {
                 onClick={(e) => e.preventDefault()}>
                 Forgot password?
               </a>
-            </div>
-
-            {/* Role selector */}
-            <div>
-              <label
-                className="block text-[11px] tracking-wide uppercase mb-2"
-                style={{ color: C.textSub }}>
-                Sign in as
-              </label>
-              <div
-                className="grid grid-cols-3 border-t border-l"
-                style={{ borderColor: C.border }}>
-                {roles.map((role) => {
-                  const Icon = role.icon;
-                  const isSelected = selectedRole === role.key;
-                  return (
-                    <button
-                      key={role.key}
-                      type="button"
-                      onClick={() => setSelectedRole(role.key)}
-                      className="flex flex-col items-center gap-1.5 py-3 border-r border-b transition-colors duration-200"
-                      style={{
-                        borderColor: C.border,
-                        background: isSelected ? `${C.accent}14` : "transparent",
-                      }}
-                      aria-pressed={isSelected}>
-                      <Icon
-                        size={15}
-                        style={{ color: isSelected ? C.accent : C.textSub }}
-                      />
-                      <span
-                        className="text-[9.5px] font-medium leading-tight text-center px-1"
-                        style={{ color: isSelected ? C.accent : C.textSub }}>
-                        {role.label}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
             </div>
 
             {authError && (
