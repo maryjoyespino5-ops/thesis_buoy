@@ -22,7 +22,7 @@ const roles = {
 
 const permissions = {
   admin: [
-    'dashboard', 'admin/dashboard', 'ai', 'fish', 'sanctuary', 'monitoring',
+    'dashboard', 'admin/dashboard', 'ai', 'fish', 'sanctuary', 'monitoring', 'water-quality', 'users',
     'map', 'buoys', 'alerts', 'reports', 'maintenance', 'history', 'settings', 'profile',
     'weather', 'community', 'beach', 'coral',
   ],

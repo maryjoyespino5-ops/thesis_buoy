@@ -4,7 +4,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
   Brain,
-  Satellite,
+  Monitor,
   Map,
   Ship,
   Bell,
@@ -16,15 +16,13 @@ import {
   Menu,
   X,
   Shield,
-  Building2,
   Fish,
-  Mic,
-  Microscope,
-  Anchor,
-  Sun,
+  CloudRain,
+  Wind,
+  BarChart3,
+  Activity,
   Users,
-  Thermometer,
-  MessageSquare,
+  LogOut,
 } from "lucide-react";
 import { useRole } from "../../hooks/useRole";
 import { cn } from "../../lib/utils";
@@ -34,102 +32,49 @@ const navGroups = [
     section: "Overview",
     items: [
       { path: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-      { path: "/ai", label: "AI Command", icon: Brain },
+      { path: "/ai", label: "AI Command Center", icon: Brain },
     ],
   },
   {
-    section: "Monitoring",
+    section: "Buoy Operations",
     items: [
-      { path: "/monitoring", label: "Live Monitoring", icon: Satellite },
+      { path: "/monitoring", label: "Live Monitoring", icon: Monitor },
       { path: "/map", label: "Interactive Map", icon: Map },
       { path: "/buoys", label: "Buoy Management", icon: Ship },
-      { path: "/fish", label: "Fish Activity", icon: Fish },
-      { path: "/sanctuary", label: "Sanctuary", icon: Microscope },
     ],
   },
   {
-    section: "Environment",
+    section: "Environmental Monitoring",
     items: [
-      { path: "/weather", label: "Weather", icon: Thermometer },
-      { path: "/community", label: "Community", icon: MessageSquare },
+      { path: "/water-quality", label: "Water Quality", icon: Wind },
+      { path: "/fish", label: "Fish Monitoring", icon: Fish },
+      { path: "/weather", label: "Marine Weather", icon: CloudRain },
     ],
   },
   {
-    section: "Reports",
+    section: "AI & Analytics",
     items: [
+      { path: "/ai", label: "AI Analysis", icon: Brain },
       { path: "/alerts", label: "Alerts", icon: Bell },
-      { path: "/history", label: "History", icon: Clock },
-      { path: "/reports", label: "Reports", icon: FileText },
-      { path: "/maintenance", label: "Maintenance", icon: Wrench },
+      { path: "/history", label: "Historical Data", icon: Clock },
+      { path: "/reports", label: "Analytics & Reports", icon: BarChart3 },
+    ],
+  },
+  {
+    section: "System Management",
+    items: [
+      { path: "/maintenance", label: "System Maintenance", icon: Wrench },
+      { path: "/users", label: "User Management", icon: Users },
+      { path: "/settings", label: "Settings", icon: Settings },
     ],
   },
   {
     section: "Account",
     items: [
-      { path: "/settings", label: "Settings", icon: Settings },
       { path: "/profile", label: "Profile", icon: User },
     ],
   },
 ];
-
-const roleSpecificNav = {
-  beach: [
-    {
-      section: "Beach Monitoring",
-      items: [
-        { path: "/beach", label: "Beach Monitor", icon: Sun },
-      ],
-    },
-  ],
-  coral_reef: [
-    {
-      section: "Coral Reef",
-      items: [
-        { path: "/coral", label: "Coral Reef Monitor", icon: Anchor },
-      ],
-    },
-  ],
-  community: [
-    {
-      section: "Community",
-      items: [
-        { path: "/community", label: "Community Feed", icon: Users },
-      ],
-    },
-  ],
-  lgu: [
-    {
-      section: "LGU",
-      items: [
-        { path: "/reports", label: "LGU Reports", icon: FileText },
-      ],
-    },
-  ],
-  bfar: [
-    {
-      section: "BFAR",
-      items: [
-        { path: "/fish", label: "Fishery Reports", icon: Fish },
-      ],
-    },
-  ],
-  fisherman: [
-    {
-      section: "Fishing",
-      items: [
-        { path: "/fish", label: "Fish Activity", icon: Fish },
-      ],
-    },
-  ],
-  research: [
-    {
-      section: "Research",
-      items: [
-        { path: "/history", label: "Research Data", icon: Clock },
-      ],
-    },
-  ],
-};
 
 export function Sidebar() {
   const [open, setOpen] = useState(false);
@@ -143,14 +88,6 @@ export function Sidebar() {
   };
 
   const filteredGroups = navGroups
-    .map((group) => ({
-      ...group,
-      items: group.items.filter((item) => hasPermission(item.path)),
-    }))
-    .filter((group) => group.items.length > 0);
-
-  const roleSpecificGroups = roleSpecificNav[currentRole] || [];
-  const filteredRoleGroups = roleSpecificGroups
     .map((group) => ({
       ...group,
       items: group.items.filter((item) => hasPermission(item.path)),
@@ -241,14 +178,6 @@ export function Sidebar() {
               {renderNavItems(group.items)}
             </div>
           ))}
-          {filteredRoleGroups.map((group, gi) => (
-            <div key={gi} className="mb-5">
-              <p className="text-xs font-semibold uppercase tracking-wider text-text-muted px-1 mb-2">
-                {group.section}
-              </p>
-              {renderNavItems(group.items)}
-            </div>
-          ))}
         </nav>
 
         {/* Bottom */}
@@ -265,7 +194,7 @@ export function Sidebar() {
               /* handle sign out */
             }}
             className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-text-secondary hover:bg-red-50 hover:text-red-600 transition-colors w-full">
-            <Shield size={16} className="text-text-muted" />
+            <LogOut size={16} className="text-text-muted" />
             <span>Sign Out</span>
           </button>
         </div>

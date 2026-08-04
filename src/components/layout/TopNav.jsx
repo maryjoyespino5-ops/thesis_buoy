@@ -11,11 +11,14 @@ import {
   User,
   Shield,
   LogOut,
+  Users,
+  Link,
 } from "lucide-react";
 import { useTheme } from "../../hooks/useTheme";
 import { useAuth } from "../../hooks/useAuth";
 import { cn } from "../../lib/utils";
 import { Dropdown } from "../ui/Dropdown";
+import { useLocation } from "react-router-dom";
 
 export function TopNav() {
   const { darkMode, toggleTheme } = useTheme();
@@ -44,6 +47,15 @@ export function TopNav() {
           <span className="text-sm text-text-muted">Overview</span>
         </nav>
       </div>
+
+      {/* Public Community Link */}
+      <a
+        href="/community"
+        className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium text-text-muted hover:text-text-primary hover:bg-surface-muted transition-colors"
+        aria-label="Community Portal">
+        <Users size={13} />
+        Community
+      </a>
 
       {/* Right */}
       <div className="flex items-center gap-1.5">
