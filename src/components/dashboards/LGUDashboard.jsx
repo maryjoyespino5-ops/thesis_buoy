@@ -1,4 +1,4 @@
-// path: src/components/dashboards/LGUDashboard.jsx
+// path: src/coments/dashboards/LGUDashboard.jsx
 import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { useNavigate } from "react-router-dom"
