@@ -1,60 +1,76 @@
 // path: src/components/dashboards/ResearchDashboard.jsx
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
-import { useRole } from "../../hooks/useRole";
-import { MetricCard } from "../../components/ui/MetricCard";
+import React, { useState, useEffect } from "react"
+import { motion } from "framer-motion"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../hooks/useAuth"
+import { useRole } from "../../hooks/useRole"
+import { useAI } from "../../hooks/useAI"
+import { WidgetGrid } from "../widgets/system/WidgetGrid"
+import { WidgetContainer } from "../widgets/system/WidgetContainer"
+import { RawSensorDataWidget } from "../widgets/core/RawSensorDataWidget"
+import { HistoricalGraphsWidget } from "../widgets/core/HistoricalGraphsWidget"
+import { ExportCSVWidget } from "../widgets/core/ExportCSVWidget"
+import { ExportPDFWidget } from "../widgets/core/ExportPDFWidget"
+import { AIAnalysisWidget } from "../widgets/core/AIAnalysisWidget"
+import { WaterQualityIndexWidget } from "../widgets/core/WaterQualityIndexWidget"
+import { MarineHealthWidget } from "../widgets/core/MarineHealthWidget"
+import { EnvironmentalTrendsWidget } from "../widgets/core/EnvironmentalTrendsWidget"
+import { DeploymentMapWidget } from "../widgets/core/DeploymentMapWidget"
+import { MultiBuoyAnalyticsWidget } from "../widgets/core/MultiBuoyAnalyticsWidget"
+import { MetricCard } from "../../components/ui/MetricCard"
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../components/ui/Card";
-import { Button } from "../../components/ui/Button";
-import { Badge } from "../../components/ui/Badge";
-import { WeatherCard } from "../../components/ui/WeatherCard";
-import { BuoySelector } from "../../components/widgets/BuoySelector";
-import { AISuggestionCard } from "../../components/widgets/AISuggestionCard";
-import { AlertFeed } from "../../components/widgets/AlertFeed";
-import { FishActivityCard } from "../../components/widgets/FishActivityCard";
-import { WaterQualityCard } from "../../components/widgets/WaterQualityCard";
-import { ForecastChart } from "../../components/widgets/ForecastChart";
-import { RiskAssessmentCard } from "../../components/widgets/RiskAssessmentCard";
-import { MapWidget } from "../../components/widgets/MapWidget";
-import {
-  buoyData,
-  alerts,
-} from "../../api/sampleData";
+} from "../../components/ui/Card"
+import { Button } from "../../components/ui/Button"
+import { Badge } from "../../components/ui/Badge"
+import { buoyData, alerts } from "../../api/sampleData"
 import {
   Microscope,
   Wifi,
   AlertTriangle,
-  Thermometer,
-  Droplets,
-  Bell,
+  Clock,
   ArrowRight,
   MapPin,
-  Clock,
-} from "lucide-react";
+  Download,
+  FileText,
+} from "lucide-react"
+import { cn } from "../../lib/utils"
+
+const researchBuoys = buoyData.map((b) => ({
+  id: b.id,
+  name: b.name,
+  coords: b.coords,
+  status: b.status,
+  x: 15 + Math.random() * 70,
+  y: 15 + Math.random() * 70,
+}))
 
 export function ResearchDashboard() {
-  const { user } = useAuth();
-  const navigate = useNavigate();
-  const [buoys, setBuoys] = useState([]);
-  const [alertFilter, setAlertFilter] = useState("All");
-  const [selectedBuoyId, setSelectedBuoyId] = useState(1);
+  const { user } = useAuth()
+  const { currentRole } = useRole()
+  const navigate = useNavigate()
+  const [buoys, setBuoys] = useState([])
+  const [alertFilter, setAlertFilter] = useState("All")
+  const [selectedBuoyId, setSelectedBuoyId] = useState(1)
+  const [selectedZone, setSelectedZone] = useState(1)
+  const [comparisonIds, setComparisonIds] = useState([1, 2, 3])
 
   useEffect(() => {
-    setBuoys(buoyData);
-  }, []);
+    setBuoys(buoyData)
+  }, [])
 
   const filteredAlerts =
     alertFilter === "All"
       ? alerts
-      : alerts.filter((a) => a.priority === alertFilter);
+      : alerts.filter((a) => a.priority === alertFilter)
 
-  const selectedBuoy = buoys.find((b) => b.id === selectedBuoyId) || buoys[0];
+  const selectedBuoy = buoys.find((b) => b.id === selectedBuoyId) || buoys[0]
+
+  // AI processes sensor data — same data for every role, no duplication
+  const ai = useAI(selectedBuoy)
 
   const researchStats = [
     { icon: "Microscope", value: "5", label: "Buoys", trend: "+1", up: true },
@@ -67,14 +83,22 @@ export function ResearchDashboard() {
       up: false,
     },
     { icon: "Clock", value: "12", label: "Datasets", trend: "+3", up: true },
-  ];
+  ]
+
+  const handleToggleBuoy = (id) => {
+    setComparisonIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
+    )
+  }
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="space-y-4">
+      className="space-y-4"
+    >
+      {/* Hero */}
       <Card className="border-l-2 border-l-primary-500 overflow-hidden">
         <CardContent className="p-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -91,67 +115,78 @@ export function ResearchDashboard() {
                 variant="secondary"
                 size="sm"
                 className="h-7 text-sm px-3"
-                onClick={() => navigate("/alerts")}>
-                <Bell size={12} /> Alerts
+                onClick={() => navigate("/alerts")}
+              >
+                <Clock size={12} /> Research Data
               </Button>
               <Button
                 variant="primary"
                 size="sm"
                 className="h-7 text-sm px-3"
-                onClick={() => navigate("/history")}>
-                <Clock size={12} /> Research Data
+                onClick={() => navigate("/history")}
+              >
+                <FileText size={12} /> History
               </Button>
             </div>
           </div>
           <div className="grid grid-cols-4 gap-2 mt-3">
             {researchStats.map((s, i) => (
-              <div
+              <MetricCard
                 key={i}
-                className="bg-surface-muted/50 rounded-md px-3 py-1.5 text-center">
-                <div className="text-xl font-bold text-text-primary leading-tight">
-                  {s.value}
-                </div>
-                <div className="text-xs text-text-muted uppercase tracking-wide">
-                  {s.label}
-                </div>
-              </div>
+                value={s.value}
+                label={s.label}
+                trend={s.trend}
+                up={s.up}
+                className="p-3"
+              />
             ))}
           </div>
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-        <div className="lg:col-span-2">
-          <WeatherCard buoyName={selectedBuoy?.name} />
-        </div>
-        <div>
-          <BuoySelector
-            buoys={buoys}
-            selectedBuoyId={selectedBuoyId}
-            onSelect={setSelectedBuoyId}
-          />
-        </div>
-      </div>
+      {/* Raw Sensor Data + Historical Graphs Row */}
+      <WidgetGrid columns={2}>
+        <RawSensorDataWidget />
+        <HistoricalGraphsWidget />
+      </WidgetGrid>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        <AISuggestionCard />
-        <AlertFeed
-          alerts={filteredAlerts.slice(0, 4)}
-          alertFilter={alertFilter}
-          setAlertFilter={setAlertFilter}
+      {/* Export CSV + Export PDF Row */}
+      <WidgetGrid columns={2}>
+        <ExportCSVWidget />
+        <ExportPDFWidget />
+      </WidgetGrid>
+
+      {/* AI Analysis + Water Quality Index Row */}
+      <WidgetGrid columns={2}>
+        <AIAnalysisWidget
+          confidence={ai?.confidence ?? 97}
+          summary={ai?.dailySummary ?? "All sensors operating within normal parameters."}
         />
-      </div>
+        <WaterQualityIndexWidget
+          wqi={ai?.waterQualityIndex ?? 96}
+          trend="up"
+        />
+      </WidgetGrid>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-        <WaterQualityCard />
-        <FishActivityCard />
-        <RiskAssessmentCard />
-      </div>
+      {/* Marine Health + Environmental Trends Row */}
+      <WidgetGrid columns={2}>
+        <MarineHealthWidget health={ai?.marineHealthIndex ?? 94} trend="up" />
+        <EnvironmentalTrendsWidget />
+      </WidgetGrid>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        <ForecastChart />
-        <MapWidget />
-      </div>
+      {/* Deployment Map + Multi-Buoy Analytics Row */}
+      <WidgetGrid columns={2}>
+        <DeploymentMapWidget
+          zones={researchBuoys}
+          selectedZone={selectedZone}
+          onSelectZone={setSelectedZone}
+        />
+        <MultiBuoyAnalyticsWidget
+          buoys={buoys}
+          selectedIds={comparisonIds}
+          onToggleBuoy={handleToggleBuoy}
+        />
+      </WidgetGrid>
     </motion.div>
-  );
+  )
 }

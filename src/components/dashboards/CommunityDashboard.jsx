@@ -1,29 +1,29 @@
 // path: src/components/dashboards/CommunityDashboard.jsx
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
-import { useRole } from "../../hooks/useRole";
-import { MetricCard } from "../../components/ui/MetricCard";
+import React, { useState, useEffect } from "react"
+import { motion } from "framer-motion"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../hooks/useAuth"
+import { useRole } from "../../hooks/useRole"
+import { useAI } from "../../hooks/useAI"
+import { WidgetGrid } from "../widgets/system/WidgetGrid"
+import { WidgetContainer } from "../widgets/system/WidgetContainer"
+import { CurrentWeatherWidget } from "../widgets/core/CurrentWeatherWidget"
+import { WaterQualityStatusWidget } from "../widgets/core/WaterQualityStatusWidget"
+import { BeachSafetyWidget } from "../widgets/core/BeachSafetyWidget"
+import { MarineNewsWidget } from "../widgets/core/MarineNewsWidget"
+import { PublicAdvisoriesWidget } from "../widgets/core/PublicAdvisoriesWidget"
+import { AIEnvironmentalSummaryWidget } from "../widgets/core/AIEnvironmentalSummaryWidget"
+import { InteractiveMapWidget } from "../widgets/core/InteractiveMapWidget"
+import { MetricCard } from "../../components/ui/MetricCard"
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../components/ui/Card";
-import { Button } from "../../components/ui/Button";
-import { Badge } from "../../components/ui/Badge";
-import { WeatherCard } from "../../components/ui/WeatherCard";
-import { BuoySelector } from "../../components/widgets/BuoySelector";
-import { AISuggestionCard } from "../../components/widgets/AISuggestionCard";
-import { AlertFeed } from "../../components/widgets/AlertFeed";
-import { ForecastChart } from "../../components/widgets/ForecastChart";
-import { CommunityFeedCard } from "../../components/widgets/CommunityFeedCard";
-import { MapWidget } from "../../components/widgets/MapWidget";
-import {
-  buoyData,
-  alerts,
-} from "../../api/sampleData";
+} from "../../components/ui/Card"
+import { Button } from "../../components/ui/Button"
+import { Badge } from "../../components/ui/Badge"
+import { buoyData, alerts } from "../../api/sampleData"
 import {
   Users,
   Wifi,
@@ -31,25 +31,40 @@ import {
   Bell,
   ArrowRight,
   Anchor,
-} from "lucide-react";
+} from "lucide-react"
+import { cn } from "../../lib/utils"
+
+const communityBuoys = buoyData.map((b) => ({
+  id: b.id,
+  name: b.name,
+  coords: b.coords,
+  status: b.status,
+  x: 15 + Math.random() * 70,
+  y: 15 + Math.random() * 70,
+}))
 
 export function CommunityDashboard() {
-  const { user } = useAuth();
-  const navigate = useNavigate();
-  const [buoys, setBuoys] = useState([]);
-  const [alertFilter, setAlertFilter] = useState("All");
-  const [selectedBuoyId, setSelectedBuoyId] = useState(1);
+  const { user } = useAuth()
+  const { currentRole } = useRole()
+  const navigate = useNavigate()
+  const [buoys, setBuoys] = useState([])
+  const [alertFilter, setAlertFilter] = useState("All")
+  const [selectedBuoyId, setSelectedBuoyId] = useState(1)
+  const [selectedZone, setSelectedZone] = useState(1)
 
   useEffect(() => {
-    setBuoys(buoyData);
-  }, []);
+    setBuoys(buoyData)
+  }, [])
 
   const filteredAlerts =
     alertFilter === "All"
       ? alerts
-      : alerts.filter((a) => a.priority === alertFilter);
+      : alerts.filter((a) => a.priority === alertFilter)
 
-  const selectedBuoy = buoys.find((b) => b.id === selectedBuoyId) || buoys[0];
+  const selectedBuoy = buoys.find((b) => b.id === selectedBuoyId) || buoys[0]
+
+  // AI processes sensor data — same data for every role, no duplication
+  const ai = useAI(selectedBuoy)
 
   const communityStats = [
     { icon: "Users", value: "5", label: "Buoys", trend: "+1", up: true },
@@ -62,14 +77,16 @@ export function CommunityDashboard() {
       up: false,
     },
     { icon: "Anchor", value: "8", label: "Posts", trend: "+2", up: true },
-  ];
+  ]
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="space-y-4">
+      className="space-y-4"
+    >
+      {/* Hero */}
       <Card className="border-l-2 border-l-primary-500 overflow-hidden">
         <CardContent className="p-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -86,63 +103,75 @@ export function CommunityDashboard() {
                 variant="secondary"
                 size="sm"
                 className="h-7 text-sm px-3"
-                onClick={() => navigate("/alerts")}>
+                onClick={() => navigate("/alerts")}
+              >
                 <Bell size={12} /> Alerts
               </Button>
               <Button
                 variant="primary"
                 size="sm"
                 className="h-7 text-sm px-3"
-                onClick={() => navigate("/community")}>
-                <MessageSquare size={12} /> Community
+                onClick={() => navigate("/community")}
+              >
+                <span className="text-sm">👥</span> Community
               </Button>
             </div>
           </div>
           <div className="grid grid-cols-4 gap-2 mt-3">
             {communityStats.map((s, i) => (
-              <div
+              <MetricCard
                 key={i}
-                className="bg-surface-muted/50 rounded-md px-3 py-1.5 text-center">
-                <div className="text-xl font-bold text-text-primary leading-tight">
-                  {s.value}
-                </div>
-                <div className="text-xs text-text-muted uppercase tracking-wide">
-                  {s.label}
-                </div>
-              </div>
+                value={s.value}
+                label={s.label}
+                trend={s.trend}
+                up={s.up}
+                className="p-3"
+              />
             ))}
           </div>
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-        <div className="lg:col-span-2">
-          <WeatherCard buoyName={selectedBuoy?.name} />
-        </div>
-        <div>
-          <BuoySelector
-            buoys={buoys}
-            selectedBuoyId={selectedBuoyId}
-            onSelect={setSelectedBuoyId}
-          />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        <AISuggestionCard />
-        <AlertFeed
-          alerts={filteredAlerts.slice(0, 4)}
-          alertFilter={alertFilter}
-          setAlertFilter={setAlertFilter}
+      {/* Current Weather + Water Quality Row */}
+      <WidgetGrid columns={2}>
+        <CurrentWeatherWidget
+          temperature={selectedBuoy?.temp || "28.4°C"}
+          condition="Sunny"
+          humidity="72%"
+          windSpeed="12 km/h"
         />
-      </div>
+        <WaterQualityStatusWidget
+          status={ai?.waterQualityIndex >= 85 ? "Good" : "Moderate"}
+          description="Water is safe for swimming and recreation."
+        />
+      </WidgetGrid>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        <ForecastChart />
-        <MapWidget />
-      </div>
+      {/* Beach Safety + Marine News Row */}
+      <WidgetGrid columns={2}>
+        <BeachSafetyWidget
+          safety="Safe"
+          description="Conditions are safe for beach activities."
+        />
+        <MarineNewsWidget />
+      </WidgetGrid>
 
-      <CommunityFeedCard />
+      {/* Public Advisories + AI Summary Row */}
+      <WidgetGrid columns={2}>
+        <PublicAdvisoriesWidget />
+        <AIEnvironmentalSummaryWidget
+          confidence={ai?.confidence ?? 93}
+          summary={ai?.dailySummary ?? "Overall environmental conditions are good."}
+        />
+      </WidgetGrid>
+
+      {/* Interactive Map Row */}
+      <WidgetGrid columns={1}>
+        <InteractiveMapWidget
+          zones={communityBuoys}
+          selectedZone={selectedZone}
+          onSelectZone={setSelectedZone}
+        />
+      </WidgetGrid>
     </motion.div>
-  );
+  )
 }
