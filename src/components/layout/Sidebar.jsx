@@ -24,6 +24,8 @@ import {
   Sun,
   Users,
   Thermometer,
+  MessageSquare,
+  Anchor,
 } from "lucide-react";
 import { useRole } from "../../hooks/useRole";
 import { cn } from "../../lib/utils";
@@ -84,7 +86,7 @@ const roleSpecificNav = {
     {
       section: "Coral Reef",
       items: [
-        { path: "/coral", label: "Coral Reef Monitor", icon: Coral },
+        { path: "/coral", label: "Coral Reef Monitor", icon: Anchor },
       ],
     },
   ],
